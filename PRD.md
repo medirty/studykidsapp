@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.6 · **Tanggal:** 21 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.7 · **Tanggal:** 21 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -760,6 +760,17 @@ Jika ada bug: (1) reproduksi dengan test yang gagal, (2) cari akar masalah (buka
 | Review akhir fase sebelum phase gate | Refactor kecil, update dokumentasi, CSS |
 | Menganalisis Change Request PRD (§18) | Setup tooling, script, CI |
 
+#### Aturan subagent (WAJIB)
+
+| Aturan | Isi |
+|---|---|
+| Subagent yang boleh dipakai | **Hanya 4 milik project:** `architect`, `reviewer` (Opus); `implementer`, `tester` (Sonnet). Tidak boleh memakai subagent umum (general-purpose, Explore, Plan) atau subagent bawaan plugin. |
+| Jumlah | **Maksimal 1 subagent berjalan pada satu waktu.** Tidak ada eksekusi paralel. |
+| Eksekusi rencana | Langsung di sesi utama memakai skill `superpowers:executing-plans`. **Tidak memakai** `superpowers:subagent-driven-development` dan `superpowers:dispatching-parallel-agents`. |
+| Worktree | **Tidak memakai** `superpowers:using-git-worktrees`. Satu task = satu branch di folder utama (worktree membingungkan di Windows + XAMPP). |
+| Kapan delegasi | Sesuai tag task (`[opus]` → `architect`) dan aturan eskalasi di atas. Task `[sonnet]` sebaiknya dikerjakan sesi utama; `implementer`/`tester` dipakai hanya bila task besar dan bisa dipisah dengan jelas. |
+| Konflik dengan skill | Jika sebuah skill (superpowers atau lainnya) menyarankan membuat subagent, worktree, atau menjalankan agen paralel, **aturan di tabel ini yang berlaku**. |
+
 ### 16.3 Aturan hemat limit (WAJIB)
 
 1. **Satu sesi = satu task** dari `PROGRESS.md`. Setelah task selesai & di-commit → `/clear`.
@@ -938,10 +949,38 @@ Domain + SSL aktif · kebijakan privasi & S&K · backup terjadwal · error loggi
 |---|---|
 | `main` | Selalu stabil & lolos CI. Dilindungi: tidak boleh push langsung dan tidak boleh force push; merge hanya lewat PR dengan CI hijau. |
 | Branch kerja | Satu branch per task: `feat/f3-mcq-component`, `fix/sync-duplicate`, `docs/...` (prefix `f<nomor fase>`). |
-| PR | Dibuat oleh Claude Code (`gh pr create`) setelah task selesai. Deskripsi berisi: task dari `PROGRESS.md`, ringkasan perubahan, bukti test. Bimo yang merge (atau mengizinkan Claude merge setelah CI hijau). |
+| PR | Dibuat oleh Claude Code (`gh pr create`) setelah task selesai. Deskripsi berisi: task dari `PROGRESS.md`, ringkasan perubahan, bukti test. **Di-merge otomatis oleh Claude** jika memenuhi aturan auto-merge di bawah; selain itu menunggu Bimo. |
 | Commit | Conventional commits (`feat:`, `fix:`, `test:`, `docs:`, `refactor:`, `chore:`). |
 | Rilis | Tag semver (`v0.3.0` = demo Fase 3, `v1.0.0` = launch). Tag memicu deploy ke hosting. |
 | Phase gate | Akhir fase ditandai tag `phase-N-approved` setelah Bimo menyetujui. |
+
+#### Aturan auto-merge
+
+Claude **langsung merge tanpa bertanya** (`gh pr merge <nomor> --squash --delete-branch`, lalu `git switch main && git pull`) jika **SEMUA** syarat ini terpenuhi:
+
+1. Acceptance criteria task terpenuhi dan perintah verifikasi (lint, typecheck, test) sudah dijalankan dengan hasil **lolos**, output ditampilkan di laporan/PR.
+2. **CI hijau** di PR. Sebelum CI ada (sebelum T0.10 selesai): semua pemeriksaan lokal yang relevan lolos.
+3. Isi PR hanya untuk task itu (tidak ada perubahan di luar scope).
+4. Tidak ada pertanyaan terbuka atau temuan `reviewer` yang belum diselesaikan.
+5. PR **bukan** kategori "wajib review Bimo" di bawah.
+
+**Wajib review Bimo (Claude bertanya dulu, tidak auto-merge):**
+
+| Kategori | Contoh |
+|---|---|
+| Aturan & dokumen inti | Perubahan `PRD.md`, `CLAUDE.md`, isi `.claude/` (kecuali yang berasal dari CR yang sudah disetujui Bimo) |
+| Skema & data | Migrasi database baru |
+| Keamanan & uang | Auth, sesi, Parent Gate, entitlement, pembayaran, webhook, harga/kuota early bird |
+| Deploy & rahasia | Workflow deploy ke hosting, pengaturan secrets |
+| Visual yang harus dilihat | Mockup & logo (Fase 1), perubahan besar tampilan |
+| Phase gate | Persetujuan fase selalu oleh Bimo ("Fase X disetujui") |
+| Dependabot | Update **major**. Update patch/minor dengan CI hijau boleh auto-merge. |
+
+**Setelah auto-merge:** laporan akhir task menyebut "PR #N sudah di-merge otomatis" + ringkasan. Jika Bimo ingin membatalkan: `Batalkan PR #N` → Claude membuat PR revert.
+
+**Skill `superpowers:finishing-a-development-branch`:** jangan tampilkan pilihan merge/PR/simpan/buang ke Bimo. Ikuti aturan auto-merge ini: PR lalu auto-merge, atau PR lalu tanya Bimo bila termasuk kategori wajib review.
+
+**Setelah CI & branch protection aktif (T0.10 + B8):** gunakan `gh pr merge <nomor> --squash --auto --delete-branch` agar GitHub yang merge begitu CI hijau. Syarat: Settings → General → centang **Allow auto-merge**.
 
 **GitHub Secrets** (ditambahkan saat dibutuhkan, tidak pernah di kode): `DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_PATH`, `DEPLOY_METHOD`, `DEPLOY_SSH_KEY` atau `DEPLOY_FTP_PASSWORD` (Fase 4); `MIDTRANS_SERVER_KEY` dan lainnya disimpan hanya di `.env` server, bukan di GitHub (Fase 6).
 
@@ -1027,3 +1066,4 @@ Masih terbuka:
 | 1.4 | 21 Nov 2026 | Hasil cek laptop Bimo dicatat di §17.1. PHP dinaikkan ke **8.4** (8.2 habis masa patch keamanan Des 2026) memakai `C:\php-8.4`; kode tetap kompatibel 8.2+. Tambah langkah install `gh`, Claude Code CLI, dan `mysql` di PATH. |
 | 1.5 | 21 Nov 2026 | §16.4 ditulis ulang: semua plugin/skill/MCP dipasang **otomatis** oleh Claude Code lewat `docs/setup/BOOTSTRAP.md` (scope project), hook `SessionStart` + `doctor`. claude-mem tidak dipasang default (kuota, Bun, lisensi). PHP dipanggil via `PHP_BIN`, PATH sistem tidak diubah. |
 | 1.6 | 21 Nov 2026 | claude-mem **tidak dipakai** (final). Memori project dipegang file repo: CLAUDE.md, PROGRESS.md, DECISIONS.md, docs/plans, Git (§16.3 butir 9, §16.4, §21). |
+| 1.7 | 21 Nov 2026 | CR-001: aturan subagent (hanya 4 subagent project, maks. 1 bersamaan, eksekusi inline, tanpa worktree; §16.2) dan aturan auto-merge PR dengan daftar kategori wajib review Bimo (§17.5). |

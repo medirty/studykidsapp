@@ -34,6 +34,9 @@
 - [ ] T0.12 `[sonnet]` Verifikasi plugin/MCP + rangkum bukti Exit Criteria (§16.2, §16.4)
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 0 disetujui" → tag `phase-0-approved`
 
+### Change Request
+- [x] **CR-001** Aturan subagent & auto-merge PR — disetujui Bimo, diterapkan 21 Nov 2026 → PRD **v1.7** (§16.2 aturan subagent, §17.5 auto-merge + kategori wajib review), `CLAUDE.md`, `docs/PANDUAN_VIBE_CODING.md`. Arsip: `docs/plans/CR-001-subagent-dan-auto-merge.md`. Saat T0.2 membuat `docs/CHANGE_REQUESTS.md`, salin entri ini ke sana.
+
 ### Tindakan manual Bimo
 - [ ] B1 Beli domain `studykids.id`
 - [x] B2 PHP 8.4.28 di `C:\php-8.4`, 8 ekstensi aktif (21 Nov 2026). PATH sistem tidak diubah — pakai `PHP_BIN`
