@@ -98,7 +98,7 @@ vendor/bin/phinx migrate
 
 ## Git & GitHub — repo `medirty/studykidsapp` (PRD §17.5)
 
-- Jangan push langsung ke `main`. Satu task = satu branch (`feat/f<fase>-<nama>`, `fix/...`, `docs/...`) → PR via `gh pr create` dengan bukti test → merge hanya jika CI hijau.
+- Jangan push langsung ke `main`. Satu task = satu branch (`feat/f<fase>-<nama>`, `fix/...`, `docs/...`) → PR via `gh pr create` dengan bukti test → merge hanya jika CI hijau. **Claude boleh merge sendiri** (`gh pr merge --squash --delete-branch`) setelah CI hijau.
 - Conventional commits: `feat:`, `fix:`, `test:`, `docs:`, `refactor:`, `chore:`. Commit kecil & rapi.
 - **Repo PUBLIC:** jangan pernah force push; jangan commit `.env`, secret, key, dump DB, data pengguna, atau screenshot berisi data anak. Hanya `.env.example` tanpa nilai asli. Semua pengecekan keamanan tetap di server.
 - Build GitHub Pages memakai `VITE_BASE=/studykidsapp/`; produksi `VITE_BASE=/`. Jangan hardcode path absolut `/`.

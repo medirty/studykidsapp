@@ -37,7 +37,7 @@
 - [ ] B1 Beli domain `studykids.id`
 - [x] B2 PHP 8.4.28 di `C:\php-8.4`, 8 ekstensi aktif (21 Nov 2026). PATH sistem tidak diubah — pakai `PHP_BIN`
 - [ ] B3 Start MySQL di XAMPP setiap mulai kerja (PATH `mysql` diurus T0.0)
-- [ ] B4 User MySQL `studykids` + DB `studykids_dev` & `studykids_test`; isi `backend/.env`
+- [x] B4 User MySQL `studykids` (hak hanya ke 2 DB) + DB `studykids_dev` & `studykids_test` (utf8mb4); `backend/.env` terisi, di-ignore Git (21 Nov 2026)
 - [ ] B5 Aktifkan Secret scanning & Push protection di repo
 - [ ] B6 Pages → Source: GitHub Actions
 - [ ] B7 Setujui instalasi plugin/skill/MCP saat T0.0 berjalan (dipasang otomatis oleh Claude)
@@ -53,5 +53,5 @@
 
 ### Pertanyaan terbuka untuk Bimo
 1. ~~Path PHP~~ — **terjawab:** `C:\php-8.4` (CLAUDE.md & PRD v1.5 sudah sama).
-2. Merge PR: Bimo yang merge, atau Claude boleh merge sendiri setelah CI hijau?
+2. ~~Merge PR~~ — **terjawab (21 Nov 2026):** Claude boleh merge sendiri setelah CI hijau (squash merge; sebelum CI ada di T0.10, PR docs/chore boleh di-merge setelah dicek).
 3. ~~claude-mem~~ — **terjawab (PRD v1.6):** tidak dipakai. Memori project = PROGRESS.md, DECISIONS.md, docs/plans, Git.
