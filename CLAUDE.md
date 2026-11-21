@@ -22,6 +22,7 @@ Bimo tidak mengganti model manual. Routing diatur oleh `.claude/settings.json` (
 - Review akhir fase & review keamanan → subagent `reviewer` (Opus) lewat `/gate`.
 - Saat membuat task (`/plan-phase`), beri setiap task tag `[opus]` atau `[sonnet]` sesuai tabel PRD §16.2.
 - Jangan pernah set `CLAUDE_CODE_SUBAGENT_MODEL`.
+- **Subagent:** hanya `architect`, `reviewer`, `implementer`, `tester`; **maksimal 1 bersamaan**, tidak paralel. Eksekusi rencana di sesi utama (`superpowers:executing-plans`). **Jangan pakai** `subagent-driven-development`, `dispatching-parallel-agents`, `using-git-worktrees`, atau subagent umum/bawaan plugin. Jika skill menyarankan sebaliknya, aturan ini yang berlaku (PRD §16.2).
 - Simpan rencana di `docs/plans/` supaya tidak dibuat ulang. Jangan buka `node_modules/`, `vendor/`, `dist/`, lockfile.
 - Jika limit hampir habis: tulis posisi terakhir ("task X, langkah Y") di `PROGRESS.md` sebelum berhenti.
 - **Memori project = file repo** (`PROGRESS.md`, `DECISIONS.md`, `docs/plans/`, Git). Selalu update di akhir task. **Jangan pasang claude-mem** atau plugin memori lain (PRD §16.4).
@@ -98,7 +99,10 @@ vendor/bin/phinx migrate
 
 ## Git & GitHub — repo `medirty/studykidsapp` (PRD §17.5)
 
-- Jangan push langsung ke `main`. Satu task = satu branch (`feat/f<fase>-<nama>`, `fix/...`, `docs/...`) → PR via `gh pr create` dengan bukti test → merge hanya jika CI hijau. **Claude boleh merge sendiri** (`gh pr merge --squash --delete-branch`) setelah CI hijau.
+- Jangan push langsung ke `main`. Satu task = satu branch (`feat/f<fase>-<nama>`, `fix/...`, `docs/...`) → PR via `gh pr create` dengan bukti test.
+- **Auto-merge (PRD §17.5):** jika AC terpenuhi, verifikasi lolos, CI hijau (sebelum T0.10: cek lokal lolos), scope sesuai task, tidak ada pertanyaan terbuka, dan bukan kategori wajib review → **langsung** `gh pr merge <n> --squash --delete-branch`, lalu `git switch main && git pull`, tanpa bertanya. Laporkan "PR #N di-merge otomatis".
+- **Wajib tanya Bimo dulu:** perubahan PRD/CLAUDE.md/.claude (kecuali dari CR yang sudah disetujui), migrasi DB, auth/pembayaran/webhook/harga, workflow deploy/secrets, mockup/logo/perubahan besar tampilan, Dependabot major, phase gate.
+- Saat skill `superpowers:finishing-a-development-branch` aktif: **jangan** tampilkan menu pilihan; ikuti aturan auto-merge di atas.
 - Conventional commits: `feat:`, `fix:`, `test:`, `docs:`, `refactor:`, `chore:`. Commit kecil & rapi.
 - **Repo PUBLIC:** jangan pernah force push; jangan commit `.env`, secret, key, dump DB, data pengguna, atau screenshot berisi data anak. Hanya `.env.example` tanpa nilai asli. Semua pengecekan keamanan tetap di server.
 - Build GitHub Pages memakai `VITE_BASE=/studykidsapp/`; produksi `VITE_BASE=/`. Jangan hardcode path absolut `/`.

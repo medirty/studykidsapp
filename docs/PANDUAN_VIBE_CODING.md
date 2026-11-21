@@ -85,16 +85,20 @@ Selama bootstrap:
 ```
 Mulai hari. Baca CLAUDE.md dan docs/PROGRESS.md.
 Ringkas dalam 5 baris: fase aktif, task terakhir yang selesai, task yang setengah jalan (kalau ada), dan task berikutnya.
+Jika ada PR yang masih terbuka, selesaikan dulu sesuai aturan auto-merge (atau tanyakan aku bila wajib review).
 Lalu jalankan /next.
 ```
 
 ### B. Setiap task selesai
 
-Claude akan melapor: apa yang dikerjakan, bukti test, dan task berikutnya. Lalu:
+Claude akan melapor: apa yang dikerjakan, bukti test, dan status PR. Ada dua kemungkinan:
 
-1. **Cek hasilnya** (lihat bagian 6 "Cara mengecek hasil").
-2. Kalau oke → buka **sesi baru** → ketik `/next`.
-3. Kalau ada yang salah → tulis di sesi yang sama, misalnya:
+- **"PR #N sudah di-merge otomatis"** → task aman dan sudah masuk `main`. Kamu cukup cek hasilnya sekilas (bagian 6) kalau mau, lalu buka **sesi baru** → `/next`.
+- **"PR #N menunggu review Bimo"** → task ini termasuk kategori penting (database, keamanan, pembayaran, desain, deploy, atau perubahan aturan). Cek hasilnya, lalu balas `Merge PR #N` atau jelaskan apa yang harus diperbaiki.
+
+Kalau ternyata hasil yang sudah di-merge otomatis tidak sesuai, ketik `Batalkan PR #N`. Claude akan membatalkannya dengan PR revert.
+
+Kalau ada yang salah → tulis di sesi yang sama, misalnya:
 
 ```
 Tombol "Coba Gratis" di HP terlalu kecil dan teksnya terpotong. Perbaiki sesuai PRD §9.1 dan §8.5 (target sentuh 48px).
@@ -238,6 +242,12 @@ Halaman beranda anak terasa terlalu ramai. Aku mau: maksimal 4 kartu mapel terli
 Tampilkan ringkasan progress project: fase mana yang sudah selesai, fase aktif, persentase task fase aktif, dan perkiraan task tersisa sampai demo (Fase 3) dan launch (Fase 7).
 ```
 
+### Kapan aku masih ditanya soal merge?
+
+Claude merge sendiri jika semua test lolos dan task-nya tidak berisiko. Kamu tetap ditanya untuk: perubahan PRD/aturan, database, login/keamanan/pembayaran, desain (mockup, logo), deploy, update library versi besar, dan persetujuan fase.
+
+Kalau Claude Desktop menampilkan **dialog izin** untuk perintah `gh pr merge` atau `git push`, pilih **"Always allow"**. Itu izin aplikasi, bukan pertanyaan merge, dan cukup sekali.
+
 ---
 
 ## 8. Kumpulan prompt cepat (cheat sheet)
@@ -255,6 +265,8 @@ Tampilkan ringkasan progress project: fase mana yang sudah selesai, fase aktif, 
 | Demo ke HP | `Deploy demo ke GitHub Pages dan beri link-nya.` |
 | Tutup hari | `Tutup hari. Commit & push, update PROGRESS.md, ringkas, daftar PR untuk di-merge.` |
 | Kuota menipis | `Simpan posisi di PROGRESS.md, commit WIP, lalu berhenti.` |
+| Setujui PR yang menunggu | `Merge PR #N` |
+| Batalkan PR yang sudah di-merge | `Batalkan PR #N` |
 
 ---
 
@@ -277,6 +289,7 @@ Tampilkan ringkasan progress project: fase mana yang sudah selesai, fase aktif, 
 - Menaruh password, API key, atau data asli di chat atau di file project (repo-nya public).
 - Mengedit `PRD.md` sendiri diam-diam. Lewat `/cr` supaya tercatat dan Claude tahu.
 - Memasang plugin memori (claude-mem, dll.) atau plugin lain di luar PRD §16.4. Kalau tertarik pada plugin baru, ajukan lewat `/cr`.
+- Meminta Claude "pakai banyak agent paralel" atau "kerjakan pakai worktree". Project ini sengaja memakai maksimal 1 subagent agar kuota awet (PRD §16.2).
 
 ---
 
