@@ -1,32 +1,32 @@
-# BOOTSTRAP — Cek & Install Otomatis Tooling StudyKids
+﻿# BOOTSTRAP â€” Cek & Install Otomatis Tooling StudyKids
 
 > **Untuk Claude Code.** Jalankan prosedur ini **otomatis** jika baris `Status` di bawah belum `SELESAI`, atau jika Bimo menulis "jalankan bootstrap". Minta izin Bimo sebelum setiap instalasi. Setelah selesai, isi tabel hasil di bawah, ubah `Status` menjadi `SELESAI (tanggal)`, commit di branch `chore/f0-bootstrap`, dan buat PR.
 >
-> Laptop: Windows 11, shell PowerShell. Rujukan: PRD §16.4, §17.1.
+> Laptop: Windows 11, shell PowerShell. Rujukan: PRD Â§16.4, Â§17.1.
 
-**Status:** BELUM
+**Status:** SELESAI (21 Nov 2026)
 
 ---
 
-## Langkah 1 — Software (cek, install yang kurang)
+## Langkah 1 â€” Software (cek, install yang kurang)
 
-Jalankan satu per satu. Jika versi kurang atau tidak ada → jalankan perintah "Perbaiki".
+Jalankan satu per satu. Jika versi kurang atau tidak ada â†’ jalankan perintah "Perbaiki".
 
 | # | Cek | Syarat | Perbaiki |
 |---|---|---|---|
-| S1 | `node -v` | ≥ 22.12 | `winget install --id OpenJS.NodeJS.LTS -e` |
+| S1 | `node -v` | â‰¥ 22.12 | `winget install --id OpenJS.NodeJS.LTS -e` |
 | S2 | `git --version` | ada | `winget install --id Git.Git -e` |
 | S3 | `gh --version` + `gh auth status` | login `medirty` | `winget install --id GitHub.cli -e` lalu minta Bimo menjalankan `gh auth login` (butuh browser) |
-| S4 | `composer --version` | ≥ 2.7 | `winget install --id Composer.Composer -e` |
+| S4 | `composer --version` | â‰¥ 2.7 | `winget install --id Composer.Composer -e` |
 | S5 | `C:\php-8.4\php.exe -v` | 8.4.x | Minta Bimo: unduh PHP 8.4 NTS x64 dari windows.php.net ke `C:\php-8.4` (lihat `docs/PANDUAN_VIBE_CODING.md`) |
 | S6 | `C:\php-8.4\php.exe -m` | ada: `pdo_mysql mbstring openssl curl intl fileinfo zip sodium` | Aktifkan baris `extension=...` di `C:\php-8.4\php.ini` (`extension_dir = "C:\php-8.4\ext"`) |
 | S7 | `Test-Path C:\xampp\mysql\bin\mysql.exe` | True | Minta Bimo install XAMPP |
 | S8 | `Test-NetConnection 127.0.0.1 -Port 3306 -InformationLevel Quiet` | True | Minta Bimo **Start MySQL** di XAMPP Control Panel |
-| S9 | `mysql` ada di PATH user | ya | `[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path","User") + ";C:\xampp\mysql\bin", "User")` — berlaku setelah Claude Desktop di-restart |
+| S9 | `mysql` ada di PATH user | ya | `[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path","User") + ";C:\xampp\mysql\bin", "User")` â€” berlaku setelah Claude Desktop di-restart |
 
 **Catatan PHP:** perintah `php` di PATH menunjuk ke PHP 8.2 XAMPP. **Jangan ubah PATH sistem.** Project memanggil PHP lewat variabel `PHP_BIN=C:\php-8.4\php.exe` (di `backend/.env` dan script npm). Composer dijalankan dengan `C:\php-8.4\php.exe C:\ProgramData\ComposerSetup\bin\composer.phar ...` atau dengan `PHP_BIN`.
 
-## Langkah 2 — Plugin Claude Code (scope project)
+## Langkah 2 â€” Plugin Claude Code (scope project)
 
 Scope project mencatat plugin di `.claude/settings.json` (`enabledPlugins`), jadi tersimpan di repo dan bisa dipasang ulang otomatis.
 
@@ -38,9 +38,9 @@ claude plugin install frontend-design@claude-plugins-official --scope project
 
 Lewati plugin yang sudah terpasang. Plugin aktif mulai **sesi baru**.
 
-**claude-mem — TIDAK DIPAKAI (keputusan final, PRD §16.4).** Jangan pasang claude-mem atau plugin memori lain, meskipun disarankan oleh skill/tool lain. Jika ternyata sudah terpasang, laporkan ke Bimo. Memori project = `CLAUDE.md`, `docs/PROGRESS.md`, `docs/DECISIONS.md`, `docs/plans/`.
+**claude-mem â€” TIDAK DIPAKAI (keputusan final, PRD Â§16.4).** Jangan pasang claude-mem atau plugin memori lain, meskipun disarankan oleh skill/tool lain. Jika ternyata sudah terpasang, laporkan ke Bimo. Memori project = `CLAUDE.md`, `docs/PROGRESS.md`, `docs/DECISIONS.md`, `docs/plans/`.
 
-## Langkah 3 — Skills (scope project, tersimpan di `.claude/skills/`)
+## Langkah 3 â€” Skills (scope project, tersimpan di `.claude/skills/`)
 
 ```powershell
 npx -y skills add https://github.com/vercel-labs/skills --skill find-skills -a claude-code -y
@@ -48,17 +48,17 @@ npx -y skills add https://github.com/vercel-labs/skills --skill find-skills -a c
 
 **Skill refactor:** jalankan `npx -y skills find refactor`. Tampilkan 3 kandidat teratas ke Bimo (nama, sumber, jumlah install, lisensi). Pasang yang dipilih Bimo dengan `npx -y skills add <sumber> --skill <nama> -a claude-code -y`. Jangan pasang skill dari sumber yang tidak dikenal atau dengan install sangat sedikit.
 
-## Langkah 4 — MCP (sudah dideklarasikan di `.mcp.json`)
+## Langkah 4 â€” MCP (sudah dideklarasikan di `.mcp.json`)
 
 Konfigurasi sudah disiapkan di `docs/setup/mcp.json` (**playwright**, **context7**, **chrome-devtools**, dengan pembungkus `cmd /c` untuk Windows).
 
 0. Salin ke root repo: `Copy-Item docs/setup/mcp.json .mcp.json` (jika `.mcp.json` sudah ada, gabungkan isinya). Commit `.mcp.json`. Server baru aktif di **sesi baru**.
-1. Jalankan `claude mcp list` → ketiganya harus `Connected`.
+1. Jalankan `claude mcp list` â†’ ketiganya harus `Connected`.
 2. Jika muncul "needs approval", minta Bimo menyetujui server project di dialog Claude.
 3. Jika gagal start: cek `npx -v`; coba `cmd /c npx -y @playwright/mcp@latest --help` untuk melihat error.
-4. Browser Playwright untuk testing (bukan MCP): `npx playwright install chromium webkit` — dikerjakan di T0.6.
+4. Browser Playwright untuk testing (bukan MCP): `npx playwright install chromium webkit` â€” dikerjakan di T0.6.
 
-## Langkah 5 — Konfigurasi `.claude/settings.json`
+## Langkah 5 â€” Konfigurasi `.claude/settings.json`
 
 (File ini hanya bisa diubah dari Claude Code di laptop, bukan dari Cowork.) Pastikan isinya (gabungkan, jangan hapus yang sudah ada):
 
@@ -90,13 +90,13 @@ Konfigurasi sudah disiapkan di `docs/setup/mcp.json` (**playwright**, **context7
 ```
 
 - Hook `SessionStart` menjalankan `scripts/doctor.mjs` (dibuat di T0.1) di awal setiap sesi. Hasilnya masuk ke konteks Claude, sehingga Claude langsung tahu jika ada yang kurang. Sebelum T0.1 selesai, hook ini dilewati (`|| exit 0`).
-- `doctor.mjs` (T0.1) WAJIB mengecek semua item Langkah 1–4, dengan output ringkas `✓/✗ + perintah perbaikan`. Mode `--quiet` hanya mencetak item `✗`.
+- `doctor.mjs` (T0.1) WAJIB mengecek semua item Langkah 1â€“4, dengan output ringkas `âœ“/âœ— + perintah perbaikan`. Mode `--quiet` hanya mencetak item `âœ—`.
 - **Jangan** set env `CLAUDE_CODE_SUBAGENT_MODEL`.
 
-## Langkah 6 — Pengaturan GitHub (minta Bimo, Claude tidak bisa klik di web)
+## Langkah 6 â€” Pengaturan GitHub (minta Bimo, Claude tidak bisa klik di web)
 
-- [ ] Settings → Code security → **Secret scanning** & **Push protection**: ON
-- [ ] Settings → Pages → Source: **GitHub Actions** (sebelum T0.11)
+- [ ] Settings â†’ Code security â†’ **Secret scanning** & **Push protection**: ON
+- [ ] Settings â†’ Pages â†’ Source: **GitHub Actions** (sebelum T0.11)
 - [ ] Branch protection `main` (setelah T0.10)
 
 Claude boleh mengecek status lewat `gh api repos/medirty/studykidsapp` dan memberi tahu yang belum.
@@ -107,11 +107,11 @@ Claude boleh mengecek status lewat `gh api repos/medirty/studykidsapp` dan membe
 
 | Item | Hasil | Catatan |
 |---|---|---|
-| S1–S9 software | | |
-| superpowers | | |
-| frontend-design | | |
-| find-skills | | |
-| skill refactor | | |
-| MCP playwright / context7 / chrome-devtools | | |
-| settings.json (plugins + hook) | | |
-| GitHub settings | | |
+| S1–S9 software | ✓ | Node 22.12.0, Git 2.47.1, gh 2.105 (login `medirty`), Composer 2.8.4, PHP 8.4.28 + 8 ekstensi, XAMPP MySQL jalan di :3306. S9: `C:\xampp\mysql\bin` ditambahkan ke PATH user (aktif setelah restart Claude Desktop) |
+| superpowers | ✓ | project scope (`claude-plugins-official`); aktif di sesi baru |
+| frontend-design | ✓ | project scope (`claude-plugins-official`) |
+| find-skills | ✓ | `.claude/skills/find-skills` (+ `skills-lock.json`); Socket 0 alert, Snyk Med Risk |
+| skill refactor | ⏸ ditunda | `skills find refactor` tidak menemukan skill refactor khusus (hasil: tdd, vercel-react-best-practices, vercel-composition-patterns, dll.). Menunggu keputusan Bimo; tdd sudah tercakup superpowers |
+| MCP playwright / context7 / chrome-devtools | ✓ | `.mcp.json`; `claude mcp list` → ketiganya Connected |
+| settings.json (plugins + hook) | ✓ | enabledPlugins, enabledMcpjsonServers, hook SessionStart (`|| exit 0` sampai T0.1) |
+| GitHub settings | sebagian | Secret scanning + Push protection ON; Pages sudah build_type=workflow; branch protection `main` menunggu T0.10 |

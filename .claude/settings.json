@@ -1,15 +1,36 @@
-{
-  "model": "opusplan",
-  "permissions": {
-    "deny": [
-      "Read(./node_modules/**)",
-      "Read(./frontend/node_modules/**)",
-      "Read(./backend/vendor/**)",
-      "Read(./**/dist/**)",
-      "Read(./**/package-lock.json)",
-      "Read(./**/composer.lock)",
-      "Read(./.env)",
-      "Read(./backend/.env)"
-    ]
-  }
+﻿{
+    "permissions":  {
+                        "deny":  [
+                                     "Read(./node_modules/**)",
+                                     "Read(./frontend/node_modules/**)",
+                                     "Read(./backend/vendor/**)",
+                                     "Read(./**/dist/**)",
+                                     "Read(./**/package-lock.json)",
+                                     "Read(./**/composer.lock)",
+                                     "Read(./.env)",
+                                     "Read(./backend/.env)"
+                                 ]
+                    },
+    "model":  "opusplan",
+    "enabledPlugins":  {
+                           "superpowers@claude-plugins-official":  true,
+                           "frontend-design@claude-plugins-official":  true
+                       },
+    "enabledMcpjsonServers":  [
+                                  "playwright",
+                                  "context7",
+                                  "chrome-devtools"
+                              ],
+    "hooks":  {
+                  "SessionStart":  [
+                                       {
+                                           "hooks":  [
+                                                         {
+                                                             "command":  "node scripts/doctor.mjs --quiet || exit 0",
+                                                             "type":  "command"
+                                                         }
+                                                     ]
+                                       }
+                                   ]
+              }
 }
