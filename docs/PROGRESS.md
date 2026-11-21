@@ -6,7 +6,7 @@
 ## Status
 
 - **Fase aktif:** 0 — Setup
-- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). Task berikutnya: T0.1.
+- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). Task berikutnya: **T0.0 Bootstrap**, lalu T0.1.
 - **Persetujuan fase:** belum ada.
 
 ## Fase 0 — Setup (rencana: `docs/plans/phase-0.md`)
@@ -18,7 +18,8 @@
 - [x] `docs/PROGRESS.md` + `docs/plans/phase-0.md`
 
 ### Task
-- [ ] T0.1 `[sonnet]` `docs/SETUP_LOCAL.md` + `scripts/doctor.mjs` (§17.1)
+- [ ] T0.0 `[sonnet]` **Bootstrap tooling** — jalankan `docs/setup/BOOTSTRAP.md` (cek software, install plugin/skill/MCP otomatis, settings.json + hook) — **kerjakan pertama**
+- [ ] T0.1 `[sonnet]` `docs/SETUP_LOCAL.md` + `scripts/doctor.mjs` (§17.1) — doctor juga cek item BOOTSTRAP Langkah 1–4, mode `--quiet`
 - [ ] T0.2 `[sonnet]` Kerangka dokumen: README, DECISIONS, CHANGELOG, CHANGE_REQUESTS, ASSET_LICENSES, `.env.example` (§11, §18)
 - [ ] T0.3 `[opus]` ADR layout repo, kontrak script & env, daftar dependency + lisensi (§10, §11, §8.1) — **catat bukti delegasi `/next` → architect (E4)**
 - [ ] T0.4 `[sonnet]` Scaffold frontend Svelte 5 + Vite + TS strict, struktur folder, hello-world, `VITE_BASE` (§10.1, §11, §17.5)
@@ -34,12 +35,12 @@
 
 ### Tindakan manual Bimo
 - [ ] B1 Beli domain `studykids.id`
-- [ ] B2 Install PHP 8.4 bersih ke `C:\php-8.4` + ekstensi + PATH
-- [ ] B3 `C:\xampp\mysql\bin` ke PATH; start MySQL di XAMPP
+- [x] B2 PHP 8.4.28 di `C:\php-8.4`, 8 ekstensi aktif (21 Nov 2026). PATH sistem tidak diubah — pakai `PHP_BIN`
+- [ ] B3 Start MySQL di XAMPP setiap mulai kerja (PATH `mysql` diurus T0.0)
 - [ ] B4 User MySQL `studykids` + DB `studykids_dev` & `studykids_test`; isi `backend/.env`
 - [ ] B5 Aktifkan Secret scanning & Push protection di repo
 - [ ] B6 Pages → Source: GitHub Actions
-- [ ] B7 Install plugin/MCP §16.4 yang belum ada
+- [ ] B7 Setujui instalasi plugin/skill/MCP saat T0.0 berjalan (dipasang otomatis oleh Claude)
 - [ ] B8 Proteksi branch `main` (setelah T0.10)
 
 ### Bukti Exit Criteria
@@ -51,6 +52,6 @@
 | E4 `/next` mendelegasikan `[opus]` ke architect | — |
 
 ### Pertanyaan terbuka untuk Bimo
-1. Path PHP: `CLAUDE.md` menyebut `C:\php-8.4.2`, PRD §17.1 menyebut `C:\php-8.4` (folder 8.4.2 rusak). Boleh `CLAUDE.md` disamakan ke `C:\php-8.4`?
+1. ~~Path PHP~~ — **terjawab:** `C:\php-8.4` (CLAUDE.md & PRD v1.5 sudah sama).
 2. Merge PR: Bimo yang merge, atau Claude boleh merge sendiri setelah CI hijau?
-3. claude-mem: dipasang atau tidak (menambah pemakaian kuota Pro)?
+3. ~~claude-mem~~ — **terjawab (PRD v1.6):** tidak dipakai. Memori project = PROGRESS.md, DECISIONS.md, docs/plans, Git.

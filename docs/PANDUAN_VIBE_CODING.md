@@ -56,25 +56,23 @@ Aturan emas:
 
 ### Prompt pertama (copas persis)
 
-```
-Halo, ini hari pertama project StudyKids.
-Baca CLAUDE.md, lalu PRD.md bagian §14 (roadmap), §16 (workflow), §17.1 (dev lokal), dan §17.5 (Git & GitHub).
-
-Kita mulai Fase 0. Tolong:
-1. Hubungkan folder ini ke repo github.com/medirty/studykidsapp (repo public), buat .gitignore dan LICENSE "All rights reserved", lalu commit & push pertama.
-2. Buat docs/PROGRESS.md.
-3. Jalankan /plan-phase untuk Fase 0.
-
-Jangan mulai coding fitur apa pun. Setelah selesai, tunjukkan daftar task Fase 0 dan apa yang perlu aku lakukan sendiri (misalnya beli domain).
-```
-
-Setelah Claude menampilkan daftar task, baca sekilas. Kalau oke, balas:
+Fase 0 sudah direncanakan (lihat `docs/PROGRESS.md`). Sesi berikutnya dimulai dengan **bootstrap**: Claude mengecek laptop dan memasang sendiri plugin, skill, dan MCP yang belum ada.
 
 ```
-Oke, rencana Fase 0 disetujui. Kerjakan /next.
+Halo, lanjut project StudyKids.
+Baca CLAUDE.md dan docs/PROGRESS.md.
+Kerjakan T0.0: jalankan docs/setup/BOOTSTRAP.md. Cek semua software, lalu install otomatis plugin, skill, dan MCP yang belum ada. Minta izinku setiap mau install.
+Selesai bootstrap, beri ringkasan ✓/✗, apa yang harus aku lakukan sendiri, dan minta aku membuka sesi baru supaya plugin/MCP aktif.
 ```
 
----
+Selama bootstrap:
+
+- Klik **izinkan** untuk setiap instalasi yang diminta (plugin, skill, MCP).
+- Jika muncul dialog **persetujuan MCP server project** (playwright, context7, chrome-devtools), pilih **setujui**.
+- Untuk skill refactor, Claude akan memberi 3 pilihan. Pilih yang direkomendasikan Claude kalau ragu.
+- Setelah selesai: **tutup sesi, buka sesi baru** (plugin & MCP baru aktif di sesi baru), lalu ketik `/next`.
+
+> Setelah bootstrap, setiap sesi otomatis menjalankan pengecekan (`doctor`). Kalau suatu hari ada yang hilang, misalnya setelah update atau ganti laptop, Claude akan memasangnya lagi sendiri.
 
 ## 4. Rutinitas harian (hari ke-2 dan seterusnya)
 
@@ -102,7 +100,17 @@ Claude akan melapor: apa yang dikerjakan, bukti test, dan task berikutnya. Lalu:
 Tombol "Coba Gratis" di HP terlalu kecil dan teksnya terpotong. Perbaiki sesuai PRD §9.1 dan §8.5 (target sentuh 48px).
 ```
 
-> Kenapa sesi baru setiap task? Percakapan yang panjang menghabiskan kuota jauh lebih cepat. Semua ingatan project sudah tersimpan di `PROGRESS.md`, jadi Claude tidak "lupa".
+> Kenapa sesi baru setiap task? Percakapan yang panjang menghabiskan kuota jauh lebih cepat. Claude tidak "lupa" karena ingatan project disimpan di file repo, bukan di percakapan:
+>
+> | File | Isi |
+> |---|---|
+> | `CLAUDE.md` | Aturan kerja |
+> | `docs/PROGRESS.md` | Fase aktif, task selesai, posisi terakhir |
+> | `docs/DECISIONS.md` | Keputusan yang sudah diambil dan alasannya |
+> | `docs/plans/` | Rencana tiap fase |
+> | Riwayat Git / PR | Apa yang berubah dan kapan |
+>
+> Karena itu project ini **tidak memakai plugin memori seperti claude-mem**. Yang penting: setiap akhir task dan akhir hari, pastikan Claude meng-update `PROGRESS.md` (prompt "Tutup hari" sudah mencakup ini).
 
 ### C. Akhir hari
 
@@ -268,6 +276,7 @@ Tampilkan ringkasan progress project: fase mana yang sudah selesai, fase aktif, 
 - Menyetujui fase tanpa mengecek sendiri.
 - Menaruh password, API key, atau data asli di chat atau di file project (repo-nya public).
 - Mengedit `PRD.md` sendiri diam-diam. Lewat `/cr` supaya tercatat dan Claude tahu.
+- Memasang plugin memori (claude-mem, dll.) atau plugin lain di luar PRD §16.4. Kalau tertarik pada plugin baru, ajukan lewat `/cr`.
 
 ---
 
@@ -281,4 +290,5 @@ Tampilkan ringkasan progress project: fase mana yang sudah selesai, fase aktif, 
 | CI merah di PR | `CI di PR #<nomor> merah. Cek log-nya dan perbaiki.` |
 | GitHub Pages blank putih | `GitHub Pages blank. Cek VITE_BASE=/studykidsapp/ sesuai PRD §17.5.` |
 | Claude lupa aturan / mulai melenceng | Buka sesi baru, mulai dengan prompt "Mulai hari". |
+| Claude seperti lupa progress kemarin | `Baca docs/PROGRESS.md dan git log 10 commit terakhir, lalu ringkas posisi project.` Kalau PROGRESS ternyata tidak ter-update, minta: `Update PROGRESS.md berdasarkan git log dan PR terakhir.` |
 | Bingung harus apa | `Aku bingung harus ngapain selanjutnya. Lihat PROGRESS.md dan beri tahu 1 langkah berikutnya untukku.` |

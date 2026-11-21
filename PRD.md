@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.4 · **Tanggal:** 21 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.6 · **Tanggal:** 21 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -770,43 +770,26 @@ Jika ada bug: (1) reproduksi dengan test yang gagal, (2) cari akar masalah (buka
 6. Jalankan `/plan-phase` & `/gate` (Opus) di awal jendela 5 jam; `/next` untuk task `[sonnet]` saat kuota menipis.
 7. Hindari menjalankan banyak subagent paralel di Pro (boros kuota); gunakan hanya untuk review akhir fase.
 8. Jika limit tercapai: tulis status ke `PROGRESS.md` ("sedang di task X, langkah Y") sebelum berhenti.
+9. **Memori project = file di repo, bukan plugin.** Claude mengingat project lewat `CLAUDE.md` (aturan), `docs/PROGRESS.md` (posisi & task), `docs/DECISIONS.md` (keputusan), `docs/plans/` (rencana), dan riwayat Git. File-file ini WAJIB selalu up to date di akhir setiap task/sesi. Tidak memakai claude-mem atau plugin memori lain.
 
-### 16.4 Skills, plugin & MCP yang di-install (Fase 0)
+### 16.4 Skills, plugin & MCP — dipasang OTOMATIS oleh Claude Code
 
-**Install Claude Code CLI dulu** (PowerShell, sekali saja): `irm https://claude.ai/install.ps1 | iex`, lalu tutup & buka lagi terminal, masuk ke folder `studykidsapp`, ketik `claude`, dan login dengan akun Pro. (Cek perintah install terbaru di docs.claude.com bila berubah.)
+Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/setup/BOOTSTRAP.md`**. Prosedur ini berjalan sendiri di sesi pertama (status `BELUM`), atau kapan saja hook `doctor` di awal sesi menemukan item yang kurang. Bimo hanya perlu menyetujui setiap instalasi.
 
-Lalu jalankan di dalam Claude Code:
+| Jenis | Item | Cara dipasang | Tersimpan di |
+|---|---|---|---|
+| Plugin | **superpowers** (brainstorming, writing-plans, TDD, systematic-debugging, code review, verification) | `claude plugin install superpowers@claude-plugins-official --scope project` | `.claude/settings.json` → `enabledPlugins` |
+| Plugin | **frontend-design** | `claude plugin install frontend-design@claude-plugins-official --scope project` | idem |
+| Skill | **find-skills** | `npx -y skills add https://github.com/vercel-labs/skills --skill find-skills -a claude-code -y` | `.claude/skills/` |
+| Skill | **refactor** | dicari via `npx skills find refactor`; Bimo memilih dari 3 kandidat teratas | `.claude/skills/` |
+| MCP | **Playwright**, **Context7**, **Chrome DevTools** | disalin dari `docs/setup/mcp.json` ke `.mcp.json` (root), pakai `cmd /c npx` untuk Windows | `.mcp.json` |
+| Hook | `SessionStart` → `node scripts/doctor.mjs --quiet` | ditambahkan ke `.claude/settings.json` | `.claude/settings.json` |
+| Plugin | ~~claude-mem~~ | **Tidak dipakai (keputusan final v1.6).** Alasan: menambah kuota tiap sesi, butuh Bun, lisensi AGPL-3.0 + PolyForm Noncommercial tidak cocok untuk produk komersial. Plugin memori lain juga tidak dipasang. | — |
+| MCP | ~~GitHub MCP~~ | Tidak dipakai — `gh` CLI cukup (§17.5) | — |
 
-```bash
-# Superpowers (brainstorming, writing-plans, TDD, systematic-debugging, code review, verification)
-/plugin install superpowers@claude-plugins-official
-#   (alternatif) /plugin marketplace add obra/superpowers-marketplace
-#                /plugin install superpowers@superpowers-marketplace
+**Kenapa scope project:** plugin, skill, dan MCP tercatat di repo (`.claude/settings.json`, `.claude/skills/`, `.mcp.json`). Kalau pindah laptop atau install ulang, Claude Code tinggal membaca konfigurasi dan memasang ulang.
 
-# claude-mem (memori lintas sesi) — ikuti instruksi install di github.com/thedotmack/claude-mem
-#   Catatan: claude-mem memakai kuota tambahan. Jika limit Pro terasa sempit, nonaktifkan dan
-#   andalkan docs/PROGRESS.md + docs/DECISIONS.md sebagai memori proyek.
-
-# find-skills (mencari skill lain sesuai kebutuhan)
-npx skills add vercel-labs/skills --skill find-skills
-
-# Refactor: gunakan find-skills untuk mencari skill "refactor" yang paling banyak dipakai,
-#   lalu install. Refactor hanya dilakukan sesuai aturan §16.6.
-
-# Frontend design (kualitas UI)
-/plugin install frontend-design@claude-plugins-official
-```
-
-**MCP:**
-
-| MCP | Kegunaan |
-|---|---|
-| **Playwright MCP** (`@playwright/mcp`) | Claude bisa membuka app, klik, screenshot, cek mobile view |
-| **Context7** (`@upstash/context7-mcp`) | Dokumentasi library terbaru (Svelte 5, Slim, Dexie) agar tidak pakai API usang |
-| **Chrome DevTools MCP** | Analisis performa (LCP, INP) |
-| ~~GitHub MCP~~ | Tidak dipakai — `gh` CLI sudah cukup & lebih hemat konteks (§17.5) |
-
-> Sebelum install, cek nama paket & instruksi terbaru di README masing-masing repo karena bisa berubah. Install MCP seperlunya — setiap MCP aktif menambah konteks (dan kuota) di setiap sesi.
+**Catatan teknis:** file di `.claude/` dan `.mcp.json` hanya bisa dibuat/diubah oleh Claude Code di laptop. Konfigurasi siap pakai disediakan di `docs/setup/` untuk disalin. Setiap MCP aktif menambah konteks di setiap sesi; jika kuota Pro terasa sempit, nonaktifkan `chrome-devtools` sampai dibutuhkan di Fase 7 (audit performa).
 
 ### 16.5 Protokol sesi Claude Code
 
@@ -863,7 +846,7 @@ npx skills add vercel-labs/skills --skill find-skills
 | Komponen | Cara |
 |---|---|
 | Database | MySQL dari XAMPP (start lewat XAMPP Control Panel). DB: `studykids_dev` (dev) & `studykids_test` (test otomatis, di-reset setiap test run). User khusus `studykids` (bukan `root`). |
-| PHP | **`C:\php-8.4`** — install bersih PHP 8.4 terbaru (VS17 x64 Non Thread Safe dari windows.php.net), bukan PHP 8.2 bawaan XAMPP. Folder lama `C:\php-8.4.2` tidak dipakai (berisi `php_pdo_mysql.dll` milik PHP 8.2 sehingga error). Aktifkan ekstensi di `php.ini`: `pdo_mysql`, `mbstring`, `openssl`, `curl`, `intl`, `fileinfo`, `zip`, `sodium`. Letakkan `C:\php-8.4` **di atas** `C:\xampp\php` dalam PATH. Tambahkan juga `C:\xampp\mysql\bin` ke PATH (saat ini `mysql` belum ada di PATH). |
+| PHP | **`C:\php-8.4`** — install bersih PHP 8.4 terbaru (VS17 x64 Non Thread Safe dari windows.php.net), bukan PHP 8.2 bawaan XAMPP. Folder lama `C:\php-8.4.2` tidak dipakai (berisi `php_pdo_mysql.dll` milik PHP 8.2 sehingga error). Aktifkan ekstensi di `php.ini`: `pdo_mysql`, `mbstring`, `openssl`, `curl`, `intl`, `fileinfo`, `zip`, `sodium`. PATH sistem **tidak diubah** (perintah `php` tetap XAMPP 8.2); project memanggil PHP lewat `PHP_BIN=C:\php-8.4\php.exe` di `backend/.env` & script npm. Tambahkan juga `C:\xampp\mysql\bin` ke PATH (saat ini `mysql` belum ada di PATH). |
 | Composer & Node | Install Composer (Windows installer) & Node.js LTS. Git for Windows. |
 | Menjalankan app | `npm run dev` di root → menjalankan bersamaan (pakai `concurrently`): Vite di `localhost:5173` + API `php -S localhost:8000 -t backend/public`. Vite mem-*proxy* `/api` → `localhost:8000`, jadi tidak ada masalah CORS dan URL sama seperti produksi. |
 | Akses DB oleh Claude Code | Lewat **CLI** (`mysql -u studykids -p studykids_dev -e "..."`), Phinx (`migrate`, `seed`), dan script `npm run db:reset`. **Tanpa MCP database** — CLI lebih hemat token & tidak menambah konteks setiap sesi. |
@@ -877,11 +860,12 @@ npx skills add vercel-labs/skills --skill find-skills
 | Node.js v22.12.0 · npm 11.0.0 | OK | — (memenuhi syarat Vite) |
 | Git 2.47.1 | OK | — |
 | Composer 2.8.4 | OK | — |
-| PHP | Yang aktif di PATH = 8.2.12 (XAMPP) | Install bersih ke `C:\php-8.4` (lihat baris PHP di atas) |
-| MySQL client (`mysql`) | Tidak ada di PATH | Tambah `C:\xampp\mysql\bin` ke PATH |
-| MySQL/MariaDB server | XAMPP (tidak ada service MySQL lain yang aktif, jadi tidak ada bentrok port 3306) | Start lewat XAMPP Control Panel |
-| GitHub CLI (`gh`) | Tidak ada | `winget install --id GitHub.cli` lalu `gh auth login` |
-| Claude Code CLI (`claude`) | Tidak ada di terminal | Install (lihat §16.4) lalu login dengan akun Claude Pro |
+| PHP 8.4.28 NTS x64 di `C:\php-8.4` | OK — 8 ekstensi wajib aktif, tanpa warning | Project memanggil `PHP_BIN=C:\php-8.4\php.exe` (perintah `php` di PATH tetap XAMPP 8.2) |
+| MySQL client (`mysql`) | Belum ada di PATH | T0.0 Bootstrap menambahkan `C:\xampp\mysql\bin` ke PATH user |
+| MySQL/MariaDB server | OK — XAMPP, port 3306; tidak ada service MySQL lain | Start lewat XAMPP Control Panel |
+| GitHub CLI 2.105 | OK — login `medirty` | — |
+| Claude Code 2.1.330 | OK — dipakai lewat tab **Code** di Claude Desktop | — |
+| Plugin/skill/MCP Claude | Belum diverifikasi | Otomatis lewat `docs/setup/BOOTSTRAP.md` (§16.4) |
 | Docker, WSL, PostgreSQL | Terpasang | Tidak dipakai di project ini |
 
 **Fase 0, task pertama:** Claude Code membuat `docs/SETUP_LOCAL.md` (langkah klik-demi-klik untuk Bimo) dan script `scripts/doctor` yang mengecek versi PHP/Node/Composer, koneksi MySQL, dan port 5173/8000 bebas.
@@ -1024,7 +1008,7 @@ Masih terbuka:
 | `slimphp/Slim`, `cakephp/phinx`, `PHPMailer/PHPMailer` | Backend |
 | `Midtrans/midtrans-php` | Integrasi pembayaran (Fase 6) |
 | `microsoft/playwright`, `vitest-dev/vitest`, `GoogleChrome/lighthouse-ci`, `dequelabs/axe-core` | Testing |
-| `obra/superpowers`, `thedotmack/claude-mem` | Workflow Claude Code |
+| `obra/superpowers`, `vercel-labs/skills` (find-skills) | Workflow Claude Code |
 | `microsoft/playwright-mcp`, `upstash/context7`, `ChromeDevTools/chrome-devtools-mcp` | MCP |
 | `SamKirkland/FTP-Deploy-Action` | Deploy via FTP bila hosting tanpa SSH |
 
@@ -1041,3 +1025,5 @@ Masih terbuka:
 | 1.2 | 21 Nov 2026 | Repo `github.com/medirty/studykidsapp` ditetapkan (§1, §11, Fase 0). Aturan Git & GitHub baru (§17.5): branch protection, PR per task, tag rilis, secrets, base path Vite `/studykidsapp/` untuk GitHub Pages, catatan repo private vs public. Staging `staging.studykids.id`. GitHub MCP diganti `gh` CLI. |
 | 1.3 | 21 Nov 2026 | Repo dipastikan **public** → preview di GitHub Pages. Aturan repo public: push protection & secret scanning, `LICENSE` all rights reserved, larangan commit data asli, keputusan lokasi konten Full di awal Fase 5 (§17.5, §19, §20). |
 | 1.4 | 21 Nov 2026 | Hasil cek laptop Bimo dicatat di §17.1. PHP dinaikkan ke **8.4** (8.2 habis masa patch keamanan Des 2026) memakai `C:\php-8.4`; kode tetap kompatibel 8.2+. Tambah langkah install `gh`, Claude Code CLI, dan `mysql` di PATH. |
+| 1.5 | 21 Nov 2026 | §16.4 ditulis ulang: semua plugin/skill/MCP dipasang **otomatis** oleh Claude Code lewat `docs/setup/BOOTSTRAP.md` (scope project), hook `SessionStart` + `doctor`. claude-mem tidak dipasang default (kuota, Bun, lisensi). PHP dipanggil via `PHP_BIN`, PATH sistem tidak diubah. |
+| 1.6 | 21 Nov 2026 | claude-mem **tidak dipakai** (final). Memori project dipegang file repo: CLAUDE.md, PROGRESS.md, DECISIONS.md, docs/plans, Git (§16.3 butir 9, §16.4, §21). |

@@ -24,6 +24,11 @@ Dibuat: 21 Nov 2026 lewat `/plan-phase`. Checklist ringkas ada di `docs/PROGRESS
 
 Setiap task = 1 sesi `/next`, 1 branch (`chore/f0-...` / `docs/f0-...` / `feat/f0-...`), 1 PR.
 
+### T0.0 `[sonnet]` Bootstrap tooling
+- **PRD:** §16.4, §17.1. Prosedur: `docs/setup/BOOTSTRAP.md`.
+- **Isi:** cek software (Node, PHP_BIN, Composer, gh, mysql di PATH user); pasang plugin/skill scope project, salin `docs/setup/mcp.json` → `.mcp.json`, hook `SessionStart` doctor di `.claude/settings.json`. Izin Bimo per instalasi.
+- **AC:** tabel hasil di BOOTSTRAP.md terisi, `Status: SELESAI (tanggal)`; branch `chore/f0-bootstrap` + PR.
+
 ### T0.1 `[sonnet]` Panduan setup lokal + `scripts/doctor`
 - **Tujuan:** Bimo bisa menyiapkan laptop klik-demi-klik; satu perintah mengecek kesiapan.
 - **PRD:** §17.1 ("Fase 0, task pertama").
@@ -92,11 +97,11 @@ Setiap task = 1 sesi `/next`, 1 branch (`chore/f0-...` / `docs/f0-...` / `feat/f
 | # | Tindakan | Kapan | Rujukan |
 |---|---|---|---|
 | B1 | Beli domain `studykids.id` (registrar mana saja; DNS diarahkan nanti di Fase 4) | Secepatnya (sebelum diambil orang) | §14, §17.2 |
-| B2 | Install PHP 8.4 bersih ke `C:\php-8.4` + aktifkan ekstensi + atur PATH | Sebelum T0.7 | §17.1, `SETUP_LOCAL.md` (T0.1) |
-| B3 | Tambah `C:\xampp\mysql\bin` ke PATH; start MySQL di XAMPP | Sebelum T0.7 | §17.1 |
+| B2 | ~~Install PHP 8.4 ke `C:\php-8.4`~~ — **selesai** (8.4.28, 8 ekstensi; dipanggil via `PHP_BIN`) | — | §17.1 |
+| B3 | Start MySQL di XAMPP setiap mulai kerja (PATH `mysql` diurus T0.0) | Sebelum T0.7 | §17.1 |
 | B4 | Buat user MySQL `studykids` + DB `studykids_dev` & `studykids_test`; isi `backend/.env` (password hanya di laptop) | Sebelum T0.8 | §17.1 |
 | B5 | GitHub → Settings → Code security: aktifkan **Secret scanning** & **Push protection** | Sekarang | §17.5 |
 | B6 | GitHub → Settings → Pages → Source: **GitHub Actions** | Sebelum T0.11 | §17.5 |
-| B7 | Install plugin/MCP §16.4 yang belum ada: find-skills, skill refactor, Context7, Chrome DevTools MCP; (opsional) claude-mem | Kapan saja di Fase 0 | §16.4 |
+| B7 | Setujui instalasi plugin/skill/MCP saat T0.0 berjalan (dipasang otomatis oleh Claude lewat `docs/setup/BOOTSTRAP.md`; pilih skill refactor dari 3 kandidat) | Saat T0.0 | §16.4 |
 | B8 | Proteksi branch `main` (wajib PR + CI hijau, tanpa force push) | Setelah T0.10 (supaya nama check CI ada) | §17.5 |
 | B9 | Review & merge PR tiap task | Tiap task | §17.5 |
