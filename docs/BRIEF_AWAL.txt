@@ -1,0 +1,53 @@
+STUDYKIDS WEB APP claude code
+
+IDE
+	◦	kurikulum berbasis cambridge / terinspirasi oleh cambridge
+	◦	Nama studykids (berubah jika nama domain sudah ada)
+	◦	Untuk Kelas 1-6 SD
+	◦	Mata pelajaran math, english, science, global perspectives, well being, art and design, music, computing and technology
+	◦	Free Demo web app dan one time payment full web app
+	◦	Demo web app hanya 3 mapel dan 2 unit aja, math, global perspectives, art and design
+	◦	Demo masih bisa digunakan terus menerus jika tidak ingin membeli
+	◦	berdasarkan saranmu Harga Rp.50000 buat early bird 100 pengguna pertama, setelah itu harganya jadi Rp.100000
+	◦	Sistem pembayaran
+	◦	Belajar yang interactive, fun, ada mini games
+	◦	Memberi tahu keunggulan user/anak dan apa yang harus di improve dari user/anak
+	◦	Bahasa Indonesia dan inggris
+	◦	Mobile friendly 
+	◦	Web app harus ringan dan cepat
+	◦	Admin web app; isinya analytics dari web app studykids.  kritik dan saran, total pembelian full web app, finance (total penjualan), semacam itu, gak perlu terlalu complex, tapi data yang penting aja. Automatic Marketing tools, buat bantuin marketing web app nya di social media, gak perlu complex, tapi tepat sasaran. 
+	◦	Pembuatan PRD
+	◦	Generate rules buat claude code
+	◦	PRD harus sangat jelas biar tidak banyak pertanyaan
+	◦	Develop di lokal dulu sebelum deploy, atau bisa pakai GitHub pages buat testing. Deploy di idwebhost/hostinger indonesia
+	◦	Claude code pro subscription apa cukup? Kalau cukup kasih aturan di dalam PRD biar gak limit. Rencana pakai opus 5.5/sonnet 5.5 Atau cara kerja ngikutin limit dari pro subscription 
+	◦	Perintah otomatis kapan menggunakan opus kapan menggunakan sonnet (PENTING!) jadi bukan aku yang ngerubah pakai model apa, tapi otomatis
+	◦	Soal/kuis tidak monoton, selalu berbeda
+	◦	Buat logo berdasarkan nama web app. Simple, tapi kuat dan mudah diingat, tidak kaku, tidak menunjukkan edukasi, tapi lebih ke fun
+	◦	Mockup dulu sebelum benar benar dibuat sistemnya
+	◦	Kalau perlu speech gunakan speech dari perangkat 
+	◦	Blueprints pengerjaan web app
+	◦	Folder structure
+	◦	Road map, fase yang harus diikuti dalam pengerjaan
+	◦	Pengerjaan bertahap sesuai tahap dan langkah atau roadmap
+	◦	Tidak lanjut ke fase selanjutnya jika belum terbukti bebas bug dan fitur selesai
+	◦	Tech stacks dan arsitektur folder
+	◦	Pengolahan data
+	◦	Menggunakan database, pilih yang terbaik buat project ini (yang mudah diintegrasi ke domain dan web hosting di indonesia) murah tidak perlu bayar lagi
+	◦	Aturan dan larangan dalam pengerjaan
+	◦	Kewajiban mengikuti instruksi/PRD
+	◦	Penulisan code harus rapi dan efisien, mengurangi refactoring
+	◦	Testing, debugging, harus dipastikan semua tanpa bug
+	◦	UI dan UX
+	◦	Sistem pembayaran terakhir, karena belum pernah, dan belum tau gimana cara daftarnya
+	◦	Install Skills / plugin yang dibutuhkan berdasarkan requirement project ini
+	◦	Install skill superpower, find skills, claude mem, refactor
+	◦	Install MCP yang dibutuhkan buat project ini
+	◦	Cari github repo yang bisa ngebantu project ini 
+	◦	Otomatis update sistem secara berkala
+	◦	Steps apa aja yang harus diambil jika ada update PRD, tambahan fitur jika sudah dalam tahap development
+	◦	develop lokal biasanya aku pakai xampp, kalau memang pakai xampp, gunakan MCP, atau something to connect to, atau ada cara yang lebih bagus, pakai cara yang lebih bagus dan nyaman buat kamu develop
+	◦	domain studykids.id masih ada sampai hari ini (kalau gak ada aku kabari)
+	◦	keputusan menggunakan idwebhost / hostinger terakhir bagaimana? seharusnya tidak mengganggu development
+
+

@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+dist/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+
+# Environment & secrets (hanya .env.example yang boleh di-commit)
+.env
+.env.*
+!.env.example
+backend/.env
+
+# Claude Code: setting lokal pribadi
+.claude/settings.local.json
+
+# Data asli (jangan pernah di-commit)
+*.sql.gz
+*.dump
+dumps/
+exports/
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
