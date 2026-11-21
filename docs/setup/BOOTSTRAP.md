@@ -111,7 +111,8 @@ Claude boleh mengecek status lewat `gh api repos/medirty/studykidsapp` dan membe
 | superpowers | ✓ | project scope (`claude-plugins-official`); aktif di sesi baru |
 | frontend-design | ✓ | project scope (`claude-plugins-official`) |
 | find-skills | ✓ | `.claude/skills/find-skills` (+ `skills-lock.json`); Socket 0 alert, Snyk Med Risk |
-| skill refactor | ⏸ ditunda | `skills find refactor` tidak menemukan skill refactor khusus (hasil: tdd, vercel-react-best-practices, vercel-composition-patterns, dll.). Menunggu keputusan Bimo; tdd sudah tercakup superpowers |
+| skill refactor | dilewati (keputusan Bimo, 21 Nov 2026) | `skills find refactor` tidak menemukan skill refactor khusus (hasil: tdd, vercel-react-best-practices, vercel-composition-patterns, dll.). tdd sudah tercakup superpowers |
 | MCP playwright / context7 / chrome-devtools | ✓ | `.mcp.json`; `claude mcp list` → ketiganya Connected |
 | settings.json (plugins + hook) | ✓ | enabledPlugins, enabledMcpjsonServers, hook SessionStart (`|| exit 0` sampai T0.1) |
 | GitHub settings | sebagian | Secret scanning + Push protection ON; Pages sudah build_type=workflow; branch protection `main` menunggu T0.10 |
+
