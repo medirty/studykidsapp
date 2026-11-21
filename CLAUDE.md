@@ -5,6 +5,7 @@ Kamu adalah implementer untuk **StudyKids** (web app belajar SD kelas 1–6, kur
 
 ## Mulai setiap sesi
 
+0. **Bootstrap tooling:** jika `docs/setup/BOOTSTRAP.md` berstatus `BELUM`, atau output hook `doctor` di awal sesi menunjukkan item `✗`, jalankan prosedur di `docs/setup/BOOTSTRAP.md` dulu (install otomatis yang kurang, minta izin Bimo per instalasi), baru lanjut ke task.
 1. Baca file ini + `docs/PROGRESS.md`.
 2. Ambil **satu** task teratas yang belum selesai di fase aktif. Satu sesi = satu task.
 3. Baca hanya bagian PRD yang dirujuk task itu (sebut nomor §). Jangan baca seluruh PRD kecuali diminta.
@@ -23,6 +24,7 @@ Bimo tidak mengganti model manual. Routing diatur oleh `.claude/settings.json` (
 - Jangan pernah set `CLAUDE_CODE_SUBAGENT_MODEL`.
 - Simpan rencana di `docs/plans/` supaya tidak dibuat ulang. Jangan buka `node_modules/`, `vendor/`, `dist/`, lockfile.
 - Jika limit hampir habis: tulis posisi terakhir ("task X, langkah Y") di `PROGRESS.md` sebelum berhenti.
+- **Memori project = file repo** (`PROGRESS.md`, `DECISIONS.md`, `docs/plans/`, Git). Selalu update di akhir task. **Jangan pasang claude-mem** atau plugin memori lain (PRD §16.4).
 
 ## Phase gate (WAJIB)
 
@@ -33,10 +35,10 @@ Bimo tidak mengganti model manual. Routing diatur oleh `.claude/settings.json` (
 ## Stack (jangan diganti tanpa persetujuan)
 
 Frontend: Svelte 5 + Vite + TypeScript strict, CSS variables, Dexie (IndexedDB), vite-plugin-pwa, uPlot (lazy).
-Backend: PHP 8.4 (lokal `C:\php-8.4.2`; kode kompatibel 8.2+) + Slim 4 + PDO, MySQL/MariaDB, Phinx, PHPMailer.
+Backend: PHP 8.4 (lokal `C:\php-8.4\php.exe` lewat `PHP_BIN`; kode kompatibel 8.2+) + Slim 4 + PDO, MySQL/MariaDB, Phinx, PHPMailer.
 Test: Vitest, Playwright (mobile viewport), PHPUnit, Lighthouse CI, axe-core.
 Hosting: Hostinger (shared, hosting-agnostic — setting deploy hanya di GitHub Secrets). Preview: GitHub Pages dengan `VITE_API_MODE=local`.
-Dev lokal (Windows): XAMPP **hanya** untuk MySQL/MariaDB (PHP pakai `C:\php-8.4.2`, bukan PHP XAMPP); jangan pakai Apache/htdocs. Jalankan `npm run dev` (Vite :5173 + `php -S` :8000, proxy `/api`). Akses DB lewat `mysql` CLI & Phinx, tanpa MCP database. Detail PRD §17.1.
+Dev lokal (Windows): XAMPP **hanya** untuk MySQL/MariaDB (PHP pakai `C:\php-8.4` via `PHP_BIN`, bukan PHP XAMPP); jangan pakai Apache/htdocs. Jalankan `npm run dev` (Vite :5173 + `php -S` :8000, proxy `/api`). Akses DB lewat `mysql` CLI & Phinx, tanpa MCP database. Detail PRD §17.1.
 
 ## Bisnis (jangan diubah tanpa CR)
 
@@ -96,7 +98,7 @@ vendor/bin/phinx migrate
 
 ## Git & GitHub — repo `medirty/studykidsapp` (PRD §17.5)
 
-- Jangan push langsung ke `main`. Satu task = satu branch (`feat/f<fase>-<nama>`, `fix/...`, `docs/...`) → PR via `gh pr create` dengan bukti test → merge hanya jika CI hijau.
+- Jangan push langsung ke `main`. Satu task = satu branch (`feat/f<fase>-<nama>`, `fix/...`, `docs/...`) → PR via `gh pr create` dengan bukti test → merge hanya jika CI hijau. **Claude boleh merge sendiri** (`gh pr merge --squash --delete-branch`) setelah CI hijau.
 - Conventional commits: `feat:`, `fix:`, `test:`, `docs:`, `refactor:`, `chore:`. Commit kecil & rapi.
 - **Repo PUBLIC:** jangan pernah force push; jangan commit `.env`, secret, key, dump DB, data pengguna, atau screenshot berisi data anak. Hanya `.env.example` tanpa nilai asli. Semua pengecekan keamanan tetap di server.
 - Build GitHub Pages memakai `VITE_BASE=/studykidsapp/`; produksi `VITE_BASE=/`. Jangan hardcode path absolut `/`.
