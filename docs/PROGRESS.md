@@ -6,7 +6,7 @@
 ## Status
 
 - **Fase aktif:** 0 — Setup
-- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. Task berikutnya: **T0.2**.
+- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). Task berikutnya: **T0.3** `[opus]` → delegasi ke `architect`.
 - **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor). Bagian atas `docs/setup/BOOTSTRAP.md` masih ada mojibake (`â€”`), belum diperbaiki (di luar scope).
 - **Persetujuan fase:** belum ada.
 
@@ -22,7 +22,8 @@
 - [x] T0.0 `[sonnet]` **Bootstrap tooling** — jalankan `docs/setup/BOOTSTRAP.md` (cek software, install plugin/skill/MCP otomatis, settings.json + hook) — **kerjakan pertama**
 - [x] T0.1 `[sonnet]` `docs/SETUP_LOCAL.md` + `scripts/doctor.mjs` (§17.1) — doctor juga cek item BOOTSTRAP Langkah 1–4, mode `--quiet`
   - Bukti (21 Nov 2026): `node --test scripts/lib/doctor-utils.test.mjs` → 7/7 pass. `node scripts/doctor.mjs` → 18/19 OK, exit 1 (✗ `mysql` di PATH: sudah di PATH user, aktif setelah restart Claude Desktop). Uji gagal sengaja: port 8000 diduduki → ✗ + saran, exit 1. Waktu jalan ±1,5 detik.
-- [ ] T0.2 `[sonnet]` Kerangka dokumen: README, DECISIONS, CHANGELOG, CHANGE_REQUESTS, ASSET_LICENSES, `.env.example` (§11, §18)
+- [x] T0.2 `[sonnet]` Kerangka dokumen: README, DECISIONS, CHANGELOG, CHANGE_REQUESTS, ASSET_LICENSES, `.env.example` (§11, §18)
+  - Bukti (22 Nov 2026): 7 file dibuat; cek link relatif antar dokumen → 0 rusak; grep nilai rahasia di 2 `.env.example` → kosong; kedua file tidak di-ignore Git; `node scripts/doctor.mjs --quiet` → exit 0. CR-001 sudah disalin ke `CHANGE_REQUESTS.md`.
 - [ ] T0.3 `[opus]` ADR layout repo, kontrak script & env, daftar dependency + lisensi (§10, §11, §8.1) — **catat bukti delegasi `/next` → architect (E4)**
 - [ ] T0.4 `[sonnet]` Scaffold frontend Svelte 5 + Vite + TS strict, struktur folder, hello-world, `VITE_BASE` (§10.1, §11, §17.5)
 - [ ] T0.5 `[sonnet]` ESLint/Prettier/svelte-check/Vitest + `check-bundle-size` + `npm run check` (§8.1, §15)
