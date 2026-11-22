@@ -1,0 +1,37 @@
+/* Design tokens (PRD §9.2). Warna hanya boleh didefinisikan di sini. */
+:root {
+  --color-primary: #ff6b3d;
+  --color-ink: #1b1340;
+  --color-sunny: #ffc93c;
+  --color-teal: #2ec4b6;
+  --color-bubblegum: #ff9ec4;
+  --color-success: #22a55b;
+  --color-error: #d93a4a;
+  --color-bg: #fff8f2;
+  --color-surface: #ffffff;
+
+  --subject-math: #2459d6;
+  --subject-english: #8b5cf6;
+  --subject-science: #22a55b;
+  --subject-gp: #0ea5e9;
+  --subject-wellbeing: #ec4899;
+  --subject-art: #ff8a1f;
+  --subject-music: #f43f5e;
+  --subject-computing: #14b8a6;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-full: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Baloo 2 & Nunito di-self-host menyusul; sementara fallback sistem. */
+  --font-heading: 'Baloo 2', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "studykids",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": ["frontend"],
+  "engines": { "node": ">=22.12" },
+  "scripts": {
+    "build": "npm run build -w frontend",
+    "doctor": "node scripts/doctor.mjs"
+  }
+}
