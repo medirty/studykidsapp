@@ -22,6 +22,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 | ID | Judul | Status | PRD |
 |---|---|---|---|
 | CR-001 | Aturan subagent & auto-merge PR | Diterapkan (21 Nov 2026) | v1.7 |
+| CR-002 | Bantuan langsung saat task terblokir tindakan manual | Diterapkan (22 Nov 2026) | v1.8 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -30,3 +31,23 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 - **Prioritas:** wajib
 - **Keputusan Bimo:** diterima sekarang (21 Nov 2026)
 - **Status:** diterapkan di PRD v1.7 (§16.2, §17.5), `CLAUDE.md`, `docs/PANDUAN_VIBE_CODING.md`. Arsip rinci: [plans/CR-001-subagent-dan-auto-merge.md](plans/CR-001-subagent-dan-auto-merge.md).
+
+## CR-002 — Bantuan langsung saat task terblokir tindakan manual
+- **Tanggal / Pengaju:** 22 Nov 2026 / Bimo
+- **Deskripsi:** Jika task berikutnya terblokir tindakan manual (item `B*` di `PROGRESS.md`, mis. B9 upgrade Node), Claude tidak berhenti di "Bimo harus melakukan X". Urutannya:
+  1. Jelaskan dengan bahasa sederhana untuk non-programmer: apa yang kurang dan kenapa dibutuhkan.
+  2. Coba jalankan sendiri (instalasi/upgrade/konfigurasi), dengan izin Bimo per instalasi seperti BOOTSTRAP.
+  3. Sebelum memberi perintah ke Bimo, cek dulu kondisi nyata di laptop (mis. `winget list`, lokasi program) supaya perintahnya pasti cocok. Contoh kasus: Node terdaftar sebagai `OpenJS.NodeJS.22`, bukan `OpenJS.NodeJS.LTS`, sehingga `winget upgrade` gagal.
+  4. Jika ditolak sistem izin Claude Code atau butuh hak admin/UAC: jangan mengakali izin. Beri langkah klik-demi-klik bernomor (apa yang dibuka, apa yang diketik/disalin, tampilan yang diharapkan), satu perintah per langkah.
+  5. Setelah Bimo selesai: verifikasi sendiri (mis. `node --version`, `node scripts/doctor.mjs`), centang item `B*` di `PROGRESS.md`, lalu lanjut ke task.
+- **Alasan:** Bimo tidak berlatar teknis. Pada `/next` 22 Nov 2026, T0.5 berhenti karena B9 tanpa bantuan yang bisa diikuti.
+- **Prioritas:** wajib
+- **Analisis dampak:**
+  - **File:** PRD §16.5 (protokol sesi: langkah "jika terblokir tindakan manual"), riwayat versi → v1.8; `CLAUDE.md` (bagian "Mulai setiap sesi"); `.claude/commands/next.md`; `docs/PANDUAN_VIBE_CODING.md` (jika membahas tindakan manual).
+  - **FR/tabel/kode aplikasi:** tidak ada. Hanya aturan kerja.
+  - **Jumlah task:** 1 task docs `[sonnet]`.
+  - **Risiko:** (a) Claude memasang software tanpa persetujuan → mitigasi: tetap minta izin per instalasi, tidak pernah mengakali penolakan izin. (b) Perubahan `.claude/` & `CLAUDE.md` masuk kategori wajib review → PR tidak di-merge otomatis, harus disetujui Bimo.
+  - **Fase aktif:** tidak mengganggu. Justru membuka blokir T0.5 (B9).
+- **Rekomendasi:** diterima sekarang. Kecil, tanpa kode aplikasi, langsung berguna untuk B9 dan tindakan manual berikutnya (B3, B8, B1).
+- **Keputusan Bimo:** diterima sekarang (22 Nov 2026)
+- **Status:** diterapkan di PRD v1.8 (§16.5), `CLAUDE.md`, `.claude/commands/next.md`.

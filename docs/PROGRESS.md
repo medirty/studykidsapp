@@ -6,7 +6,7 @@
 ## Status
 
 - **Fase aktif:** 0 — Setup
-- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). T0.4 scaffold frontend selesai (22 Nov 2026). Task berikutnya: **T0.5** `[sonnet]` tooling frontend + `npm run check` — **butuh B9 upgrade Node dulu** (lalu naikkan `engines.node` & doctor ke ≥ 22.22, D-004).
+- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). T0.4 scaffold frontend selesai (22 Nov 2026). Task berikutnya: **T0.5** `[sonnet]` tooling frontend + `npm run check` — B9 sudah selesai (Node 22.23.5); naikkan `engines.node` & doctor ke ≥ 22.22 (D-004). CR-002 diterapkan (PRD v1.8, 22 Nov 2026).
 - **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor). Bagian atas `docs/setup/BOOTSTRAP.md` masih ada mojibake (`â€”`), belum diperbaiki (di luar scope).
 - **Persetujuan fase:** belum ada.
 
@@ -39,6 +39,7 @@
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 0 disetujui" → tag `phase-0-approved`
 
 ### Change Request
+- [x] **CR-002** Bantuan langsung saat task terblokir tindakan manual — diterima Bimo & diterapkan 22 Nov 2026 → PRD **v1.8** (§16.5), `CLAUDE.md`, `.claude/commands/next.md`. Detail: `docs/CHANGE_REQUESTS.md`.
 - [x] **CR-001** Aturan subagent & auto-merge PR — disetujui Bimo, diterapkan 21 Nov 2026 → PRD **v1.7** (§16.2 aturan subagent, §17.5 auto-merge + kategori wajib review), `CLAUDE.md`, `docs/PANDUAN_VIBE_CODING.md`. Arsip: `docs/plans/CR-001-subagent-dan-auto-merge.md`. Saat T0.2 membuat `docs/CHANGE_REQUESTS.md`, salin entri ini ke sana.
 
 ### Tindakan manual Bimo
@@ -50,7 +51,7 @@
 - [x] B6 (terverifikasi via API) Pages → Source: GitHub Actions
 - [x] B7 Setujui instalasi plugin/skill/MCP saat T0.0 berjalan (dipasang otomatis oleh Claude)
 - [ ] B8 Proteksi branch `main` (setelah T0.10)
-- [ ] B9 Upgrade Node ke 24 LTS (`winget upgrade OpenJS.NodeJS.LTS`) sebelum T0.5 — alasan di `docs/DECISIONS.md` D-004
+- [x] B9 Upgrade Node — selesai 22 Nov 2026: Node **22.23.5** (memenuhi ≥ 22.22; bukan 24, cukup untuk T0.5). Perintah yang benar `winget upgrade --id OpenJS.NodeJS.22 --exact` (ID `OpenJS.NodeJS.LTS` tidak cocok). Alasan: `docs/DECISIONS.md` D-004
 
 ### Bukti Exit Criteria
 | Kriteria | Bukti |
