@@ -6,7 +6,7 @@
 ## Status
 
 - **Fase aktif:** 0 — Setup
-- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). Task berikutnya: **T0.3** `[opus]` → delegasi ke `architect`.
+- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). Task berikutnya: **T0.4** `[sonnet]` scaffold frontend (acuan: `docs/DECISIONS.md` D-001–D-007). Sebelum T0.5: B9 upgrade Node.
 - **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor). Bagian atas `docs/setup/BOOTSTRAP.md` masih ada mojibake (`â€”`), belum diperbaiki (di luar scope).
 - **Persetujuan fase:** belum ada.
 
@@ -24,7 +24,8 @@
   - Bukti (21 Nov 2026): `node --test scripts/lib/doctor-utils.test.mjs` → 7/7 pass. `node scripts/doctor.mjs` → 18/19 OK, exit 1 (✗ `mysql` di PATH: sudah di PATH user, aktif setelah restart Claude Desktop). Uji gagal sengaja: port 8000 diduduki → ✗ + saran, exit 1. Waktu jalan ±1,5 detik.
 - [x] T0.2 `[sonnet]` Kerangka dokumen: README, DECISIONS, CHANGELOG, CHANGE_REQUESTS, ASSET_LICENSES, `.env.example` (§11, §18)
   - Bukti (22 Nov 2026): 7 file dibuat; cek link relatif antar dokumen → 0 rusak; grep nilai rahasia di 2 `.env.example` → kosong; kedua file tidak di-ignore Git; `node scripts/doctor.mjs --quiet` → exit 0. CR-001 sudah disalin ke `CHANGE_REQUESTS.md`.
-- [ ] T0.3 `[opus]` ADR layout repo, kontrak script & env, daftar dependency + lisensi (§10, §11, §8.1) — **catat bukti delegasi `/next` → architect (E4)**
+- [x] T0.3 `[opus]` ADR layout repo, kontrak script & env, daftar dependency + lisensi (§10, §11, §8.1) — **catat bukti delegasi `/next` → architect (E4)**
+  - Bukti (22 Nov 2026): ADR D-001–D-007 di `docs/DECISIONS.md` (layout + npm workspaces, kontrak script, kontrak env, versi runtime, dependency FE/BE + lisensi, cek budget). Versi/lisensi/engines dicek di registry npm & Packagist (tanpa install). Cek link relatif → 0 rusak; grep rahasia → bersih; `node scripts/doctor.mjs --quiet` → exit 0. Temuan: ESLint 10/jsdom 31/LHCI 0.16 butuh Node > 22.12 → B9; TypeScript dikunci ~6.0; PHPUnit ^11.5 (12+ butuh PHP ≥ 8.3).
 - [ ] T0.4 `[sonnet]` Scaffold frontend Svelte 5 + Vite + TS strict, struktur folder, hello-world, `VITE_BASE` (§10.1, §11, §17.5)
 - [ ] T0.5 `[sonnet]` ESLint/Prettier/svelte-check/Vitest + `check-bundle-size` + `npm run check` (§8.1, §15)
 - [ ] T0.6 `[sonnet]` Playwright (Pixel 5, iPhone 12, desktop) + axe-core smoke test (§15.1)
@@ -48,6 +49,7 @@
 - [x] B6 (terverifikasi via API) Pages → Source: GitHub Actions
 - [x] B7 Setujui instalasi plugin/skill/MCP saat T0.0 berjalan (dipasang otomatis oleh Claude)
 - [ ] B8 Proteksi branch `main` (setelah T0.10)
+- [ ] B9 Upgrade Node ke 24 LTS (`winget upgrade OpenJS.NodeJS.LTS`) sebelum T0.5 — alasan di `docs/DECISIONS.md` D-004
 
 ### Bukti Exit Criteria
 | Kriteria | Bukti |
@@ -55,7 +57,7 @@
 | E1 `npm run check` & `composer test` hijau di CI | — |
 | E2 `npm run dev` → frontend + API + DB lokal | — |
 | E3 Hello-world di GitHub Pages | — |
-| E4 `/next` mendelegasikan `[opus]` ke architect | — |
+| E4 `/next` mendelegasikan `[opus]` ke architect | T0.3: delegasi /next → architect, 22 Nov 2026 |
 
 ### Pertanyaan terbuka untuk Bimo
 1. ~~Path PHP~~ — **terjawab:** `C:\php-8.4` (CLAUDE.md & PRD v1.5 sudah sama).
