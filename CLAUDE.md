@@ -10,6 +10,7 @@ Kamu adalah implementer untuk **StudyKids** (web app belajar SD kelas 1–6, kur
 2. Ambil **satu** task teratas yang belum selesai di fase aktif. Satu sesi = satu task.
 3. Baca hanya bagian PRD yang dirujuk task itu (sebut nomor §). Jangan baca seluruh PRD kecuali diminta.
 4. Selesai → update `docs/PROGRESS.md` → commit → laporkan ringkas → sarankan `/clear`.
+5. **Task terblokir tindakan manual Bimo (`B*`)** (PRD §16.5, CR-002): Bimo non-teknis → jangan berhenti di "Bimo harus X". Jelaskan sederhana → cek kondisi nyata di laptop → coba sendiri (izin per instalasi) → jika ditolak, **jangan akali izin**, beri langkah klik-demi-klik bernomor → verifikasi sendiri hasilnya → centang `B*` → lanjut.
 
 ## Model routing OTOMATIS (hemat limit Claude Pro) — PRD §16.2
 

@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.7 · **Tanggal:** 21 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.8 · **Tanggal:** 22 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -815,6 +815,14 @@ Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/
 7. Laporkan ringkas: apa yang selesai, bukti test, task berikutnya
 ```
 
+**Jika task terblokir tindakan manual Bimo (item `B*` di `PROGRESS.md`) — CR-002:** Bimo tidak berlatar teknis, jadi Claude tidak berhenti di "Bimo harus melakukan X". Urutannya:
+
+1. Jelaskan dengan bahasa sederhana: apa yang kurang dan kenapa dibutuhkan.
+2. Cek kondisi nyata di laptop dulu (mis. `winget list`, lokasi program) supaya langkah pasti cocok.
+3. Coba kerjakan sendiri dengan izin Bimo per instalasi.
+4. Jika ditolak sistem izin atau butuh hak admin: **jangan mengakali penolakan.** Beri langkah klik-demi-klik bernomor, satu perintah per langkah, lengkap dengan tampilan yang diharapkan.
+5. Setelah Bimo selesai: verifikasi sendiri (mis. `node --version`, `node scripts/doctor.mjs`), centang item `B*` di `PROGRESS.md`, lalu lanjut ke task.
+
 ### 16.6 Aturan & larangan coding
 
 **Wajib:**
@@ -1067,3 +1075,4 @@ Masih terbuka:
 | 1.5 | 21 Nov 2026 | §16.4 ditulis ulang: semua plugin/skill/MCP dipasang **otomatis** oleh Claude Code lewat `docs/setup/BOOTSTRAP.md` (scope project), hook `SessionStart` + `doctor`. claude-mem tidak dipasang default (kuota, Bun, lisensi). PHP dipanggil via `PHP_BIN`, PATH sistem tidak diubah. |
 | 1.6 | 21 Nov 2026 | claude-mem **tidak dipakai** (final). Memori project dipegang file repo: CLAUDE.md, PROGRESS.md, DECISIONS.md, docs/plans, Git (§16.3 butir 9, §16.4, §21). |
 | 1.7 | 21 Nov 2026 | CR-001: aturan subagent (hanya 4 subagent project, maks. 1 bersamaan, eksekusi inline, tanpa worktree; §16.2) dan aturan auto-merge PR dengan daftar kategori wajib review Bimo (§17.5). |
+| 1.8 | 22 Nov 2026 | CR-002: protokol bantuan langsung saat task terblokir tindakan manual Bimo — jelaskan sederhana, cek kondisi nyata, coba sendiri, jika diblokir beri langkah klik-demi-klik, lalu verifikasi (§16.5). |
