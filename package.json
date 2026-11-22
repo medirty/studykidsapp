@@ -14,6 +14,7 @@
     "check": "npm run check -w frontend",
     "format": "npm run format -w frontend",
     "doctor": "node scripts/doctor.mjs",
+    "test:e2e": "npm run test:e2e -w frontend",
     "test:scripts": "node --test \"scripts/lib/*.test.mjs\""
   }
 }
