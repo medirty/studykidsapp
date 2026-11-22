@@ -18,7 +18,7 @@
   }
 
   h1 {
-    color: var(--color-primary);
+    color: var(--color-ink);
     font-size: 2.25rem;
   }
 

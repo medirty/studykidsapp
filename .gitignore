@@ -8,6 +8,7 @@ coverage/
 playwright-report/
 test-results/
 .lighthouseci/
+.playwright-mcp/
 
 # Environment & secrets (hanya .env.example yang boleh di-commit)
 .env
