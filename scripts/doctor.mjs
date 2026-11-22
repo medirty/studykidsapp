@@ -189,7 +189,7 @@ async function collectResults() {
   const phpBin = env?.PHP_BIN || DEFAULT_PHP_BIN;
   const settings = readJson(join(ROOT, '.claude', 'settings.json'));
   return [
-    checkVersion('Node.js', 'node', '22.12', 'winget install --id OpenJS.NodeJS.LTS -e'),
+    checkVersion('Node.js', 'node', '22.22', 'winget upgrade --id OpenJS.NodeJS.22 --exact'),
     checkVersion('Git', 'git', '2.0', 'winget install --id Git.Git -e'),
     checkVersion('GitHub CLI', 'gh', '2.0', 'winget install --id GitHub.cli -e'),
     checkGhAuth(),

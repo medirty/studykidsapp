@@ -3,10 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "workspaces": ["frontend"],
-  "engines": { "node": ">=22.12" },
+  "workspaces": [
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=22.22"
+  },
   "scripts": {
     "build": "npm run build -w frontend",
-    "doctor": "node scripts/doctor.mjs"
+    "check": "npm run check -w frontend",
+    "format": "npm run format -w frontend",
+    "doctor": "node scripts/doctor.mjs",
+    "test:scripts": "node --test \"scripts/lib/*.test.mjs\""
   }
 }
