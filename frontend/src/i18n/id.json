@@ -1,5 +1,6 @@
 {
   "hello.title": "Halo, aku Kiko!",
   "hello.subtitle": "Belajar jadi seru bersama {brand}.",
-  "hello.status": "Aplikasi sedang disiapkan."
+  "hello.status": "Aplikasi sedang disiapkan.",
+  "dev.health": "API {api}, DB {db}"
 }

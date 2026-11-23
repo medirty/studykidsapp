@@ -10,6 +10,9 @@
     "node": ">=22.22"
   },
   "scripts": {
+    "dev": "concurrently -k -n web,api \"npm:dev:web\" \"npm:dev:api\"",
+    "dev:web": "npm run dev -w frontend",
+    "dev:api": "node scripts/run-php.mjs -S localhost:8000 -t backend/public",
     "build": "npm run build -w frontend",
     "check": "npm run check -w frontend",
     "format": "npm run format -w frontend",
@@ -20,5 +23,8 @@
     "db:migrate": "node scripts/run-php.mjs backend/vendor/bin/phinx migrate -c backend/phinx.php",
     "db:reset": "node scripts/db-reset.mjs",
     "test:scripts": "node --test \"scripts/lib/*.test.mjs\""
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7"
   }
 }
