@@ -214,3 +214,8 @@ D-001 s.d. D-007 dibuat di T0.3 (22 Nov 2026) sebagai acuan T0.4–T0.11. Rencan
 - **Catatan security-review:** contoh kode untuk Next.js/Supabase/Solana, bukan PHP/Slim/PDO. Di task auth/pembayaran, padukan dengan checklist keamanan PRD §15 (PDO prepared statements, CSRF Slim, anti-IDOR).
 - **Alternatif:** ECC paket penuh (ditolak, lihat PRD §16.4); graphify (ditunda ke awal Fase 4, §16.4.2).
 - **Konsekuensi:** `scripts/doctor.mjs` mengecek ponytail aktif + `.claude/skills/security-review/SKILL.md`.
+
+## D-009 — MariaDB 11.8 lokal & koneksi DB tahan-beda-server (CR-004, 23 Nov 2026)
+- **Status:** disetujui (CR-004, Bimo)
+- **Keputusan:** MariaDB **11.8.2** dipasang lewat `winget` (MSI, service `MariaDB`, Running + Automatic) di `C:\Program Files\MariaDB 11.8` (path sesuai rencana, tidak berbeda). Password root acak di `%USERPROFILE%\.studykids\mariadb-root.txt` (ACL hanya user Windows), di luar repo. `scripts/db-setup.ps1` membuat DB dev/test + user `studykids`. `Database::pdo()` mengeset `sql_mode` ketat, `time_zone='+00:00'`, `utf8mb4_unicode_ci` (test: `DatabaseSessionTest`). CI memakai `mariadb:11.8`. Nama job CI tidak diubah.
+- **Catatan:** user `studykids` dibuat untuk `'localhost'` saja; koneksi `127.0.0.1` tetap diterima MariaDB (diverifikasi doctor). XAMPP tidak di-uninstall (rollback: start MySQL XAMPP + kembalikan `backend/.env`).

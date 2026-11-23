@@ -61,3 +61,12 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 - **Analisis dampak:** PRD §16.4 (+§16.4.1, §16.4.2), riwayat → v1.9; `CLAUDE.md`; `.claude/agents/*.md`; `docs/setup/BOOTSTRAP.md`; `scripts/doctor.mjs`; `docs/PANDUAN_VIBE_CODING.md`. Tanpa kode aplikasi. Risiko: skill pihak ketiga menjalankan perintah tak terduga → mitigasi: baca SKILL.md & script sebelum pasang, izin Bimo per instalasi.
 - **Keputusan Bimo:** diterima sekarang (23 Nov 2026)
 - **Status:** diterapkan di PRD v1.9. Arsip rinci: [plans/CR-003-skills-ponytail-graphify-ecc.md](plans/CR-003-skills-ponytail-graphify-ecc.md).
+
+## CR-004 — Database lokal: XAMPP (MariaDB 10.4) → MariaDB 11.8 standalone
+- **Tanggal / Pengaju:** 23 Nov 2026 / Bimo
+- **Deskripsi:** Ganti database lokal ke MariaDB 11.8 (service Windows), CI ke `mariadb:11.8`, koneksi DB mengatur sql_mode/UTC/collation sendiri, `scripts/db-setup.ps1`, HeidiSQL pengganti phpMyAdmin.
+- **Alasan:** Laptop (10.4), CI (MySQL 8.0), dan Hostinger (11.8) memakai tiga database berbeda; XAMPP 10.4 sudah tidak didukung.
+- **Prioritas:** wajib
+- **Analisis dampak:** PRD K9, §10.1, §17.1, §17.2, riwayat → v1.10; `CLAUDE.md`; `ci.yml`; `Database.php`; `doctor.mjs`; `SETUP_LOCAL.md`; BOOTSTRAP; PANDUAN. Skema DB tidak berubah. Alur deploy tidak berubah.
+- **Keputusan Bimo:** diterima (23 Nov 2026), syarat: deploy tidak boleh lebih susah.
+- **Status:** diterapkan di PRD v1.10. Arsip rinci: [plans/CR-004-mariadb-tanpa-xampp.md](plans/CR-004-mariadb-tanpa-xampp.md).

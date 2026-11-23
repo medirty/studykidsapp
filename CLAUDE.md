@@ -40,7 +40,7 @@ Frontend: Svelte 5 + Vite + TypeScript strict, CSS variables, Dexie (IndexedDB),
 Backend: PHP 8.4 (lokal `C:\php-8.4\php.exe` lewat `PHP_BIN`; kode kompatibel 8.2+) + Slim 4 + PDO, MySQL/MariaDB, Phinx, PHPMailer.
 Test: Vitest, Playwright (mobile viewport), PHPUnit, Lighthouse CI, axe-core.
 Hosting: Hostinger (shared, hosting-agnostic — setting deploy hanya di GitHub Secrets). Preview: GitHub Pages dengan `VITE_API_MODE=local`.
-Dev lokal (Windows): XAMPP **hanya** untuk MySQL/MariaDB (PHP pakai `C:\php-8.4` via `PHP_BIN`, bukan PHP XAMPP); jangan pakai Apache/htdocs. Jalankan `npm run dev` (Vite :5173 + `php -S` :8000, proxy `/api`). Akses DB lewat `mysql` CLI & Phinx, tanpa MCP database. Detail PRD §17.1.
+Dev lokal (Windows): **MariaDB 11.8** (service `MariaDB`, sama dengan Hostinger & CI) + PHP 8.4 (`PHP_BIN=C:\php-8.4\php.exe`). XAMPP **tidak dipakai**. Jalankan `npm run dev` (Vite :5173 + `php -S` :8000, proxy `/api`). Akses DB lewat client `mariadb` & Phinx, tanpa MCP database. Waktu disimpan UTC; migrasi wajib `utf8mb4_unicode_ci`. Detail PRD §17.1.
 
 ## Bisnis (jangan diubah tanpa CR)
 

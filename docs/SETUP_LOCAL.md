@@ -14,7 +14,7 @@ Panduan klik-demi-klik untuk menyiapkan laptop dev, misalnya laptop baru atau se
 | Git, GitHub CLI (`gh`) | terbaru | `gh` login sebagai `medirty` |
 | Composer | ≥ 2.7 | |
 | PHP | 8.4 NTS x64 di **`C:\php-8.4`** | Bukan PHP XAMPP. PATH sistem **tidak diubah**; project memanggil PHP lewat `PHP_BIN` |
-| MySQL/MariaDB | dari **XAMPP** (`C:\xampp`) | Hanya MySQL. Apache/`htdocs` tidak dipakai (kecuali sebentar untuk phpMyAdmin) |
+| MariaDB | **11.8** (service Windows `MariaDB`, port 3306) | Sama dengan Hostinger & CI. XAMPP tidak dipakai (CR-004) |
 
 ---
 
@@ -62,42 +62,31 @@ gh auth login      # pilih GitHub.com → HTTPS → Login with a web browser
 
 > **Kenapa PATH tidak diubah?** Perintah `php` di PATH tetap menunjuk PHP 8.2 milik XAMPP. Script project (npm, Composer) memakai `PHP_BIN=C:\php-8.4\php.exe` dari `backend/.env`, jadi tidak bentrok.
 
-## Langkah 3: XAMPP (MySQL)
+## Langkah 3: Install MariaDB 11.8 (MSI)
 
-1. Jika belum ada: unduh XAMPP dari <https://www.apachefriends.org/> → install ke **`C:\xampp`** (komponen cukup **MySQL** + **phpMyAdmin**).
-2. Buka **XAMPP Control Panel** → **Start** pada baris **MySQL**. Lakukan ini setiap mulai kerja.
-3. Tambahkan client `mysql` ke PATH user (sekali saja):
+1. Pasang tanpa dialog installer. Buat password root acak (≥ 24 karakter) dan simpan di `%USERPROFILE%\.studykids\mariadb-root.txt` (di luar repo, akses hanya user Windows kamu), lalu:
    ```powershell
-   [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path","User") + ";C:\xampp\mysql\bin", "User")
+   winget install --id MariaDB.Server --version 11.8.2.0 -e --silent --accept-package-agreements --accept-source-agreements --override "/qn SERVICENAME=MariaDB PORT=3306 UTF8=1 PASSWORD=<password-root>"
    ```
-   Lalu **restart Claude Desktop / terminal** supaya PATH baru terbaca.
+   Cadangan: unduh MSI 11.8 LTS (Windows x86_64) dari <https://mariadb.org/download/> dan pasang dengan opsi `/qn` yang sama lewat `msiexec`. HeidiSQL ikut terpasang (untuk melihat data).
+2. Cek: `Get-Service MariaDB` → `Running` + `Automatic` (menyala otomatis bersama Windows).
+3. Tambahkan client ke PATH user (sekali saja; hapus `C:\xampp\mysql\bin` jika ada), lalu **restart Claude Desktop / terminal**:
+   ```powershell
+   [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path","User") + ";C:\Program Files\MariaDB 11.8\bin", "User")
+   ```
+4. Jangan Start MySQL di XAMPP: akan bentrok di port 3306.
 
-## Langkah 4: User & database MySQL
-
-Masuk sebagai root. Password root XAMPP default kosong, jadi tekan Enter saja:
+## Langkah 4: User & database (`scripts/db-setup.ps1`)
 
 ```powershell
-C:\xampp\mysql\bin\mysql.exe -u root -p
+powershell -ExecutionPolicy Bypass -File scripts\db-setup.ps1
 ```
 
-Jalankan perintah berikut, ganti `GANTI_PASSWORD_KUAT` dengan password buatanmu sendiri:
-
-```sql
-CREATE DATABASE studykids_dev  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE DATABASE studykids_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'studykids'@'localhost' IDENTIFIED BY 'GANTI_PASSWORD_KUAT';
-CREATE USER 'studykids'@'127.0.0.1' IDENTIFIED BY 'GANTI_PASSWORD_KUAT';
-GRANT ALL PRIVILEGES ON studykids_dev.*  TO 'studykids'@'localhost', 'studykids'@'127.0.0.1';
-GRANT ALL PRIVILEGES ON studykids_test.* TO 'studykids'@'localhost', 'studykids'@'127.0.0.1';
-FLUSH PRIVILEGES;
-EXIT;
-```
-
-User `studykids` hanya punya hak ke dua DB ini. Aplikasi tidak pernah memakai `root`.
+Script membaca password root dari file Langkah 3 (atau meminta jika file tidak ada), membuat `studykids_dev` & `studykids_test` (utf8mb4 / `utf8mb4_unicode_ci`), user `studykids` (hak hanya ke dua DB itu, password acak), lalu mengisi `backend/.env`. Aman dijalankan ulang. Tambah `-ResetPassword` untuk mengganti password user `studykids`. Aplikasi tidak pernah memakai `root`.
 
 ## Langkah 5: `backend/.env`
 
-Buat file `backend/.env`. File ini **di-ignore Git, jangan pernah di-commit**. Setelah T0.2 selesai, cukup salin dari `backend/.env.example`. Isi minimal:
+Buat file `backend/.env`. File ini **di-ignore Git, jangan pernah di-commit**. Setelah Langkah 4, file ini terisi otomatis (kalau belum ada, salin dari `backend/.env.example`). Isi minimal:
 
 ```ini
 PHP_BIN=C:\php-8.4\php.exe
@@ -106,7 +95,7 @@ DB_PORT=3306
 DB_NAME=studykids_dev
 DB_TEST_NAME=studykids_test
 DB_USER=studykids
-DB_PASS=GANTI_PASSWORD_KUAT
+DB_PASS=<diisi otomatis oleh db-setup.ps1>
 ```
 
 `DB_PORT` dan `DB_TEST_NAME` boleh dikosongkan. Default-nya `3306` dan `studykids_test`.
@@ -125,7 +114,7 @@ StudyKids doctor
 ✓ Node.js — v22.12.0 (min 22.12)
 ✓ PHP 8.4 (PHP_BIN) — v8.4.28 di C:\php-8.4\php.exe
 ✓ Ekstensi PHP wajib — 8/8 aktif
-✗ `mysql` di PATH — belum aktif di sesi ini
+✗ Folder bin MariaDB di PATH — belum aktif di sesi ini
     perbaiki: sudah ada di PATH user — restart Claude Desktop / terminal agar aktif
 ...
 18/19 OK
@@ -138,7 +127,7 @@ Perbaiki setiap ✗ sesuai baris `perbaiki:`, lalu jalankan lagi sampai semua �
 | Kelompok | Item |
 |---|---|
 | Software | Node ≥ 22.12, Git, GitHub CLI + login, Composer ≥ 2.7, PHP 8.4 di `PHP_BIN`, 8 ekstensi PHP |
-| Database | `backend/.env` lengkap, `mysql.exe` XAMPP, `mysql` di PATH, MySQL jalan di :3306, login `studykids` ke DB dev & test |
+| Database | `backend/.env` lengkap, client MariaDB, folder bin di PATH, service `MariaDB` Running + Automatic, server 11.8.x di :3306, login `studykids` ke DB dev & test |
 | Port | 5173 (Vite) dan 8000 (API PHP) bebas. Jika `npm run dev` sedang jalan, ✗ di sini wajar |
 | Claude Code | plugin superpowers + frontend-design aktif, tanpa claude-mem, skill find-skills, MCP playwright/context7/chrome-devtools terdaftar (lihat `docs/setup/BOOTSTRAP.md`) |
 
@@ -147,9 +136,9 @@ Perbaiki setiap ✗ sesuai baris `perbaiki:`, lalu jalankan lagi sampai semua �
 | Gejala | Solusi |
 |---|---|
 | `PHP Warning: Unable to load dynamic library` | `extension_dir` di `php.ini` salah, atau DLL dari versi PHP lain. Pakai folder `C:\php-8.4` yang bersih |
-| `Login MySQL → DB dev ✗` + `Can't connect` | MySQL belum di-Start di XAMPP |
-| `Access denied for user 'studykids'` | Password di `backend/.env` beda dengan Langkah 4, atau user belum dibuat untuk host `127.0.0.1` |
-| `Port 3306` dipakai program lain | Matikan service MySQL lain (Services → MySQL*), atau ubah `DB_PORT` |
-| `mysql` tidak dikenal di terminal | Langkah 3 poin 3, lalu restart terminal |
+| `Login MariaDB → DB dev ✗` + `Can't connect` | Service MariaDB mati: Services Windows → MariaDB → Start (atau minta Claude menyalakannya) |
+| `Access denied for user 'studykids'` | Jalankan ulang `scripts/db-setup.ps1 -ResetPassword` |
+| `Port 3306` dipakai program lain | Biasanya MySQL XAMPP masih jalan: hentikan. XAMPP tidak dipakai lagi |
+| `mariadb` tidak dikenal di terminal | Langkah 3 poin 3, lalu restart terminal (script project tidak bergantung pada PATH) |
 
 > **Alternatif (tidak wajib):** Laragon. Docker tidak dipakai di project ini.

@@ -8,7 +8,22 @@ import {
   missingKeys,
   pathContains,
   formatResults,
+  pickDbClient,
+  isMariaDb118,
 } from './doctor-utils.mjs';
+
+test('pickDbClient: first existing candidate wins, null when none', () => {
+  const exists = (p) => p === 'B';
+  assert.equal(pickDbClient(['A', 'B', 'C'], exists), 'B');
+  assert.equal(pickDbClient(['', undefined, 'A'], exists), null);
+});
+
+test('isMariaDb118: only 11.8.x matches', () => {
+  assert.equal(isMariaDb118('11.8.2-MariaDB'), true);
+  assert.equal(isMariaDb118('10.4.32-MariaDB'), false);
+  assert.equal(isMariaDb118('11.80.1'), false);
+  assert.equal(isMariaDb118(undefined), false);
+});
 
 test('parseEnv reads keys, skips comments, strips quotes', () => {
   const env = parseEnv('# c\nDB_HOST=127.0.0.1\r\n\nDB_PASS="a=b"\nBAD\nPHP_BIN=\'C:\\php\'');

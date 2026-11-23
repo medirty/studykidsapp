@@ -20,9 +20,9 @@ Jalankan satu per satu. Jika versi kurang atau tidak ada â†’ jalankan perin
 | S4 | `composer --version` | â‰¥ 2.7 | `winget install --id Composer.Composer -e` |
 | S5 | `C:\php-8.4\php.exe -v` | 8.4.x | Minta Bimo: unduh PHP 8.4 NTS x64 dari windows.php.net ke `C:\php-8.4` (lihat `docs/PANDUAN_VIBE_CODING.md`) |
 | S6 | `C:\php-8.4\php.exe -m` | ada: `pdo_mysql mbstring openssl curl intl fileinfo zip sodium` | Aktifkan baris `extension=...` di `C:\php-8.4\php.ini` (`extension_dir = "C:\php-8.4\ext"`) |
-| S7 | `Test-Path C:\xampp\mysql\bin\mysql.exe` | True | Minta Bimo install XAMPP |
-| S8 | `Test-NetConnection 127.0.0.1 -Port 3306 -InformationLevel Quiet` | True | Minta Bimo **Start MySQL** di XAMPP Control Panel |
-| S9 | `mysql` ada di PATH user | ya | `[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path","User") + ";C:\xampp\mysql\bin", "User")` â€” berlaku setelah Claude Desktop di-restart |
+| S7 | `Test-Path "C:\Program Files\MariaDB 11.8\bin\mariadb.exe"` | True | Pasang MariaDB 11.8 (`docs/SETUP_LOCAL.md` Langkah 3, CR-004) |
+| S8 | `Get-Service MariaDB` | Running + Automatic | `Start-Service MariaDB` (atau Services Windows → MariaDB → Start) |
+| S9 | folder bin MariaDB ada di PATH user | ya | `[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path","User") + ";C:\Program Files\MariaDB 11.8\bin", "User")` — berlaku setelah Claude Desktop di-restart |
 
 **Catatan PHP:** perintah `php` di PATH menunjuk ke PHP 8.2 XAMPP. **Jangan ubah PATH sistem.** Project memanggil PHP lewat variabel `PHP_BIN=C:\php-8.4\php.exe` (di `backend/.env` dan script npm). Composer dijalankan dengan `C:\php-8.4\php.exe C:\ProgramData\ComposerSetup\bin\composer.phar ...` atau dengan `PHP_BIN`.
 

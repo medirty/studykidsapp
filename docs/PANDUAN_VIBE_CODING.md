@@ -12,9 +12,6 @@ Panduan ini untuk Bimo: cara memulai, melanjutkan setiap hari, dan apa yang perl
 Buka Claude Desktop → tab Code → folder studykidsapp
         │
         ▼
-  Nyalakan MySQL (XAMPP)
-        │
-        ▼
   Prompt "mulai hari"  ──►  /next  ──►  Claude kerjakan 1 task
         ▲                                   │
         │                                   ▼
@@ -23,6 +20,8 @@ Buka Claude Desktop → tab Code → folder studykidsapp
         ▼ (akhir fase)
   /gate → kamu cek → tulis "Fase X disetujui"
 ```
+
+Database (MariaDB) menyala otomatis bersama Windows, tidak perlu dinyalakan manual.
 
 Aturan emas:
 
@@ -36,7 +35,7 @@ Aturan emas:
 
 - [x] Node, npm, Git, Composer
 - [x] PHP 8.4 di `C:\php-8.4` (8 ekstensi aktif)
-- [x] XAMPP (MySQL)
+- [x] MariaDB 11.8 (otomatis menyala bersama Windows)
 - [x] Claude Code + GitHub CLI (login `medirty`)
 - [x] Folder `studykidsapp` berisi `PRD.md`, `CLAUDE.md`, `.claude/`, `docs/`
 - [ ] Beli domain `studykids.id` (dikerjakan di Fase 0, boleh kapan saja minggu ini)
@@ -47,12 +46,11 @@ Aturan emas:
 
 ### Langkah
 
-1. Buka **XAMPP Control Panel** → klik **Start** pada **MySQL** (Apache tidak perlu).
-2. Buka **Claude Desktop** → pilih tab **Code**.
-3. Pilih / buka folder: `C:\Users\Lenovo\Documents\Work\studykidsapp`.
-4. Mode izin: pilih yang **meminta izin** (Ask / default) dulu untuk minggu pertama, supaya kamu melihat apa yang dilakukan Claude. Setelah terbiasa, boleh pakai "accept edits".
-5. Model: biarkan default. Folder `.claude/settings.json` sudah mengatur `opusplan` (Opus saat merencanakan, Sonnet saat mengerjakan).
-6. Tempel prompt di bawah.
+1. Buka **Claude Desktop** → pilih tab **Code**.
+2. Pilih / buka folder: `C:\Users\Lenovo\Documents\Work\studykidsapp`.
+3. Mode izin: pilih yang **meminta izin** (Ask / default) dulu untuk minggu pertama, supaya kamu melihat apa yang dilakukan Claude. Setelah terbiasa, boleh pakai "accept edits".
+4. Model: biarkan default. Folder `.claude/settings.json` sudah mengatur `opusplan` (Opus saat merencanakan, Sonnet saat mengerjakan).
+5. Tempel prompt di bawah.
 
 ### Prompt pertama (copas persis)
 
@@ -78,9 +76,8 @@ Selama bootstrap:
 
 ### A. Mulai hari
 
-1. Start **MySQL** di XAMPP.
-2. Claude Desktop → Code → folder `studykidsapp` → **sesi baru**.
-3. Tempel:
+1. Claude Desktop → Code → folder `studykidsapp` → **sesi baru**.
+2. Tempel:
 
 ```
 Mulai hari. Baca CLAUDE.md dan docs/PROGRESS.md.
@@ -170,7 +167,7 @@ Fase 0 disetujui. Buat tag phase-0-approved, lalu jalankan /plan-phase untuk Fas
 | Di HP asli | Minta Claude: `Deploy demo ke GitHub Pages.` Lalu buka `https://medirty.github.io/studykidsapp/` di HP. |
 | Mockup (Fase 1) | Minta: `Buka mockup di browser` atau buka file di `docs/mockups/`. |
 | Test lolos atau tidak | Lihat laporan Claude (ada output test), atau centang hijau di PR GitHub. |
-| Database | phpMyAdmin: nyalakan Apache di XAMPP sebentar → `http://localhost/phpmyadmin`. |
+| Database | Buka **HeidiSQL** (Start menu) → koneksi 127.0.0.1, user studykids. Atau minta Claude: "Tampilkan isi tabel settings." |
 
 ---
 
@@ -315,7 +312,8 @@ Kalau Claude terasa "terlalu minimal" (misalnya melewatkan teks bahasa Inggris a
 
 | Masalah | Solusi |
 |---|---|
-| Claude bilang tidak bisa konek database | Pastikan MySQL di XAMPP sudah **Start** (hijau). |
+| Claude bilang tidak bisa konek database | Database belum jalan. Minta Claude: "Cek service MariaDB dan nyalakan kalau mati." Atau buka Services Windows → MariaDB → Start. |
+| XAMPP | Tidak dipakai lagi. Jangan Start MySQL di XAMPP karena akan bentrok dengan MariaDB di port 3306. |
 | `/next` atau command lain tidak dikenal | Pastikan folder yang dibuka di Claude Desktop adalah `studykidsapp` dan ada folder `.claude/commands/` di dalamnya. Buka sesi baru. |
 | Port 5173/8000 dipakai | `Ada port yang bentrok, cari prosesnya dan matikan, lalu jalankan npm run dev lagi.` |
 | CI merah di PR | `CI di PR #<nomor> merah. Cek log-nya dan perbaiki.` |
