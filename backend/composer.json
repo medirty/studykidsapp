@@ -1,0 +1,46 @@
+{
+    "name": "studykids/backend",
+    "description": "StudyKids API (Slim 4)",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "php-di/php-di": "^7.1",
+        "slim/psr7": "^1.8",
+        "slim/slim": "^4.15",
+        "vlucas/phpdotenv": "^5.8"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "phpstan/phpstan": "^2.3",
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "StudyKids\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "StudyKids\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.2.0"
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit",
+        "lint": [
+            "@php vendor/bin/phpstan analyse --no-progress",
+            "@php vendor/bin/php-cs-fixer check"
+        ],
+        "fix": "@php vendor/bin/php-cs-fixer fix"
+    }
+}

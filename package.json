@@ -15,6 +15,8 @@
     "format": "npm run format -w frontend",
     "doctor": "node scripts/doctor.mjs",
     "test:e2e": "npm run test:e2e -w frontend",
+    "test:api": "node scripts/run-php.mjs backend/vendor/bin/phpunit -c backend/phpunit.xml.dist",
+    "lint:api": "node scripts/run-php.mjs backend/vendor/bin/phpstan analyse --no-progress -c backend/phpstan.neon && node scripts/run-php.mjs backend/vendor/bin/php-cs-fixer check --config=backend/.php-cs-fixer.dist.php",
     "test:scripts": "node --test \"scripts/lib/*.test.mjs\""
   }
 }
