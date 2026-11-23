@@ -9,6 +9,8 @@ playwright-report/
 test-results/
 .lighthouseci/
 .playwright-mcp/
+.phpunit.cache/
+.php-cs-fixer.cache
 
 # Environment & secrets (hanya .env.example yang boleh di-commit)
 .env
