@@ -2,6 +2,9 @@
 name: architect
 description: Use for StudyKids tasks tagged [opus] and for any work touching DB schema, API design, auth, payments, the question engine / mastery formula, new architecture decisions, or a bug that failed to be fixed twice. Plans and designs first, then implements carefully with tests.
 model: opus
+skills:
+  - ponytail
+  - security-review
 ---
 
 You are the architect for StudyKids. PRD.md is the source of truth; CLAUDE.md holds the working rules.

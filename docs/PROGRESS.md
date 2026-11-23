@@ -6,7 +6,7 @@
 ## Status
 
 - **Fase aktif:** 0 — Setup
-- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). T0.4 scaffold frontend selesai (22 Nov 2026). T0.5 tooling frontend + `npm run check` selesai (22 Nov 2026). T0.6 Playwright + axe-core selesai (22 Nov 2026). Task berikutnya: **T0.7** `[opus]` backend Slim 4. CR-002 diterapkan (PRD v1.8, 22 Nov 2026).
+- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). T0.4 scaffold frontend selesai (22 Nov 2026). T0.5 tooling frontend + `npm run check` selesai (22 Nov 2026). T0.6 Playwright + axe-core selesai (22 Nov 2026). Task berikutnya: **T0.7** `[opus]` backend Slim 4. CR-002 diterapkan (PRD v1.8, 22 Nov 2026). CR-003 disetujui (23 Nov 2026): dokumen diterapkan di branch `docs/cr-003-skills` (PRD v1.9), instalasi ponytail & security-review berjalan; verifikasi di sesi baru.
 - **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor). Bagian atas `docs/setup/BOOTSTRAP.md` masih ada mojibake (`â€”`), belum diperbaiki (di luar scope).
 - **Persetujuan fase:** belum ada.
 
@@ -37,10 +37,15 @@
 - [ ] T0.9 `[sonnet]` `npm run dev` (concurrently + proxy `/api`) → status API & DB tampil (§17.1)
 - [ ] T0.10 `[sonnet]` CI (`ci.yml`, MySQL service, PHP 8.2/8.4, Lighthouse CI) + Dependabot (§15.1, §17.3)
 - [ ] T0.11 `[sonnet]` `deploy-pages.yml` → hello-world di GitHub Pages (§17.5) — butuh B6
+- [ ] T0.12a `[sonnet]` (CR-003) Verifikasi di sesi baru: skill `ponytail` & `security-review` muncul, nama di `skills:` agent cocok, `/ponytail-help` jalan, doctor bersih
 - [ ] T0.12 `[sonnet]` Verifikasi plugin/MCP + rangkum bukti Exit Criteria (§16.2, §16.4)
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 0 disetujui" → tag `phase-0-approved`
 
+### Dijadwalkan (CR-003)
+- [ ] **Awal Fase 4** `[sonnet]` Evaluasi graphify (PRD §16.4.2): mode code-only lokal, tanpa Cloud/git hook, `graphify-out/` di `.gitignore`; lolos jika token/file yang dibaca turun nyata pada 3 task eksplorasi dan tanpa error di Windows. Catat hasil di `DECISIONS.md`. Masukkan ke `docs/plans/phase-4.md` saat `/plan-phase` Fase 4.
+
 ### Change Request
+- [~] **CR-003** Skill tambahan (ponytail, security-review; graphify ditunda) — disetujui Bimo 23 Nov 2026 → PRD **v1.9** (§16.4.1–16.4.2), `CLAUDE.md`, `.claude/agents`, BOOTSTRAP, PANDUAN. Bagian A (dokumen) selesai; Bagian B: ponytail & security-review terpasang (23 Nov 2026, D-008), tinggal verifikasi di sesi baru (daftar skill, `/ponytail-help`, doctor bersih). Detail: `docs/plans/CR-003-skills-ponytail-graphify-ecc.md`.
 - [x] **CR-002** Bantuan langsung saat task terblokir tindakan manual — diterima Bimo & diterapkan 22 Nov 2026 → PRD **v1.8** (§16.5), `CLAUDE.md`, `.claude/commands/next.md`. Detail: `docs/CHANGE_REQUESTS.md`.
 - [x] **CR-001** Aturan subagent & auto-merge PR — disetujui Bimo, diterapkan 21 Nov 2026 → PRD **v1.7** (§16.2 aturan subagent, §17.5 auto-merge + kategori wajib review), `CLAUDE.md`, `docs/PANDUAN_VIBE_CODING.md`. Arsip: `docs/plans/CR-001-subagent-dan-auto-merge.md`. Saat T0.2 membuat `docs/CHANGE_REQUESTS.md`, salin entri ini ke sana.
 

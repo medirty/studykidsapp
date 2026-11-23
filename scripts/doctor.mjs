@@ -161,7 +161,7 @@ function checkPlugins(settings) {
   const enabled = settings?.enabledPlugins ?? {};
   const missing = REQUIRED_PLUGINS.filter((p) => enabled[p] !== true);
   const fix = missing.map((p) => `claude plugin install ${p} --scope project`).join(' ; ');
-  return result('Plugin Claude (superpowers, frontend-design)', missing.length === 0, missing.length ? `kurang: ${missing.join(', ')}` : 'aktif', fix);
+  return result('Plugin Claude (superpowers, frontend-design, ponytail)', missing.length === 0, missing.length ? `kurang: ${missing.join(', ')}` : 'aktif', fix);
 }
 
 function checkNoClaudeMem(settings) {
@@ -172,6 +172,11 @@ function checkNoClaudeMem(settings) {
 function checkFindSkills() {
   const ok = existsSync(join(ROOT, '.claude', 'skills', 'find-skills'));
   return result('Skill find-skills', ok, ok ? '.claude/skills/find-skills' : 'tidak ada', 'npx -y skills add https://github.com/vercel-labs/skills --skill find-skills -a claude-code -y');
+}
+
+function checkSecurityReview() {
+  const ok = existsSync(join(ROOT, '.claude', 'skills', 'security-review', 'SKILL.md'));
+  return result('Skill security-review', ok, ok ? '.claude/skills/security-review' : 'tidak ada', 'salin skills/security-review dari github.com/affaan-m/ECC (lihat docs/setup/BOOTSTRAP.md Langkah 3)');
 }
 
 function checkMcp(settings) {
@@ -207,6 +212,7 @@ async function collectResults() {
     checkPlugins(settings),
     checkNoClaudeMem(settings),
     checkFindSkills(),
+    checkSecurityReview(),
     checkMcp(settings),
   ];
 }

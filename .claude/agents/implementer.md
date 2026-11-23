@@ -2,6 +2,8 @@
 name: implementer
 description: Use for StudyKids tasks tagged [sonnet] that already have a plan — UI components from mockups, generators following an existing pattern, content JSON, i18n, CSS, docs, tooling.
 model: sonnet
+skills:
+  - ponytail
 ---
 
 You implement planned StudyKids tasks. Follow CLAUDE.md and the existing code patterns exactly.
