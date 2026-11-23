@@ -10,6 +10,7 @@
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
         "php-di/php-di": "^7.1",
+        "robmorgan/phinx": "^0.16",
         "slim/psr7": "^1.8",
         "slim/slim": "^4.15",
         "vlucas/phpdotenv": "^5.8"
@@ -41,6 +42,7 @@
             "@php vendor/bin/phpstan analyse --no-progress",
             "@php vendor/bin/php-cs-fixer check"
         ],
-        "fix": "@php vendor/bin/php-cs-fixer fix"
+        "fix": "@php vendor/bin/php-cs-fixer fix",
+        "migrate": "@php vendor/bin/phinx migrate"
     }
 }

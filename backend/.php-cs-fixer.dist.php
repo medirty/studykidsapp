@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 $finder = (new PhpCsFixer\Finder())
-    ->in([__DIR__ . '/public', __DIR__ . '/src', __DIR__ . '/tests'])
-    ->append([__FILE__]);
+    ->in([__DIR__ . '/db', __DIR__ . '/public', __DIR__ . '/src', __DIR__ . '/tests'])
+    ->append([__FILE__, __DIR__ . '/phinx.php']);
 
 return (new PhpCsFixer\Config())
     ->setRules([
