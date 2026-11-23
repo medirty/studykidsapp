@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.8 · **Tanggal:** 22 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.9 · **Tanggal:** 23 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -795,12 +795,43 @@ Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/
 | Skill | **refactor** | dicari via `npx skills find refactor`; Bimo memilih dari 3 kandidat teratas | `.claude/skills/` |
 | MCP | **Playwright**, **Context7**, **Chrome DevTools** | disalin dari `docs/setup/mcp.json` ke `.mcp.json` (root), pakai `cmd /c npx` untuk Windows | `.mcp.json` |
 | Hook | `SessionStart` → `node scripts/doctor.mjs --quiet` | ditambahkan ke `.claude/settings.json` | `.claude/settings.json` |
+| Plugin | **ponytail** (kode minimal, `/ponytail-review`, `/ponytail-audit`) | `claude plugin marketplace add DietrichGebert/ponytail` lalu `claude plugin install ponytail@ponytail --scope project` | `.claude/settings.json` → `enabledPlugins` + `extraKnownMarketplaces` |
+| Skill | **security-review** (dari ECC, selektif) | Salin hanya folder skill `security-review` dari `github.com/affaan-m/ECC` ke `.claude/skills/security-review/` (tanpa hooks/rules/agents/memory). Catat commit sumber di `docs/DECISIONS.md`. | `.claude/skills/` |
+| Skill | **graphify** (knowledge graph codebase) | **Dijadwalkan awal Fase 4** (task evaluasi, lihat §16.4.2). Belum dipasang. | — |
+| Plugin | ~~ECC paket penuh~~ | **Tidak dipakai.** Bertabrakan dengan aturan subagent (§16.2), keputusan tanpa plugin memori, duplikat superpowers, hooks & rules boros kuota. Hanya skill `security-review` yang diambil. | — |
 | Plugin | ~~claude-mem~~ | **Tidak dipakai (keputusan final v1.6).** Alasan: menambah kuota tiap sesi, butuh Bun, lisensi AGPL-3.0 + PolyForm Noncommercial tidak cocok untuk produk komersial. Plugin memori lain juga tidak dipasang. | — |
 | MCP | ~~GitHub MCP~~ | Tidak dipakai — `gh` CLI cukup (§17.5) | — |
 
 **Kenapa scope project:** plugin, skill, dan MCP tercatat di repo (`.claude/settings.json`, `.claude/skills/`, `.mcp.json`). Kalau pindah laptop atau install ulang, Claude Code tinggal membaca konfigurasi dan memasang ulang.
 
 **Catatan teknis:** file di `.claude/` dan `.mcp.json` hanya bisa dibuat/diubah oleh Claude Code di laptop. Konfigurasi siap pakai disediakan di `docs/setup/` untuk disalin. Setiap MCP aktif menambah konteks di setiap sesi; jika kuota Pro terasa sempit, nonaktifkan `chrome-devtools` sampai dibutuhkan di Fase 7 (audit performa).
+
+#### 16.4.1 Kapan memakai skill apa (berlaku untuk Opus & Sonnet, sesi utama & subagent)
+
+**Urutan prioritas:** PRD & CLAUDE.md (termasuk DoD) → skill proses superpowers (brainstorming, writing-plans, TDD, systematic-debugging, verification) → skill implementasi (ponytail, frontend-design, security-review). Jika skill bertentangan dengan PRD, **PRD yang berlaku**.
+
+| Situasi | Skill yang WAJIB dipakai |
+|---|---|
+| Merencanakan fase / task baru | `superpowers:writing-plans` (+ `brainstorming` bila ada keputusan desain) |
+| Menulis kode apa pun (fitur, generator, komponen, backend) | `superpowers:test-driven-development` + **`ponytail`** (pilih solusi paling sederhana yang memenuhi AC) |
+| Membuat/mengubah UI | `frontend-design` + `ponytail` |
+| Bug | `superpowers:systematic-debugging` |
+| Sebelum bilang selesai | `superpowers:verification-before-completion` |
+| Review akhir task besar & `/gate` | `/ponytail-review` (kode berlebihan/tidak perlu) + `superpowers:requesting-code-review` |
+| Auth, sesi, Parent Gate, entitlement, pembayaran, webhook, harga/kuota | **`security-review`** (wajib, oleh `architect` saat implementasi dan `reviewer` saat gate) |
+| Menjelajah codebase besar (mulai Fase 4, jika graphify lolos evaluasi) | `graphify` (query graph dulu sebelum membaca banyak file) |
+
+**Batas ponytail (WAJIB):** ponytail **tidak boleh** menjadi alasan untuk menghapus atau melewati test, i18n (teks ID/EN), design token, aksesibilitas (§8.5), validasi server, cek anti-IDOR, atau apa pun yang diwajibkan AC/DoD. "Minimal" artinya tanpa kode, abstraksi, dan dependency yang tidak perlu, bukan tanpa kualitas.
+
+**Subagent:** skill yang relevan dimuat lewat field `skills:` di frontmatter `.claude/agents/*.md` (lihat CR-003 Bagian A4), sehingga subagent Opus/Sonnet otomatis memakainya tanpa perlu diingatkan.
+
+#### 16.4.2 Rencana graphify (evaluasi di awal Fase 4)
+
+- Prasyarat: Python 3.11+ dan `uv` (`winget install astral-sh.uv`), dicek & dipasang lewat BOOTSTRAP.
+- Pasang: `uv tool install graphifyy` → `graphify install --project` (scope project).
+- **Mode code-only lokal:** tidak memproses PDF/dokumen/gambar (pass semantik memakai token), **tidak** memakai Graphify Cloud / hosted MCP, **tidak** memasang git hook pada awalnya.
+- `graphify-out/` WAJIB masuk `.gitignore`.
+- Kriteria lolos evaluasi (dicatat di `DECISIONS.md`): pada 3 task eksplorasi yang sama, pemakaian token/jumlah file yang dibaca turun nyata dibanding tanpa graphify, dan tidak ada error di Windows. Jika tidak lolos → uninstall, catat alasannya.
 
 ### 16.5 Protokol sesi Claude Code
 
@@ -1076,3 +1107,4 @@ Masih terbuka:
 | 1.6 | 21 Nov 2026 | claude-mem **tidak dipakai** (final). Memori project dipegang file repo: CLAUDE.md, PROGRESS.md, DECISIONS.md, docs/plans, Git (§16.3 butir 9, §16.4, §21). |
 | 1.7 | 21 Nov 2026 | CR-001: aturan subagent (hanya 4 subagent project, maks. 1 bersamaan, eksekusi inline, tanpa worktree; §16.2) dan aturan auto-merge PR dengan daftar kategori wajib review Bimo (§17.5). |
 | 1.8 | 22 Nov 2026 | CR-002: protokol bantuan langsung saat task terblokir tindakan manual Bimo — jelaskan sederhana, cek kondisi nyata, coba sendiri, jika diblokir beri langkah klik-demi-klik, lalu verifikasi (§16.5). |
+| 1.9 | 23 Nov 2026 | CR-003: tambah plugin **ponytail** (kode minimal) dan skill **security-review** (selektif dari ECC); **graphify** dijadwalkan evaluasi di awal Fase 4; ECC paket penuh tidak dipakai. Tabel "kapan memakai skill apa" + batas ponytail (§16.4.1–16.4.2). |

@@ -248,6 +248,20 @@ Claude merge sendiri jika semua test lolos dan task-nya tidak berisiko. Kamu tet
 
 Kalau Claude Desktop menampilkan **dialog izin** untuk perintah `gh pr merge` atau `git push`, pilih **"Always allow"**. Itu izin aplikasi, bukan pertanyaan merge, dan cukup sekali.
 
+### Skill tambahan yang dipakai project ini
+
+Claude memakai skill ini otomatis. Kamu tidak perlu memanggilnya, kecuali command yang ditandai.
+
+| Skill | Gunanya | Kapan |
+|---|---|---|
+| superpowers | Cara kerja disiplin: rencana, test dulu, debug sistematis, verifikasi | Setiap task |
+| ponytail | Menulis kode sesederhana mungkin, tanpa tambahan yang tidak perlu | Setiap menulis kode. Kamu bisa memanggil `/ponytail-review` kapan saja |
+| frontend-design | Kualitas tampilan | Task UI |
+| security-review | Mengecek celah keamanan | Login, akun, pembayaran (Fase 4 & 6) |
+| graphify | Peta codebase supaya Claude tidak perlu membaca banyak file | Dievaluasi di awal Fase 4 |
+
+Kalau Claude terasa "terlalu minimal" (misalnya melewatkan teks bahasa Inggris atau test), tulis: `Ingat batas ponytail di CLAUDE.md: test, i18n, aksesibilitas, dan validasi tetap wajib.`
+
 ---
 
 ## 8. Kumpulan prompt cepat (cheat sheet)
@@ -267,6 +281,9 @@ Kalau Claude Desktop menampilkan **dialog izin** untuk perintah `gh pr merge` at
 | Kuota menipis | `Simpan posisi di PROGRESS.md, commit WIP, lalu berhenti.` |
 | Setujui PR yang menunggu | `Merge PR #N` |
 | Batalkan PR yang sudah di-merge | `Batalkan PR #N` |
+| Cek kode berlebihan di task terakhir | `/ponytail-review` |
+| Audit kode yang terlalu rumit di seluruh project | `/ponytail-audit` |
+| Lihat penghematan dari ponytail | `/ponytail-gain` |
 
 ---
 
@@ -290,6 +307,7 @@ Kalau Claude Desktop menampilkan **dialog izin** untuk perintah `gh pr merge` at
 - Mengedit `PRD.md` sendiri diam-diam. Lewat `/cr` supaya tercatat dan Claude tahu.
 - Memasang plugin memori (claude-mem, dll.) atau plugin lain di luar PRD §16.4. Kalau tertarik pada plugin baru, ajukan lewat `/cr`.
 - Meminta Claude "pakai banyak agent paralel" atau "kerjakan pakai worktree". Project ini sengaja memakai maksimal 1 subagent agar kuota awet (PRD §16.2).
+- Memasang ECC versi lengkap atau skill dari internet sendiri tanpa `/cr`. Skill baru bisa menambah pemakaian kuota di setiap sesi dan bertabrakan dengan aturan project.
 
 ---
 

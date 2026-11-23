@@ -23,6 +23,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 |---|---|---|---|
 | CR-001 | Aturan subagent & auto-merge PR | Diterapkan (21 Nov 2026) | v1.7 |
 | CR-002 | Bantuan langsung saat task terblokir tindakan manual | Diterapkan (22 Nov 2026) | v1.8 |
+| CR-003 | Skill tambahan: ponytail, security-review, graphify (ditunda) | Diterapkan dokumen (23 Nov 2026); instalasi menunggu verifikasi | v1.9 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -51,3 +52,12 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 - **Rekomendasi:** diterima sekarang. Kecil, tanpa kode aplikasi, langsung berguna untuk B9 dan tindakan manual berikutnya (B3, B8, B1).
 - **Keputusan Bimo:** diterima sekarang (22 Nov 2026)
 - **Status:** diterapkan di PRD v1.8 (§16.5), `CLAUDE.md`, `.claude/commands/next.md`.
+
+## CR-003 — Skill tambahan: ponytail, security-review (selektif), graphify (ditunda)
+- **Tanggal / Pengaju:** 23 Nov 2026 / Bimo
+- **Deskripsi:** Pasang plugin **ponytail** (kode minimal) dan skill **security-review** dari ECC (hanya folder skill itu). **graphify** dijadwalkan evaluasi di awal Fase 4 (mode code-only lokal). ECC paket penuh tidak dipakai. Tambah tabel "kapan memakai skill apa" + batas ponytail (PRD §16.4.1–16.4.2) dan field `skills:` di subagent.
+- **Alasan:** Hemat token/kuota Pro dan kode lebih ringkas (budget bundle 120 KB); security-review berguna untuk auth (Fase 4) dan pembayaran (Fase 6). ECC penuh bertabrakan dengan CR-001 (4 subagent), keputusan tanpa plugin memori, dan duplikat superpowers.
+- **Prioritas:** disarankan
+- **Analisis dampak:** PRD §16.4 (+§16.4.1, §16.4.2), riwayat → v1.9; `CLAUDE.md`; `.claude/agents/*.md`; `docs/setup/BOOTSTRAP.md`; `scripts/doctor.mjs`; `docs/PANDUAN_VIBE_CODING.md`. Tanpa kode aplikasi. Risiko: skill pihak ketiga menjalankan perintah tak terduga → mitigasi: baca SKILL.md & script sebelum pasang, izin Bimo per instalasi.
+- **Keputusan Bimo:** diterima sekarang (23 Nov 2026)
+- **Status:** diterapkan di PRD v1.9. Arsip rinci: [plans/CR-003-skills-ponytail-graphify-ecc.md](plans/CR-003-skills-ponytail-graphify-ecc.md).

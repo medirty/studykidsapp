@@ -59,6 +59,14 @@ Dev lokal (Windows): XAMPP **hanya** untuk MySQL/MariaDB (PHP pakai `C:\php-8.4`
 - Patuhi performance budget PRD §8.1 (JS awal ≤ 120 KB gzip). Mini game & admin = chunk lazy terpisah.
 - Speech hanya Web Speech API bawaan perangkat, sebagai progressive enhancement.
 
+## Skill wajib (PRD §16.4.1)
+
+- Prioritas: PRD/CLAUDE.md → skill proses superpowers → ponytail / frontend-design / security-review.
+- Menulis kode: TDD + **ponytail** (solusi paling sederhana yang memenuhi AC). ponytail **tidak boleh** memangkas test, i18n, token, aksesibilitas, validasi, anti-IDOR, atau apa pun yang diwajibkan DoD.
+- Area auth/sesi/Parent Gate/entitlement/pembayaran/webhook/harga: **wajib `security-review`**.
+- Review task besar & `/gate`: `/ponytail-review` + review superpowers.
+- graphify belum dipakai (evaluasi awal Fase 4). ECC paket penuh **dilarang**; hanya skill `security-review`.
+
 ## Testing & Definition of Done
 
 - TDD untuk engine, generator, mastery, dan backend services (skill `superpowers:test-driven-development`).

@@ -203,3 +203,14 @@ D-001 s.d. D-007 dibuat di T0.3 (22 Nov 2026) sebagai acuan T0.4–T0.11. Rencan
   - Lighthouse CI di `ci.yml` (T0.10) dengan preset mobile, assert `categories:performance ≥ 0.9`, LCP < 2500 ms, CLS < 0.1.
 - **Alternatif:** `size-limit`/`bundlesize`: dependency tambahan dan tidak paham pembagian awal vs lazy dari manifest Vite.
 - **Konsekuensi:** `npm run check` gagal bila budget dilanggar; T0.5 wajib membuktikan dengan pelanggaran sengaja.
+
+## D-008 — Skill tambahan ponytail & security-review (CR-003, 23 Nov 2026)
+- **Status:** disetujui (CR-003, Bimo)
+- **Konteks:** PRD v1.9 §16.4.1. Sebelum dipasang, `SKILL.md`, hook, dan script dibaca; tidak ada panggilan jaringan (kecuali webhook opsional ponytail, kosong secara default), tidak ada penghapusan file di luar bendera/tmp milik plugin.
+- **Keputusan:**
+  - **ponytail** `5.3.3`, MIT, repo `DietrichGebert/ponytail`, commit `ebd8654c2c627f721eb8f9c0d1bd4090a29f9e10`. Plugin scope project (`ponytail@ponytail`), marketplace dideklarasikan di `.claude/settings.json` → `extraKnownMarketplaces`. Auto-update **tidak** diaktifkan; update hanya lewat CR/PR. Nama skill di Claude Code: `ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help` (nama di field `skills:` agent diverifikasi di sesi baru).
+  - **security-review** dari ECC (MIT), commit `4adeee6732a12d1540f49a4d50a38ce8c97f9a53`, hanya folder `skills/security-review` (`SKILL.md`, `cloud-infrastructure-security.md`) disalin ke `.claude/skills/security-review/`. Tanpa hooks/rules/agents/memory/installer.
+- **Efek samping ponytail yang diketahui:** (1) 3 hook (SessionStart, SubagentStart, UserPromptSubmit) menambah aturan + peta kode (maks 2000 karakter) ke konteks tiap sesi; (2) menulis di luar project: `~/.claude/.ponytail-active`, salinan script statusline di `~/.claude`, catatan biaya/token per giliran di `~/.config/ponytail/band/*.csv` (lokal); (3) menyarankan edit `settings.json` global untuk statusline: **ditolak**, tidak diubah. Bisa dimatikan: `PONYTAIL_MAP=0` (peta kode), `/ponytail band off`, `/ponytail off`.
+- **Catatan security-review:** contoh kode untuk Next.js/Supabase/Solana, bukan PHP/Slim/PDO. Di task auth/pembayaran, padukan dengan checklist keamanan PRD §15 (PDO prepared statements, CSRF Slim, anti-IDOR).
+- **Alternatif:** ECC paket penuh (ditolak, lihat PRD §16.4); graphify (ditunda ke awal Fase 4, §16.4.2).
+- **Konsekuensi:** `scripts/doctor.mjs` mengecek ponytail aktif + `.claude/skills/security-review/SKILL.md`.

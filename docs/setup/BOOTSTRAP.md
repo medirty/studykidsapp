@@ -34,6 +34,8 @@ Scope project mencatat plugin di `.claude/settings.json` (`enabledPlugins`), jad
 claude plugin list
 claude plugin install superpowers@claude-plugins-official --scope project
 claude plugin install frontend-design@claude-plugins-official --scope project
+claude plugin marketplace add DietrichGebert/ponytail
+claude plugin install ponytail@ponytail --scope project
 ```
 
 Lewati plugin yang sudah terpasang. Plugin aktif mulai **sesi baru**.
@@ -47,6 +49,17 @@ npx -y skills add https://github.com/vercel-labs/skills --skill find-skills -a c
 ```
 
 **Skill refactor:** jalankan `npx -y skills find refactor`. Tampilkan 3 kandidat teratas ke Bimo (nama, sumber, jumlah install, lisensi). Pasang yang dipilih Bimo dengan `npx -y skills add <sumber> --skill <nama> -a claude-code -y`. Jangan pasang skill dari sumber yang tidak dikenal atau dengan install sangat sedikit.
+
+**Skill security-review (selektif dari ECC, CR-003):** baca isinya dulu, baru salin.
+
+```powershell
+git clone --depth 1 https://github.com/affaan-m/ECC "$env:TEMP\ecc"
+# cari folder skill security-review di repo, baca SKILL.md-nya, lalu salin HANYA folder itu:
+Copy-Item -Recurse "$env:TEMP\ecc\<path>\security-review" ".claude\skills\security-review"
+Remove-Item -Recurse -Force "$env:TEMP\ecc"
+```
+
+Larangan: jangan jalankan installer ECC (`install.ps1`, `npx ecc-universal ...`) dan jangan menyalin hooks/rules/agents/memory. Catat commit sumber di `docs/DECISIONS.md`.
 
 ## Langkah 4 â€” MCP (sudah dideklarasikan di `.mcp.json`)
 
@@ -115,4 +128,5 @@ Claude boleh mengecek status lewat `gh api repos/medirty/studykidsapp` dan membe
 | MCP playwright / context7 / chrome-devtools | ✓ | `.mcp.json`; `claude mcp list` → ketiganya Connected |
 | settings.json (plugins + hook) | ✓ | enabledPlugins, enabledMcpjsonServers, hook SessionStart (`|| exit 0` sampai T0.1) |
 | GitHub settings | sebagian | Secret scanning + Push protection ON; Pages sudah build_type=workflow; branch protection `main` menunggu T0.10 |
-
+| ponytail | ✓ (23 Nov 2026) | v5.3.3 commit `ebd8654`, project scope, auto-update tidak aktif. Aktif di sesi baru. Detail: DECISIONS D-008 |
+| security-review | ✓ (23 Nov 2026) | `.claude/skills/security-review` dari ECC commit `4adeee6` (hanya skill, tanpa hooks/rules/agents) |
