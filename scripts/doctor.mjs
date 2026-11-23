@@ -14,18 +14,20 @@ import {
   REQUIRED_PLUGINS,
   extractVersion,
   formatResults,
+  isMariaDb118,
   missingKeys,
   missingPhpExtensions,
   parseEnv,
   pathContains,
+  pickDbClient,
   versionAtLeast,
 } from './lib/doctor-utils.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const BACKEND_ENV = join(ROOT, 'backend', '.env');
 const DEFAULT_PHP_BIN = 'C:\\php-8.4\\php.exe';
-const MYSQL_BIN_DIR = 'C:\\xampp\\mysql\\bin';
-const MYSQL_EXE = join(MYSQL_BIN_DIR, 'mysql.exe');
+const DB_BIN_DIR = 'C:\\Program Files\\MariaDB 11.8\\bin';
+const DB_SETUP_FIX = 'lihat docs/SETUP_LOCAL.md (MariaDB 11.8 + scripts/db-setup.ps1)';
 const DEFAULT_TEST_DB = 'studykids_test';
 
 function run(cmd, args = [], env = {}) {
@@ -84,11 +86,23 @@ function checkPhpExtensions(phpBin) {
   return result('Ekstensi PHP wajib', missing.length === 0, missing.length ? `kurang: ${missing.join(', ')}` : '8/8 aktif', fix);
 }
 
-// ---------- MySQL ----------
+// ---------- MariaDB (CR-004) ----------
 
-function checkMysqlExe() {
-  const ok = existsSync(MYSQL_EXE);
-  return result('MySQL client XAMPP', ok, ok ? MYSQL_EXE : 'tidak ada', 'install XAMPP di C:\\xampp');
+// Order: DB_CLIENT_BIN → default MariaDB 11.8 path → `mariadb`/`mysql` on PATH.
+function findDbClient(env) {
+  const found = pickDbClient([env?.DB_CLIENT_BIN, join(DB_BIN_DIR, 'mariadb.exe')], existsSync);
+  if (found) return quote(found);
+  return ['mariadb', 'mysql'].find((c) => run(c, ['--version']).ok) ?? null;
+}
+
+function checkDbClient(client) {
+  return result('Client MariaDB', Boolean(client), client ?? 'tidak ada', DB_SETUP_FIX);
+}
+
+function checkDbService() {
+  const { out } = run('powershell', ['-NoProfile', '-Command', '"(Get-Service MariaDB).Status, (Get-Service MariaDB).StartType -join \' \'"']);
+  const ok = out === 'Running Automatic';
+  return result('Service MariaDB', ok, out || 'tidak ada', 'minta Claude: "Cek service MariaDB dan nyalakan kalau mati" (atau Services Windows → MariaDB → Start/Automatic)');
 }
 
 function userPathFromRegistry() {
@@ -96,23 +110,30 @@ function userPathFromRegistry() {
   return /REG_(?:EXPAND_)?SZ\s+(.*)$/m.exec(out)?.[1] ?? '';
 }
 
-function checkMysqlInPath() {
-  if (pathContains(process.env.PATH, MYSQL_BIN_DIR)) return result('`mysql` di PATH', true, 'ya');
-  const inRegistry = pathContains(userPathFromRegistry(), MYSQL_BIN_DIR);
+function checkDbInPath() {
+  if (pathContains(process.env.PATH, DB_BIN_DIR)) return result('Folder bin MariaDB di PATH', true, 'ya');
+  const inRegistry = pathContains(userPathFromRegistry(), DB_BIN_DIR);
   const fix = inRegistry
     ? 'sudah ada di PATH user — restart Claude Desktop / terminal agar aktif'
-    : `[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path","User") + ";${MYSQL_BIN_DIR}", "User")`;
-  return result('`mysql` di PATH', false, inRegistry ? 'belum aktif di sesi ini' : 'tidak ada', fix);
+    : `[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path","User") + ";${DB_BIN_DIR}", "User")`;
+  return result('Folder bin MariaDB di PATH', false, inRegistry ? 'belum aktif di sesi ini' : 'tidak ada', fix);
 }
 
-function checkMysqlLogin(env, dbName, label) {
-  const name = `Login MySQL → ${label}`;
+function checkDbLogin(client, env, dbName, label) {
+  const name = `Login MariaDB → ${label}`;
   if (!env) return result(name, false, 'backend/.env tidak ada', 'buat backend/.env (lihat docs/SETUP_LOCAL.md)');
-  if (!existsSync(MYSQL_EXE)) return result(name, false, 'mysql.exe tidak ada', 'install XAMPP');
-  const args = ['-h', env.DB_HOST, '-P', env.DB_PORT || '3306', '-u', env.DB_USER, '-e', quote('SELECT 1'), dbName];
-  const { ok, out } = run(quote(MYSQL_EXE), args, { MYSQL_PWD: env.DB_PASS ?? '' });
+  if (!client) return result(name, false, 'client MariaDB tidak ada', DB_SETUP_FIX);
+  const args = ['-h', env.DB_HOST, '-P', env.DB_PORT || '3306', '-u', env.DB_USER, '-N', '-B', '-e', quote('SELECT VERSION()'), dbName];
+  const { ok, out } = run(client, args, { MYSQL_PWD: env.DB_PASS ?? '' });
   const detail = ok ? `${env.DB_USER}@${dbName}` : (out.split(/\r?\n/).pop() || 'gagal');
-  return result(name, ok, detail, 'Start MySQL di XAMPP; cek user/DB/password (docs/SETUP_LOCAL.md langkah 4–5)');
+  return result(name, ok, detail, `jalankan scripts/db-setup.ps1; ${DB_SETUP_FIX}`);
+}
+
+function checkDbVersion(client, env) {
+  const args = ['-h', env?.DB_HOST, '-P', env?.DB_PORT || '3306', '-u', env?.DB_USER, '-N', '-B', '-e', quote('SELECT VERSION()')];
+  const { out } = client && env ? run(client, args, { MYSQL_PWD: env.DB_PASS ?? '' }) : { out: '' };
+  const version = out.split(/\r?\n/).find((l) => /^\d+\./.test(l));
+  return result('Versi server MariaDB 11.8.x', isMariaDb118(version), version || 'tidak terbaca', DB_SETUP_FIX);
 }
 
 // ---------- ports ----------
@@ -136,9 +157,9 @@ function portOpen(port, host) {
   });
 }
 
-async function checkMysqlPort() {
+async function checkDbPort() {
   const ok = await portOpen(3306, '127.0.0.1');
-  return result('MySQL server :3306', ok, ok ? 'jalan' : 'tidak jalan', 'buka XAMPP Control Panel → Start MySQL');
+  return result('MariaDB server :3306', ok, ok ? 'jalan' : 'tidak jalan', 'nyalakan service MariaDB (XAMPP MySQL tidak dipakai, jangan di-start)');
 }
 
 async function checkPortFree(port, label) {
@@ -193,6 +214,7 @@ async function collectResults() {
   const env = loadBackendEnv();
   const phpBin = env?.PHP_BIN || DEFAULT_PHP_BIN;
   const settings = readJson(join(ROOT, '.claude', 'settings.json'));
+  const dbClient = findDbClient(env);
   return [
     checkVersion('Node.js', 'node', '22.22', 'winget upgrade --id OpenJS.NodeJS.22 --exact'),
     checkVersion('Git', 'git', '2.0', 'winget install --id Git.Git -e'),
@@ -202,11 +224,13 @@ async function collectResults() {
     checkPhp(phpBin),
     checkPhpExtensions(phpBin),
     checkBackendEnv(env),
-    checkMysqlExe(),
-    checkMysqlInPath(),
-    await checkMysqlPort(),
-    checkMysqlLogin(env, env?.DB_NAME, 'DB dev'),
-    checkMysqlLogin(env, env?.DB_TEST_NAME || DEFAULT_TEST_DB, 'DB test'),
+    checkDbClient(dbClient),
+    checkDbInPath(),
+    checkDbService(),
+    await checkDbPort(),
+    checkDbVersion(dbClient, env),
+    checkDbLogin(dbClient, env, env?.DB_NAME, 'DB dev'),
+    checkDbLogin(dbClient, env, env?.DB_TEST_NAME || DEFAULT_TEST_DB, 'DB test'),
     await checkPortFree(5173, 'Vite'),
     await checkPortFree(8000, 'API PHP'),
     checkPlugins(settings),

@@ -77,6 +77,16 @@ export function pathContains(pathValue, dir) {
   return (pathValue ?? '').split(';').some((p) => norm(p) === norm(dir));
 }
 
+/** First existing DB client: DB_CLIENT_BIN → default MariaDB path; null → caller falls back to PATH. */
+export function pickDbClient(candidates, exists) {
+  return candidates.find((c) => c && exists(c)) ?? null;
+}
+
+/** True when a `SELECT VERSION()` / `--version` text is MariaDB 11.8.x (CR-004). */
+export function isMariaDb118(text) {
+  return /\b11\.8\.\d+/.test(text ?? '');
+}
+
 /** Format results; quiet mode keeps only failures. */
 export function formatResults(results, { quiet = false } = {}) {
   const lines = [];

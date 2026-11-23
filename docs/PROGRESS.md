@@ -40,6 +40,8 @@
   - Bukti (23 Nov 2026): `npm run dev` → Vite :5173 + `php -S` :8000 (PHP_BIN via run-php); `curl localhost:5173/api/health` lewat proxy → 200 `{"status":"ok","db":"ok"}`. Browser 360 px: teks "API ok, DB ok", tanpa scroll horizontal. TDD: 4 test baru `health.test.ts` (ok, DB error, jaringan putus, non-JSON). `npm run check` hijau (JS 16,81 KB gzip), `test:e2e` 6/6, `test:scripts` 22/22, `test:api` 4/14, `lint:api` bersih. `concurrently` ^10 sesuai D-005. Dev server selalu memakai `VITE_API_MODE=api` (di `vite.config.ts`, command serve); build/preview ikut `.env` (Pages = local, status disembunyikan). Catatan: 1 error konsol `favicon.ico` 404 (belum ada favicon, bukan scope).
 - [x] T0.10 `[sonnet]` CI (`ci.yml`, MySQL service, PHP 8.2/8.4, Lighthouse CI) + Dependabot (§15.1, §17.3)
   - Bukti (23 Nov 2026, PR #17): run CI https://github.com/medirty/studykidsapp/actions/runs/45133253754 → frontend, lighthouse, backend PHP 8.2 & 8.4 semuanya hijau. Lighthouse (mobile, perf ≥ 0,9, LCP < 2,5 s, CLS < 0,1) juga lolos lokal. `@lhci/cli` via `npx` (D-005). Dependabot mingguan: npm, composer, github-actions. **Bug ditemukan CI:** migrasi `settings` gagal di MySQL 8 (kolom PK nullable; MariaDB toleran) → diperbaiki dengan `'null' => false` di migrasi lama atas izin Bimo (belum pernah dipakai di produksi). Setelah merge: B8 (proteksi branch `main`) kini bisa dikerjakan; nama check: `frontend`, `lighthouse`, `backend (php 8.2)`, `backend (php 8.4)`.
+- [x] CR-004 `[sonnet]` Ganti XAMPP → MariaDB 11.8 (Bagian A–C) — sebelum T0.12
+  - Bukti (23 Nov 2026): MariaDB 11.8.2 service Running/Automatic; `scripts/db-setup.ps1` jalan 2× (idempotent); `npm run db:reset` OK; `npm run test:api` OK 5 tes (termasuk sesi UTC/strict/collation); `test:scripts` 24/24; doctor 21/22 (sisa ✗: PATH bin MariaDB, aktif setelah restart Claude Desktop). B5 `Database.php` dikerjakan langsung di sesi utama (perubahan kecil, skema tidak berubah). PRD v1.10. Bukti CI & `npm run dev` di bawah.
 - [ ] T0.11 `[sonnet]` `deploy-pages.yml` → hello-world di GitHub Pages (§17.5) — butuh B6
 - [ ] T0.12a `[sonnet]` (CR-003) Verifikasi di sesi baru: skill `ponytail` & `security-review` muncul, nama di `skills:` agent cocok, `/ponytail-help` jalan, doctor bersih
 - [ ] T0.12 `[sonnet]` Verifikasi plugin/MCP + rangkum bukti Exit Criteria (§16.2, §16.4)
@@ -56,7 +58,7 @@
 ### Tindakan manual Bimo
 - [ ] B1 Beli domain `studykids.id`
 - [x] B2 PHP 8.4.28 di `C:\php-8.4`, 8 ekstensi aktif (21 Nov 2026). PATH sistem tidak diubah — pakai `PHP_BIN`
-- [ ] B3 Start MySQL di XAMPP setiap mulai kerja (PATH `mysql` diurus T0.0)
+- [x] B3 (diganti CR-004) Database = MariaDB 11.8 service, menyala otomatis
 - [x] B4 User MySQL `studykids` (hak hanya ke 2 DB) + DB `studykids_dev` & `studykids_test` (utf8mb4); `backend/.env` terisi, di-ignore Git (21 Nov 2026)
 - [x] B5 (terverifikasi via API) Aktifkan Secret scanning & Push protection di repo
 - [x] B6 (terverifikasi via API) Pages → Source: GitHub Actions
@@ -67,7 +69,7 @@
 ### Bukti Exit Criteria
 | Kriteria | Bukti |
 |---|---|
-| E1 `npm run check` & `composer test` hijau di CI | — |
+| E1 `npm run check` & `composer test` hijau di CI | Dibuktikan ulang dengan `mariadb:11.8` (CR-004), lihat bukti CR-004 |
 | E2 `npm run dev` → frontend + API + DB lokal | T0.9: "API ok, DB ok" di 360 px, 23 Nov 2026 |
 | E3 Hello-world di GitHub Pages | — |
 | E4 `/next` mendelegasikan `[opus]` ke architect | T0.3: delegasi /next → architect, 22 Nov 2026 |

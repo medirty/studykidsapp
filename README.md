@@ -11,7 +11,7 @@ Web app belajar untuk SD kelas 1–6 (kurikulum terinspirasi Cambridge Primary),
 | [PRD.md](PRD.md) | Sumber kebenaran produk, roadmap, arsitektur |
 | [CLAUDE.md](CLAUDE.md) | Aturan kerja untuk Claude Code |
 | [docs/PROGRESS.md](docs/PROGRESS.md) | Status fase & task |
-| [docs/SETUP_LOCAL.md](docs/SETUP_LOCAL.md) | Setup lingkungan dev lokal (Windows + XAMPP MySQL) |
+| [docs/SETUP_LOCAL.md](docs/SETUP_LOCAL.md) | Setup lingkungan dev lokal (Windows + MariaDB 11.8) |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Log keputusan (ADR singkat) |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | Riwayat perubahan |
 | [docs/CHANGE_REQUESTS.md](docs/CHANGE_REQUESTS.md) | Permintaan perubahan PRD |

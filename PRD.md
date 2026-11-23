@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.9 · **Tanggal:** 23 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.10 · **Tanggal:** 23 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -88,7 +88,7 @@ Istilah wajib: **HARUS** = wajib, **TIDAK BOLEH** = dilarang, **SEBAIKNYA** = re
 | K6 | **Pembayaran dikerjakan paling akhir** (Fase 6). Sebelum itu, unlock memakai **kode aktivasi manual** dari admin. | Owner belum pernah daftar payment gateway; bisnis bisa jalan dulu. |
 | K7 | Tidak ada iklan, tidak ada chat antar pengguna. | Keamanan anak. |
 | K8 | **Hosting: Hostinger** (paket Business Web Hosting; minimal Premium), data center Indonesia. Keputusan harus final **sebelum Fase 4**; Fase 0–3 tidak butuh hosting (pakai lokal + GitHub Pages). | SSH, Git deploy, cron, PHP 8.2+, MySQL, SSL gratis; opsi Node.js di masa depan. Detail §17.2. |
-| K9 | **Dev lokal: XAMPP dipakai hanya untuk MySQL/MariaDB + PHP CLI**, server dijalankan dari terminal (`npm run dev`), bukan lewat folder `htdocs`/Apache. Tanpa MCP database. | Struktur sama dengan produksi, hot reload, Claude Code bisa start/stop server & akses DB lewat CLI (lebih hemat token daripada MCP). Detail §17.1. |
+| K9 | **Dev lokal: MariaDB 11.8 standalone** (service Windows, versi sama dengan Hostinger) + PHP 8.4 di `C:\php-8.4`; server dijalankan dari terminal (`npm run dev`). XAMPP tidak dipakai (CR-004). Tanpa MCP database. | Laptop = CI = produksi (MariaDB 11.8), tidak perlu start manual, Claude Code akses DB lewat CLI. Detail §17.1. |
 | K10 | **Routing model Opus/Sonnet otomatis** lewat konfigurasi `.claude/` (opusplan + subagent + slash command ber-model). Bimo tidak perlu mengganti model manual. | Detail §16.2. |
 
 ### 4.2 Harga (FINAL)
@@ -480,7 +480,7 @@ Token disimpan di `src/styles/tokens.css` sebagai CSS variables. **TIDAK BOLEH**
 | Grafik (admin & laporan ortu) | **uPlot** (lazy load) | Sangat ringan. |
 | Efek | `canvas-confetti` | Ringan. |
 | Backend | **PHP 8.4 + Slim 4** (micro-framework); kode tidak boleh memakai fitur khusus 8.3/8.4 agar tetap jalan di 8.2 | Didukung semua shared hosting Indonesia. PHP 8.2 berhenti mendapat patch keamanan akhir Des 2026, sebelum launch, jadi dev & produksi memakai 8.4. |
-| Database | **MySQL 8 / MariaDB** bawaan hosting | Gratis termasuk paket hosting, mudah dikelola via phpMyAdmin. |
+| Database | **MariaDB 11.8** (bawaan Hostinger; lokal & CI memakai versi yang sama) | Gratis termasuk paket hosting. Koneksi mengatur charset/collation/sql_mode/zona waktu sendiri agar perilaku sama di semua server. |
 | Migrasi DB | **Phinx** | Skema versi-terkontrol. |
 | Email | PHPMailer + SMTP email hosting | Gratis dari hosting. |
 | Testing FE | **Vitest** (unit) + **Playwright** (E2E, mobile viewport) | |
@@ -884,23 +884,23 @@ Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/
 
 | Env | Tempat | Isi |
 |---|---|---|
-| **Local** | Laptop Bimo (Windows) — XAMPP (MySQL + PHP CLI) + Node, dijalankan dengan `npm run dev` | Pengembangan |
+| **Local** | Laptop Bimo (Windows) — MariaDB 11.8 (service) + PHP 8.4 + Node, dijalankan dengan `npm run dev` | Pengembangan |
 | **Preview** | **GitHub Pages** — `https://medirty.github.io/studykidsapp/` (mode lokal, tanpa backend) | Demo untuk diuji anak/teman |
 | **Staging** | `staging.studykids.id` + DB terpisah | Uji backend & pembayaran sandbox |
 | **Production** | Hostinger, domain `studykids.id`, SSL gratis (Let's Encrypt) | Live |
 
 #### Setup dev lokal (keputusan K9)
 
-**Keputusan:** tetap memakai XAMPP yang sudah biasa dipakai Bimo, tapi **hanya MySQL/MariaDB + phpMyAdmin + PHP CLI-nya**. Apache & folder `htdocs` TIDAK dipakai. Ini lebih nyaman untuk Claude Code karena semua bisa dijalankan dan dicek dari terminal.
+**Keputusan (CR-004):** database lokal memakai **MariaDB 11.8 standalone** sebagai service Windows, versi yang sama dengan Hostinger dan CI. XAMPP tidak dipakai lagi (MariaDB 10.4 bawaannya sudah tidak didukung dan berbeda versi dengan produksi). Lihat data manual dengan **HeidiSQL** (ikut terinstall).
 
 | Komponen | Cara |
 |---|---|
-| Database | MySQL dari XAMPP (start lewat XAMPP Control Panel). DB: `studykids_dev` (dev) & `studykids_test` (test otomatis, di-reset setiap test run). User khusus `studykids` (bukan `root`). |
-| PHP | **`C:\php-8.4`** — install bersih PHP 8.4 terbaru (VS17 x64 Non Thread Safe dari windows.php.net), bukan PHP 8.2 bawaan XAMPP. Folder lama `C:\php-8.4.2` tidak dipakai (berisi `php_pdo_mysql.dll` milik PHP 8.2 sehingga error). Aktifkan ekstensi di `php.ini`: `pdo_mysql`, `mbstring`, `openssl`, `curl`, `intl`, `fileinfo`, `zip`, `sodium`. PATH sistem **tidak diubah** (perintah `php` tetap XAMPP 8.2); project memanggil PHP lewat `PHP_BIN=C:\php-8.4\php.exe` di `backend/.env` & script npm. Tambahkan juga `C:\xampp\mysql\bin` ke PATH (saat ini `mysql` belum ada di PATH). |
+| Database | MariaDB 11.8 (MSI dari mariadb.org), service `MariaDB` otomatis menyala, port 3306. DB `studykids_dev` & `studykids_test`, user `studykids` (bukan root), dibuat dengan `scripts/db-setup.ps1`. |
+| PHP | **`C:\php-8.4`** — install bersih PHP 8.4 terbaru (VS17 x64 Non Thread Safe dari windows.php.net), bukan PHP 8.2 bawaan XAMPP. Folder lama `C:\php-8.4.2` tidak dipakai (berisi `php_pdo_mysql.dll` milik PHP 8.2 sehingga error). Aktifkan ekstensi di `php.ini`: `pdo_mysql`, `mbstring`, `openssl`, `curl`, `intl`, `fileinfo`, `zip`, `sodium`. PATH sistem **tidak diubah** (perintah `php` tetap XAMPP 8.2); project memanggil PHP lewat `PHP_BIN=C:\php-8.4\php.exe` di `backend/.env` & script npm. Folder `C:\Program Files\MariaDB 11.8\bin` ada di PATH user (script project tidak bergantung padanya; `DB_CLIENT_BIN` opsional). |
 | Composer & Node | Install Composer (Windows installer) & Node.js LTS. Git for Windows. |
 | Menjalankan app | `npm run dev` di root → menjalankan bersamaan (pakai `concurrently`): Vite di `localhost:5173` + API `php -S localhost:8000 -t backend/public`. Vite mem-*proxy* `/api` → `localhost:8000`, jadi tidak ada masalah CORS dan URL sama seperti produksi. |
-| Akses DB oleh Claude Code | Lewat **CLI** (`mysql -u studykids -p studykids_dev -e "..."`), Phinx (`migrate`, `seed`), dan script `npm run db:reset`. **Tanpa MCP database** — CLI lebih hemat token & tidak menambah konteks setiap sesi. |
-| Lihat data manual | phpMyAdmin dari XAMPP (`localhost/phpmyadmin`) — hanya Apache untuk phpMyAdmin yang boleh dinyalakan. |
+| Akses DB oleh Claude Code | Lewat **CLI** (`mariadb -u studykids -p studykids_dev -e "..."`), Phinx (`migrate`, `seed`), dan script `npm run db:reset`. **Tanpa MCP database** — CLI lebih hemat token & tidak menambah konteks setiap sesi. |
+| Lihat data manual | HeidiSQL (ikut installer MariaDB). phpMyAdmin/XAMPP tidak dipakai. |
 | Konfigurasi | `backend/.env` (dari `.env.example`): `DB_HOST=127.0.0.1`, `DB_NAME=studykids_dev`, `DB_USER=studykids`, `DB_PASS=...`. |
 
 **Status laptop Bimo (dicek 21 Nov 2026):**
@@ -911,8 +911,7 @@ Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/
 | Git 2.47.1 | OK | — |
 | Composer 2.8.4 | OK | — |
 | PHP 8.4.28 NTS x64 di `C:\php-8.4` | OK — 8 ekstensi wajib aktif, tanpa warning | Project memanggil `PHP_BIN=C:\php-8.4\php.exe` (perintah `php` di PATH tetap XAMPP 8.2) |
-| MySQL client (`mysql`) | Belum ada di PATH | T0.0 Bootstrap menambahkan `C:\xampp\mysql\bin` ke PATH user |
-| MySQL/MariaDB server | OK — XAMPP, port 3306; tidak ada service MySQL lain | Start lewat XAMPP Control Panel |
+| MariaDB 11.8 (service) | Dipasang lewat CR-004 | `npm run doctor` hijau |
 | GitHub CLI 2.105 | OK — login `medirty` | — |
 | Claude Code 2.1.330 | OK — dipakai lewat tab **Code** di Claude Desktop | — |
 | Plugin/skill/MCP Claude | Belum diverifikasi | Otomatis lewat `docs/setup/BOOTSTRAP.md` (§16.4) |
@@ -930,6 +929,7 @@ Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/
 |---|---|---|
 | Data center Indonesia | Ya | Ya |
 | PHP 8.2+ & MySQL | Ya | Ya |
+| Database | MariaDB 11.8 | — |
 | SSH & Git deploy | Ya (Premium ke atas) | Tergantung paket |
 | Cron job | Ya | Ya |
 | Panel | hPanel | cPanel |
@@ -945,6 +945,7 @@ Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/
 
 #### Deploy
 
+- Database produksi = MariaDB Hostinger. Saat membuat DB di hPanel (Fase 4), cek `SELECT VERSION();` di phpMyAdmin hosting. Jika versi mayor berubah dari 11.8, samakan image CI (`mariadb:<versi>`) dan catat di DECISIONS. Koneksi app selalu memakai UTC, utf8mb4_unicode_ci, dan sql_mode ketat (CR-004).
 - Build frontend → upload `dist/` ke `public_html/`.
 - Backend → `public_html/api/` (hanya `index.php` + `.htaccess`), source & `vendor/` & `.env` di luar `public_html`.
 - Deploy otomatis via GitHub Actions (SSH/rsync bila paket hosting mendukung SSH; jika tidak, FTP deploy action) saat membuat **tag rilis** (`v1.2.0`), bukan setiap push.
@@ -1108,3 +1109,4 @@ Masih terbuka:
 | 1.7 | 21 Nov 2026 | CR-001: aturan subagent (hanya 4 subagent project, maks. 1 bersamaan, eksekusi inline, tanpa worktree; §16.2) dan aturan auto-merge PR dengan daftar kategori wajib review Bimo (§17.5). |
 | 1.8 | 22 Nov 2026 | CR-002: protokol bantuan langsung saat task terblokir tindakan manual Bimo — jelaskan sederhana, cek kondisi nyata, coba sendiri, jika diblokir beri langkah klik-demi-klik, lalu verifikasi (§16.5). |
 | 1.9 | 23 Nov 2026 | CR-003: tambah plugin **ponytail** (kode minimal) dan skill **security-review** (selektif dari ECC); **graphify** dijadwalkan evaluasi di awal Fase 4; ECC paket penuh tidak dipakai. Tabel "kapan memakai skill apa" + batas ponytail (§16.4.1–16.4.2). |
+| 1.10 | 23 Nov 2026 | CR-004: XAMPP diganti **MariaDB 11.8 standalone** (sama dengan Hostinger & CI); CI pindah dari MySQL 8.0 ke `mariadb:11.8`; koneksi DB mengatur sql_mode/UTC/collation sendiri; `scripts/db-setup.ps1`; HeidiSQL pengganti phpMyAdmin. Alur deploy tidak berubah. |
