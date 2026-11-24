@@ -13,7 +13,8 @@
 ## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
 
 ### Task
-- [ ] T1.0 `[sonnet]` Bersih-bersih gate Fase 0: Dependabot #19/#20 (L-1), pecah job deploy Pages (M-1) + sertakan `docs/mockups/` ke artefak Pages di `/studykidsapp/mockups/` (izin Bimo sudah ada)
+- [~] T1.0 `[sonnet]` Bersih-bersih gate Fase 0: Dependabot #19/#20 (L-1), pecah job deploy Pages (M-1) + sertakan `docs/mockups/` ke artefak Pages di `/studykidsapp/mockups/` (izin Bimo sudah ada)
+  - Progres (24 Nov 2026): job deploy Pages dipecah (build/deploy) + `docs/mockups/index.html` placeholder disalin ke `/mockups/` (PR cabang `chore/f1-cleanup-gate0`). #19: sudah diminta `@dependabot rebase`, tinggal merge setelah CI hijau. #20 (TS 7): penutupan **ditolak izin otomatis** → menunggu Bimo (tutup manual atau beri izin). AC `/mockups/` 200 diperiksa setelah merge.
 - [ ] T1.1 `[sonnet]` Design tokens final + self-host Baloo 2/Nunito + test kontras AA (§9.2, §8.5)
 - [ ] T1.2 `[sonnet]` Logo final Kiko: ikon, horizontal, satu warna/putih, wordmark path, favicon & PWA PNG (§9.4)
 - [ ] T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar contoh (§9.4, FR-2) → B10
