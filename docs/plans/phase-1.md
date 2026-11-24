@@ -21,7 +21,8 @@ Dibuat: 24 Nov 2026 lewat `/plan-phase`. Checklist ringkas ada di `docs/PROGRESS
 - Kelas 1–2 vs 5–6 (§9.1 no. 2): beranda & layar soal punya **dua varian** (kecil: ikon besar, minim teks; besar: lebih "dewasa").
 - Data contoh fiktif, tanpa data anak asli. Tanpa logo/teks/soal Cambridge (§6.1). Aset baru dicatat di `docs/ASSET_LICENSES.md`.
 - Skill: `frontend-design` untuk arah visual; `design:accessibility-review` di T1.15.
-- **Kategori wajib review (§17.5):** PR mockup/logo **tidak** di-auto-merge — tunggu persetujuan Bimo. Agar Bimo tidak menunggu per layar, PR boleh di-merge setelah CI hijau dengan label "draft visual"; persetujuan formal dikumpulkan di B10 (logo) dan B11 (semua mockup). *(lihat Pertanyaan 2)*
+- **Kategori wajib review (§17.5):** PR mockup/logo **tidak** di-auto-merge — tunggu persetujuan Bimo. Agar Bimo tidak menunggu per layar, PR boleh di-merge setelah CI hijau dengan label "draft visual"; persetujuan formal dikumpulkan di B10 (logo) dan B11 (semua mockup). *(Disetujui Bimo 24 Nov 2026.)*
+- Mockup dilihat lewat GitHub Pages `/studykidsapp/mockups/` (HP & laptop); avatar cukup 4 contoh di fase ini (Bimo, 24 Nov 2026).
 
 ## Task (urut dependensi)
 
@@ -29,8 +30,8 @@ Setiap task = 1 sesi `/next`, 1 branch (`feat/f1-...` / `docs/f1-...`), 1 PR.
 
 ### T1.0 `[sonnet]` Bersih-bersih sisa gate Fase 0
 - **PRD:** §17.3, §17.5; temuan gate L-1 & M-1 (`docs/plans/gate-phase-0.md`).
-- **Isi:** L-1: Dependabot #19 (rebase via `@dependabot rebase`) & #20 (TypeScript 7 → tutup, alasan D-005). M-1: pecah job deploy Pages (build/deploy terpisah) — **workflow deploy = wajib tanya Bimo**.
-- **AC:** tidak ada PR Dependabot terbuka tanpa keputusan; deploy Pages tetap 200 setelah perubahan.
+- **Isi:** L-1: Dependabot #19 (rebase via `@dependabot rebase`) & #20 (TypeScript 7 → tutup, alasan D-005). M-1: pecah job deploy Pages (build/deploy terpisah). Tambahan (keputusan Bimo 24 Nov 2026): artefak Pages menyertakan `docs/mockups/` di `/studykidsapp/mockups/` (folder dibuat kosong + `index.html` placeholder). Izin ubah workflow deploy sudah diberikan Bimo.
+- **AC:** tidak ada PR Dependabot terbuka tanpa keputusan; `https://medirty.github.io/studykidsapp/` tetap 200 dan `/mockups/` 200 setelah perubahan.
 
 ### T1.1 `[sonnet]` Design tokens final + font self-host
 - **PRD:** §9.2, §8.5, §8.1.
