@@ -5,16 +5,16 @@
 
 ## Status
 
-- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, siap `/next` → T1.0)
+- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0 selesai, siap `/next` → T1.1)
 - **Posisi terakhir (tutup hari 24 Nov 2026):** Fase 0 disetujui & ber-tag. Hari ini: gate Fase 0 + B8 (PR #25–26), rencana Fase 1 (PR #27, `docs/plans/phase-1.md`), jawaban Bimo atas pertanyaan Fase 1 (PR #28), CR-005 ganti frontend-design → impeccable (PR #29). Semua ter-merge ke `main`; tidak ada task setengah jalan. Fase 1 belum dimulai (T1.0 belum dikerjakan). Dependabot #19 (setup-node, bentrok) & #20 (TypeScript 7) masih terbuka → ditangani di T1.0.
-- **Task berikutnya:** `/next` → T1.0 `[sonnet]` bersih-bersih gate Fase 0 (Dependabot #19/#20, pecah job deploy Pages, mockups ke artefak Pages). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** `/next` → T1.1 `[sonnet]` design tokens final + font self-host. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
 
 ### Task
-- [~] T1.0 `[sonnet]` Bersih-bersih gate Fase 0: Dependabot #19/#20 (L-1), pecah job deploy Pages (M-1) + sertakan `docs/mockups/` ke artefak Pages di `/studykidsapp/mockups/` (izin Bimo sudah ada)
-  - Progres (24 Nov 2026): job deploy Pages dipecah (build/deploy) + `docs/mockups/index.html` placeholder disalin ke `/mockups/` (PR cabang `chore/f1-cleanup-gate0`). #19: sudah diminta `@dependabot rebase`, tinggal merge setelah CI hijau. #20 (TS 7): penutupan **ditolak izin otomatis** → menunggu Bimo (tutup manual atau beri izin). AC `/mockups/` 200 diperiksa setelah merge.
+- [x] T1.0 `[sonnet]` Bersih-bersih gate Fase 0: Dependabot #19/#20 (L-1), pecah job deploy Pages (M-1) + sertakan `docs/mockups/` ke artefak Pages di `/studykidsapp/mockups/` (izin Bimo sudah ada)
+  - Bukti (24 Nov 2026): PR #31 (job deploy dipecah + `docs/mockups/` ke artefak Pages) & #19 (setup-node 7) di-merge; #20 (TS 7) ditutup atas perintah Bimo (alasan D-004). Run Deploy Pages sukses; `https://medirty.github.io/studykidsapp/` → 200, `/mockups/` → 200. Tidak ada PR Dependabot terbuka.
 - [ ] T1.1 `[sonnet]` Design tokens final + self-host Baloo 2/Nunito + test kontras AA (§9.2, §8.5)
 - [ ] T1.2 `[sonnet]` Logo final Kiko: ikon, horizontal, satu warna/putih, wordmark path, favicon & PWA PNG (§9.4)
 - [ ] T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar contoh (§9.4, FR-2) → B10
