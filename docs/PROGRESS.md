@@ -44,8 +44,10 @@
   - Bukti (23 Nov 2026): MariaDB 11.8.2 service Running/Automatic; `scripts/db-setup.ps1` jalan 2× (idempotent); `npm run db:reset` OK; `npm run test:api` OK 5 tes (termasuk sesi UTC/strict/collation); `test:scripts` 24/24; doctor 21/22 (sisa ✗: PATH bin MariaDB, aktif setelah restart Claude Desktop). B5 `Database.php` dikerjakan langsung di sesi utama (perubahan kecil, skema tidak berubah). PRD v1.10. Bukti CI & `npm run dev` di bawah.
 - [x] T0.11 `[sonnet]` `deploy-pages.yml` → hello-world di GitHub Pages (§17.5) — butuh B6
   - Bukti (24 Nov 2026): `.github/workflows/deploy-pages.yml` (push `main` + manual → build `VITE_BASE=/studykidsapp/`, `VITE_API_MODE=local` → upload `frontend/dist` → deploy). Build lokal dengan env itu sukses, `npm run check` hijau (JS 15,54 KB gzip). PR #22 di-merge atas persetujuan Bimo (24 Nov 2026). Run pertama gagal (artefak belum terbaca, jeda sesaat); rerun sukses. `https://medirty.github.io/studykidsapp/` → 200, `index.html` + JS + CSS di `/studykidsapp/assets/` semuanya 200.
-- [ ] T0.12a `[sonnet]` (CR-003) Verifikasi di sesi baru: skill `ponytail` & `security-review` muncul, nama di `skills:` agent cocok, `/ponytail-help` jalan, doctor bersih
-- [ ] T0.12 `[sonnet]` Verifikasi plugin/MCP + rangkum bukti Exit Criteria (§16.2, §16.4)
+- [x] T0.12a `[sonnet]` (CR-003) Verifikasi di sesi baru: skill `ponytail` & `security-review` muncul, nama di `skills:` agent cocok, `/ponytail-help` jalan, doctor bersih
+  - Bukti (24 Nov 2026, sesi baru setelah `/clear`): daftar skill sesi memuat `ponytail:ponytail`, `ponytail:ponytail-help`, `security-review`; hook SessionStart menyuntikkan "PONYTAIL MODE ACTIVE". `skills:` di agent: architect & reviewer = `ponytail`+`security-review`, implementer = `ponytail` (cocok PRD §16.4.1). `node scripts/doctor.mjs` → 22/22 OK (✗ `mysql` PATH sebelumnya sudah hilang).
+- [x] T0.12 `[sonnet]` Verifikasi plugin/MCP + rangkum bukti Exit Criteria (§16.2, §16.4)
+  - Bukti (24 Nov 2026): `claude plugin list` → superpowers 7.0.2, frontend-design 1.1.1, ponytail 5.3.3 enabled (scope project); tanpa claude-mem. MCP project (playwright, context7, chrome-devtools) tersedia di sesi. `.claude/settings.json`: `opusplan`, hook doctor, deny rule lockfile/node_modules/.env. Exit Criteria E1–E4 terbukti di tabel bawah.
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 0 disetujui" → tag `phase-0-approved`
 
 ### Dijadwalkan (CR-003)
