@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "docs/brand/index.html"
+        ],
+        "createdAt": "2026-11-24T15:52:38.525Z",
+        "reason": "sanctioned: #fff8f2 is the PRD §9.2 brand token --color-bg, decided in the PRD, not a reflex choice"
+      }
+    ]
+  }
+}
