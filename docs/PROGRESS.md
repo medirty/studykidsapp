@@ -8,7 +8,7 @@
 - **Fase aktif:** 0 — Setup
 - **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). T0.4 scaffold frontend selesai (22 Nov 2026). T0.5 tooling frontend + `npm run check` selesai (22 Nov 2026). T0.6 Playwright + axe-core selesai (22 Nov 2026). T0.7 backend Slim 4 selesai (23 Nov 2026). T0.8 Phinx + db:reset selesai (23 Nov 2026, PR #15). T0.9 `npm run dev` selesai (23 Nov 2026). T0.10 CI + Dependabot selesai (23 Nov 2026, PR #17). T0.11 workflow dibuat (24 Nov 2026), menunggu persetujuan merge. PR Dependabot: #18 merged; #19 (setup-node, bentrok, perlu rebase) & #20 (TypeScript 7, akan ditutup) masih terbuka — perintah komentar/close ditolak pengaman. CR-002 diterapkan (PRD v1.8, 22 Nov 2026). CR-003 disetujui (23 Nov 2026): dokumen diterapkan (PRD v1.9, PR #13), instalasi ponytail & security-review berjalan; verifikasi di sesi baru.
 - **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor). Bagian atas `docs/setup/BOOTSTRAP.md` masih ada mojibake (`â€”`), belum diperbaiki (di luar scope).
-- **Persetujuan fase:** Bimo menulis "Fase 0 disetujui" (24 Nov 2026) saat T0.12a, T0.12, dan `/gate` belum dijalankan. Tag `phase-0-approved` & lanjut Fase 1 ditahan sampai ketiganya selesai atau Bimo menegaskan boleh dilewati.
+- **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 0 — Setup (rencana: `docs/plans/phase-0.md`)
 
@@ -48,7 +48,7 @@
   - Bukti (24 Nov 2026, sesi baru setelah `/clear`): daftar skill sesi memuat `ponytail:ponytail`, `ponytail:ponytail-help`, `security-review`; hook SessionStart menyuntikkan "PONYTAIL MODE ACTIVE". `skills:` di agent: architect & reviewer = `ponytail`+`security-review`, implementer = `ponytail` (cocok PRD §16.4.1). `node scripts/doctor.mjs` → 22/22 OK (✗ `mysql` PATH sebelumnya sudah hilang).
 - [x] T0.12 `[sonnet]` Verifikasi plugin/MCP + rangkum bukti Exit Criteria (§16.2, §16.4)
   - Bukti (24 Nov 2026): `claude plugin list` → superpowers 7.0.2, frontend-design 1.1.1, ponytail 5.3.3 enabled (scope project); tanpa claude-mem. MCP project (playwright, context7, chrome-devtools) tersedia di sesi. `.claude/settings.json`: `opusplan`, hook doctor, deny rule lockfile/node_modules/.env. Exit Criteria E1–E4 terbukti di tabel bawah.
-- [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 0 disetujui" → tag `phase-0-approved`
+- [x] Gate `[opus]` `/gate` → laporan `docs/plans/gate-phase-0.md` (siap persetujuan); Bimo menulis "Fase 0 disetujui" (24 Nov 2026, setelah B8) → tag `phase-0-approved`
 
 ### Dijadwalkan (CR-003)
 - [ ] **Awal Fase 4** `[sonnet]` Evaluasi graphify (PRD §16.4.2): mode code-only lokal, tanpa Cloud/git hook, `graphify-out/` di `.gitignore`; lolos jika token/file yang dibaca turun nyata pada 3 task eksplorasi dan tanpa error di Windows. Catat hasil di `DECISIONS.md`. Masukkan ke `docs/plans/phase-4.md` saat `/plan-phase` Fase 4.
@@ -66,7 +66,7 @@
 - [x] B5 (terverifikasi via API) Aktifkan Secret scanning & Push protection di repo
 - [x] B6 (terverifikasi via API) Pages → Source: GitHub Actions
 - [x] B7 Setujui instalasi plugin/skill/MCP saat T0.0 berjalan (dipasang otomatis oleh Claude)
-- [ ] B8 Proteksi branch `main` (setelah T0.10)
+- [x] B8 Proteksi branch `main` — dipasang via `gh api` (24 Nov 2026): 4 required checks (`frontend`, `lighthouse`, `backend (php 8.2)`, `backend (php 8.4)`), force push & hapus branch dilarang, auto-merge aktif. `enforce_admins=false` (Bimo owner tunggal tetap bisa bypass darurat)
 - [x] B9 Upgrade Node — selesai 22 Nov 2026: Node **22.23.5** (memenuhi ≥ 22.22; bukan 24, cukup untuk T0.5). Perintah yang benar `winget upgrade --id OpenJS.NodeJS.22 --exact` (ID `OpenJS.NodeJS.LTS` tidak cocok). Alasan: `docs/DECISIONS.md` D-004
 
 ### Bukti Exit Criteria
