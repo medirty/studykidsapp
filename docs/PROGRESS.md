@@ -6,7 +6,7 @@
 ## Status
 
 - **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.2 selesai, siap `/next` → T1.3)
-- **Posisi terakhir (tutup hari 24 Nov 2026):** Fase 0 disetujui & ber-tag. Hari ini: gate Fase 0 + B8 (PR #25–26), rencana Fase 1 (PR #27, `docs/plans/phase-1.md`), jawaban Bimo atas pertanyaan Fase 1 (PR #28), CR-005 ganti frontend-design → impeccable (PR #29). Semua ter-merge ke `main`; tidak ada task setengah jalan. Fase 1 belum dimulai (T1.0 belum dikerjakan). Dependabot #19 (setup-node, bentrok) & #20 (TypeScript 7) masih terbuka → ditangani di T1.0.
+- **Posisi terakhir (tutup hari 24 Nov 2026, sesi ke-2):** T1.0 (PR #31, #32), T1.1 (PR #33), T1.2 (PR #34) selesai & ter-merge ke `main`; PR #35 (duplikat logo) ditutup. Tidak ada PR terbuka, tidak ada task setengah jalan. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
 - **Task berikutnya:** `/next` → T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
