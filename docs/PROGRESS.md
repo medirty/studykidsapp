@@ -5,10 +5,40 @@
 
 ## Status
 
-- **Fase aktif:** 0 — Setup
+- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; menunggu jawaban pertanyaan Fase 1 di bawah)
 - **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). T0.4 scaffold frontend selesai (22 Nov 2026). T0.5 tooling frontend + `npm run check` selesai (22 Nov 2026). T0.6 Playwright + axe-core selesai (22 Nov 2026). T0.7 backend Slim 4 selesai (23 Nov 2026). T0.8 Phinx + db:reset selesai (23 Nov 2026, PR #15). T0.9 `npm run dev` selesai (23 Nov 2026). T0.10 CI + Dependabot selesai (23 Nov 2026, PR #17). T0.11 workflow dibuat (24 Nov 2026), menunggu persetujuan merge. PR Dependabot: #18 merged; #19 (setup-node, bentrok, perlu rebase) & #20 (TypeScript 7, akan ditutup) masih terbuka — perintah komentar/close ditolak pengaman. CR-002 diterapkan (PRD v1.8, 22 Nov 2026). CR-003 disetujui (23 Nov 2026): dokumen diterapkan (PRD v1.9, PR #13), instalasi ponytail & security-review berjalan; verifikasi di sesi baru.
 - **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor). Bagian atas `docs/setup/BOOTSTRAP.md` masih ada mojibake (`â€”`), belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
+
+## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
+
+### Task
+- [ ] T1.0 `[sonnet]` Bersih-bersih gate Fase 0: Dependabot #19/#20 (L-1), pecah job deploy Pages (M-1, perlu izin Bimo)
+- [ ] T1.1 `[sonnet]` Design tokens final + self-host Baloo 2/Nunito + test kontras AA (§9.2, §8.5)
+- [ ] T1.2 `[sonnet]` Logo final Kiko: ikon, horizontal, satu warna/putih, wordmark path, favicon & PWA PNG (§9.4)
+- [ ] T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar contoh (§9.4, FR-2) → B10
+- [ ] T1.4 `[sonnet]` Kerangka `docs/mockups/` (galeri, mockup.css dari token) + Playwright 360/1280 + axe (§9.3, §8.5)
+- [ ] T1.5 `[sonnet]` Layar 1 Landing page (FR-1)
+- [ ] T1.6 `[sonnet]` Layar 2–3 Pilih kelas/profil + Beranda anak, varian kelas 1–2 & 5–6 (FR-2, FR-7)
+- [ ] T1.7 `[sonnet]` Layar 4 Peta belajar (FR-4)
+- [ ] T1.8 `[sonnet]` Layar 5a Soal mcq/input/tf/tap/listen (FR-5, FR-8)
+- [ ] T1.9 `[sonnet]` Layar 5b Soal dragdrop/match/order/draw (FR-5)
+- [ ] T1.10 `[sonnet]` Layar 6–7 Feedback benar/salah + Ringkasan sesi (FR-5, FR-7)
+- [ ] T1.11 `[sonnet]` Layar 8 Mini game "Balon Angka" (FR-6)
+- [ ] T1.12 `[sonnet]` Layar 9 Laporan anak & ortu (FR-9)
+- [ ] T1.13 `[sonnet]` Layar 10 Parent Gate, paywall/kode aktivasi, kritik & saran (FR-2, FR-10, FR-12)
+- [ ] T1.14 `[sonnet]` Layar 11 Admin: dashboard, penjualan, marketing tools (FR-13, FR-14)
+- [ ] T1.15 `[sonnet]` Review aksesibilitas & konsistensi + paket persetujuan → B11
+- [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 1 disetujui" → tag `phase-1-approved`
+
+### Tindakan manual Bimo
+- [ ] B10 Setujui logo final + ekspresi Kiko (setelah T1.3)
+- [ ] B11 Setujui semua mockup (setelah T1.15)
+
+### Pertanyaan terbuka Fase 1 (untuk Bimo)
+1. Cara melihat mockup: (a) publikasikan `docs/mockups/` ke GitHub Pages di `/studykidsapp/mockups/` agar bisa dibuka di HP (ubah workflow deploy → wajib izin), atau (b) cukup buka file lokal di laptop?
+2. PR mockup/logo termasuk "wajib review". Boleh di-merge setelah CI hijau sebagai *draft*, dengan persetujuan resmi dikumpulkan sekali di B10 (logo) & B11 (semua layar)? Atau Bimo mau setujui tiap PR?
+3. Avatar: cukup 4 contoh di Fase 1 (12 lengkap di Fase 2), setuju?
 
 ## Fase 0 — Setup (rencana: `docs/plans/phase-0.md`)
 
