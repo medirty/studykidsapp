@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Logo StudyKids — Kiko</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --ink: #1b1340;
+        --bg: #fff8f2;
+        --surface: #fff;
+        --soft: #5a5278;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, sans-serif; }
+      main { max-width: 960px; margin: 0 auto; }
+      h1 { margin: 0 0 4px; }
+      h2 { margin: 32px 0 8px; font-size: 1.15rem; }
+      p { margin: 0 0 8px; color: var(--soft); }
+      .row { display: flex; flex-wrap: wrap; gap: 12px; }
+      .tile { flex: 1 1 260px; padding: 16px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+      .light { background: var(--surface); border: 1px solid #e8dfd6; }
+      .dark { background: var(--ink); color: #fff; }
+      .tile img { max-width: 100%; height: auto; }
+      .tile small { font-size: 0.8rem; opacity: 0.8; }
+      .sizes { align-items: flex-end; flex-direction: row; justify-content: center; gap: 24px; }
+      .sizes figure { margin: 0; text-align: center; font-size: 0.8rem; }
+      .sizes img { display: block; margin: 0 auto 4px; }
+      .mask { border-radius: 50%; overflow: hidden; width: 96px; height: 96px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Logo StudyKids</h1>
+      <p>Maskot Kiko — blob jelly oranye yang memantul. Karya orisinal; wordmark sudah berupa path (tanpa font).</p>
+
+      <h2>Logo horizontal</h2>
+      <div class="row">
+        <div class="tile light"><img src="logo-horizontal.svg" width="320" alt="Logo horizontal berwarna" /><small>Warna · latar terang</small></div>
+        <div class="tile dark"><img src="logo-horizontal-white.svg" width="320" alt="Logo horizontal putih" /><small>Putih · latar gelap</small></div>
+        <div class="tile light"><img src="logo-horizontal-ink.svg" width="320" alt="Logo horizontal satu warna" /><small>Satu warna (Ink)</small></div>
+      </div>
+
+      <h2>Ikon Kiko</h2>
+      <div class="row">
+        <div class="tile light"><img src="kiko-icon.svg" width="120" alt="Kiko berwarna" /><small>Warna</small></div>
+        <div class="tile light"><img src="kiko-icon-ink.svg" width="120" alt="Kiko satu warna" /><small>Satu warna (Ink)</small></div>
+        <div class="tile dark"><img src="kiko-icon-white.svg" width="120" alt="Kiko putih" /><small>Putih</small></div>
+      </div>
+
+      <h2>Ukuran kecil (uji dikenali di 32×32)</h2>
+      <div class="row">
+        <div class="tile light sizes">
+          <figure><img src="kiko-icon.svg" width="32" height="32" alt="Kiko 32 px" />32</figure>
+          <figure><img src="kiko-icon.svg" width="48" height="48" alt="Kiko 48 px" />48</figure>
+          <figure><img src="kiko-icon.svg" width="192" height="192" alt="Kiko 192 px" />192</figure>
+        </div>
+        <div class="tile dark sizes">
+          <figure><img src="kiko-icon-white.svg" width="32" height="32" alt="Kiko putih 32 px" />32</figure>
+          <figure><img src="kiko-icon-white.svg" width="48" height="48" alt="Kiko putih 48 px" />48</figure>
+          <figure><img src="kiko-icon-white.svg" width="192" height="192" alt="Kiko putih 192 px" />192</figure>
+        </div>
+      </div>
+
+      <h2>Berkas turunan (favicon &amp; PWA)</h2>
+      <div class="row">
+        <div class="tile light sizes">
+          <figure><img src="favicon-32.png" width="32" height="32" alt="favicon 32" />favicon-32</figure>
+          <figure><img src="icon-192.png" width="96" height="96" alt="PWA 192" />icon-192</figure>
+          <figure><img src="icon-512.png" width="96" height="96" alt="PWA 512" />icon-512</figure>
+          <figure><div class="mask"><img src="icon-maskable-512.png" width="96" height="96" alt="PWA maskable 512" /></div>maskable-512 (dipotong lingkaran)</figure>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
