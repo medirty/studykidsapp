@@ -6,7 +6,7 @@
 ## Status
 
 - **Fase aktif:** 0 — Setup
-- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). T0.4 scaffold frontend selesai (22 Nov 2026). T0.5 tooling frontend + `npm run check` selesai (22 Nov 2026). T0.6 Playwright + axe-core selesai (22 Nov 2026). T0.7 backend Slim 4 selesai (23 Nov 2026). T0.8 Phinx + db:reset selesai (23 Nov 2026, PR #15). T0.9 `npm run dev` selesai (23 Nov 2026). T0.10 CI + Dependabot selesai (23 Nov 2026, PR #17). Task berikutnya: **T0.11** `[sonnet]` deploy GitHub Pages. CR-002 diterapkan (PRD v1.8, 22 Nov 2026). CR-003 disetujui (23 Nov 2026): dokumen diterapkan (PRD v1.9, PR #13), instalasi ponytail & security-review berjalan; verifikasi di sesi baru.
+- **Posisi terakhir:** rencana Fase 0 dibuat (21 Nov 2026). T0.0 Bootstrap selesai (21 Nov 2026, lihat tabel di `docs/setup/BOOTSTRAP.md`). T0.1 doctor + SETUP_LOCAL selesai (21 Nov 2026, PR #4). CR-001 diterapkan → PRD v1.7 (PR #5). Tutup hari 21 Nov 2026: tidak ada PR terbuka, tidak ada task setengah jalan. T0.2 kerangka dokumen selesai (22 Nov 2026). T0.3 ADR selesai (22 Nov 2026, delegasi `/next` → architect). T0.4 scaffold frontend selesai (22 Nov 2026). T0.5 tooling frontend + `npm run check` selesai (22 Nov 2026). T0.6 Playwright + axe-core selesai (22 Nov 2026). T0.7 backend Slim 4 selesai (23 Nov 2026). T0.8 Phinx + db:reset selesai (23 Nov 2026, PR #15). T0.9 `npm run dev` selesai (23 Nov 2026). T0.10 CI + Dependabot selesai (23 Nov 2026, PR #17). T0.11 workflow dibuat (24 Nov 2026), menunggu persetujuan merge. PR Dependabot: #18 merged; #19 (setup-node, bentrok, perlu rebase) & #20 (TypeScript 7, akan ditutup) masih terbuka — perintah komentar/close ditolak pengaman. CR-002 diterapkan (PRD v1.8, 22 Nov 2026). CR-003 disetujui (23 Nov 2026): dokumen diterapkan (PRD v1.9, PR #13), instalasi ponytail & security-review berjalan; verifikasi di sesi baru.
 - **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor). Bagian atas `docs/setup/BOOTSTRAP.md` masih ada mojibake (`â€”`), belum diperbaiki (di luar scope).
 - **Persetujuan fase:** belum ada.
 
@@ -42,7 +42,8 @@
   - Bukti (23 Nov 2026, PR #17): run CI https://github.com/medirty/studykidsapp/actions/runs/45133253754 → frontend, lighthouse, backend PHP 8.2 & 8.4 semuanya hijau. Lighthouse (mobile, perf ≥ 0,9, LCP < 2,5 s, CLS < 0,1) juga lolos lokal. `@lhci/cli` via `npx` (D-005). Dependabot mingguan: npm, composer, github-actions. **Bug ditemukan CI:** migrasi `settings` gagal di MySQL 8 (kolom PK nullable; MariaDB toleran) → diperbaiki dengan `'null' => false` di migrasi lama atas izin Bimo (belum pernah dipakai di produksi). Setelah merge: B8 (proteksi branch `main`) kini bisa dikerjakan; nama check: `frontend`, `lighthouse`, `backend (php 8.2)`, `backend (php 8.4)`.
 - [x] CR-004 `[sonnet]` Ganti XAMPP → MariaDB 11.8 (Bagian A–C) — sebelum T0.12
   - Bukti (23 Nov 2026): MariaDB 11.8.2 service Running/Automatic; `scripts/db-setup.ps1` jalan 2× (idempotent); `npm run db:reset` OK; `npm run test:api` OK 5 tes (termasuk sesi UTC/strict/collation); `test:scripts` 24/24; doctor 21/22 (sisa ✗: PATH bin MariaDB, aktif setelah restart Claude Desktop). B5 `Database.php` dikerjakan langsung di sesi utama (perubahan kecil, skema tidak berubah). PRD v1.10. Bukti CI & `npm run dev` di bawah.
-- [ ] T0.11 `[sonnet]` `deploy-pages.yml` → hello-world di GitHub Pages (§17.5) — butuh B6
+- [~] T0.11 `[sonnet]` `deploy-pages.yml` → hello-world di GitHub Pages (§17.5) — butuh B6
+  - Bukti (24 Nov 2026): `.github/workflows/deploy-pages.yml` (push `main` + manual → build `VITE_BASE=/studykidsapp/`, `VITE_API_MODE=local` → upload `frontend/dist` → deploy). Build lokal dengan env itu sukses, `npm run check` hijau (JS 15,54 KB gzip). **Tinggal:** Bimo setujui merge (workflow deploy = wajib tanya), lalu cek `https://medirty.github.io/studykidsapp/` → centang T0.11 + E3.
 - [ ] T0.12a `[sonnet]` (CR-003) Verifikasi di sesi baru: skill `ponytail` & `security-review` muncul, nama di `skills:` agent cocok, `/ponytail-help` jalan, doctor bersih
 - [ ] T0.12 `[sonnet]` Verifikasi plugin/MCP + rangkum bukti Exit Criteria (§16.2, §16.4)
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 0 disetujui" → tag `phase-0-approved`
@@ -71,7 +72,7 @@
 |---|---|
 | E1 `npm run check` & `composer test` hijau di CI | Dibuktikan ulang dengan `mariadb:11.8` (CR-004), lihat bukti CR-004 |
 | E2 `npm run dev` → frontend + API + DB lokal | T0.9: "API ok, DB ok" di 360 px, 23 Nov 2026 |
-| E3 Hello-world di GitHub Pages | — |
+| E3 Hello-world di GitHub Pages | Menunggu merge T0.11 |
 | E4 `/next` mendelegasikan `[opus]` ke architect | T0.3: delegasi /next → architect, 22 Nov 2026 |
 
 ### Pertanyaan terbuka untuk Bimo
