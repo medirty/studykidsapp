@@ -61,7 +61,7 @@ Dev lokal (Windows): **MariaDB 11.8** (service `MariaDB`, sama dengan Hostinger 
 
 ## Skill wajib (PRD §16.4.1)
 
-- Prioritas: PRD/CLAUDE.md → skill proses superpowers → ponytail / frontend-design / security-review.
+- Prioritas: PRD/CLAUDE.md → skill proses superpowers → ponytail / impeccable / security-review.
 - Menulis kode: TDD + **ponytail** (solusi paling sederhana yang memenuhi AC). ponytail **tidak boleh** memangkas test, i18n, token, aksesibilitas, validasi, anti-IDOR, atau apa pun yang diwajibkan DoD.
 - Area auth/sesi/Parent Gate/entitlement/pembayaran/webhook/harga: **wajib `security-review`**.
 - Review task besar & `/gate`: `/ponytail-review` + review superpowers.

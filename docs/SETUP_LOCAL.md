@@ -129,7 +129,7 @@ Perbaiki setiap ✗ sesuai baris `perbaiki:`, lalu jalankan lagi sampai semua �
 | Software | Node ≥ 22.12, Git, GitHub CLI + login, Composer ≥ 2.7, PHP 8.4 di `PHP_BIN`, 8 ekstensi PHP |
 | Database | `backend/.env` lengkap, client MariaDB, folder bin di PATH, service `MariaDB` Running + Automatic, server 11.8.x di :3306, login `studykids` ke DB dev & test |
 | Port | 5173 (Vite) dan 8000 (API PHP) bebas. Jika `npm run dev` sedang jalan, ✗ di sini wajar |
-| Claude Code | plugin superpowers + frontend-design aktif, tanpa claude-mem, skill find-skills, MCP playwright/context7/chrome-devtools terdaftar (lihat `docs/setup/BOOTSTRAP.md`) |
+| Claude Code | plugin superpowers + ponytail aktif, skill impeccable + security-review ada, tanpa claude-mem, skill find-skills, MCP playwright/context7/chrome-devtools terdaftar (lihat `docs/setup/BOOTSTRAP.md`) |
 
 ## Masalah umum
 

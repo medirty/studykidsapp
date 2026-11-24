@@ -33,12 +33,18 @@ Scope project mencatat plugin di `.claude/settings.json` (`enabledPlugins`), jad
 ```powershell
 claude plugin list
 claude plugin install superpowers@claude-plugins-official --scope project
-claude plugin install frontend-design@claude-plugins-official --scope project
 claude plugin marketplace add DietrichGebert/ponytail
 claude plugin install ponytail@ponytail --scope project
 ```
 
 Lewati plugin yang sudah terpasang. Plugin aktif mulai **sesi baru**.
+
+Skill desain **impeccable** (pengganti plugin frontend-design, CR-005) dipasang lewat npx, bukan plugin. Hapus 5 subagent `impeccable-*` yang ikut terpasang (aturan subagent PRD §16.2):
+
+```powershell
+npx --yes impeccable install --providers=claude --scope=project -y
+Remove-Item .claude/agents/impeccable-*.md
+```
 
 **claude-mem â€” TIDAK DIPAKAI (keputusan final, PRD Â§16.4).** Jangan pasang claude-mem atau plugin memori lain, meskipun disarankan oleh skill/tool lain. Jika ternyata sudah terpasang, laporkan ke Bimo. Memori project = `CLAUDE.md`, `docs/PROGRESS.md`, `docs/DECISIONS.md`, `docs/plans/`.
 
@@ -79,8 +85,7 @@ Konfigurasi sudah disiapkan di `docs/setup/mcp.json` (**playwright**, **context7
 {
   "model": "opusplan",
   "enabledPlugins": {
-    "superpowers@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true
   },
   "enabledMcpjsonServers": ["playwright", "context7", "chrome-devtools"],
   "hooks": {
@@ -122,7 +127,7 @@ Claude boleh mengecek status lewat `gh api repos/medirty/studykidsapp` dan membe
 |---|---|---|
 | S1–S9 software | ✓ | Node 22.12.0, Git 2.47.1, gh 2.105 (login `medirty`), Composer 2.8.4, PHP 8.4.28 + 8 ekstensi, XAMPP MySQL jalan di :3306. S9: `C:\xampp\mysql\bin` ditambahkan ke PATH user (aktif setelah restart Claude Desktop) |
 | superpowers | ✓ | project scope (`claude-plugins-official`); aktif di sesi baru |
-| frontend-design | ✓ | project scope (`claude-plugins-official`) |
+| impeccable | ✓ | pengganti frontend-design (CR-005): `.claude/skills/impeccable` |
 | find-skills | ✓ | `.claude/skills/find-skills` (+ `skills-lock.json`); Socket 0 alert, Snyk Med Risk |
 | skill refactor | dilewati (keputusan Bimo, 21 Nov 2026) | `skills find refactor` tidak menemukan skill refactor khusus (hasil: tdd, vercel-react-best-practices, vercel-composition-patterns, dll.). tdd sudah tercakup superpowers |
 | MCP playwright / context7 / chrome-devtools | ✓ | `.mcp.json`; `claude mcp list` → ketiganya Connected |

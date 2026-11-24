@@ -253,7 +253,7 @@ Claude memakai skill ini otomatis. Kamu tidak perlu memanggilnya, kecuali comman
 |---|---|---|
 | superpowers | Cara kerja disiplin: rencana, test dulu, debug sistematis, verifikasi | Setiap task |
 | ponytail | Menulis kode sesederhana mungkin, tanpa tambahan yang tidak perlu | Setiap menulis kode. Kamu bisa memanggil `/ponytail-review` kapan saja |
-| frontend-design | Kualitas tampilan | Task UI |
+| impeccable | Kualitas desain UI + pemeriksa "AI slop". Kamu bisa memanggil `/impeccable critique <layar>` atau `/impeccable polish <layar>` | Task UI, Fase 1 mockup |
 | security-review | Mengecek celah keamanan | Login, akun, pembayaran (Fase 4 & 6) |
 | graphify | Peta codebase supaya Claude tidak perlu membaca banyak file | Dievaluasi di awal Fase 4 |
 

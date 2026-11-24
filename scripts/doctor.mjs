@@ -182,7 +182,7 @@ function checkPlugins(settings) {
   const enabled = settings?.enabledPlugins ?? {};
   const missing = REQUIRED_PLUGINS.filter((p) => enabled[p] !== true);
   const fix = missing.map((p) => `claude plugin install ${p} --scope project`).join(' ; ');
-  return result('Plugin Claude (superpowers, frontend-design, ponytail)', missing.length === 0, missing.length ? `kurang: ${missing.join(', ')}` : 'aktif', fix);
+  return result('Plugin Claude (superpowers, ponytail)', missing.length === 0, missing.length ? `kurang: ${missing.join(', ')}` : 'aktif', fix);
 }
 
 function checkNoClaudeMem(settings) {
@@ -198,6 +198,11 @@ function checkFindSkills() {
 function checkSecurityReview() {
   const ok = existsSync(join(ROOT, '.claude', 'skills', 'security-review', 'SKILL.md'));
   return result('Skill security-review', ok, ok ? '.claude/skills/security-review' : 'tidak ada', 'salin skills/security-review dari github.com/affaan-m/ECC (lihat docs/setup/BOOTSTRAP.md Langkah 3)');
+}
+
+function checkImpeccable() {
+  const ok = existsSync(join(ROOT, '.claude', 'skills', 'impeccable', 'SKILL.md'));
+  return result('Skill impeccable', ok, ok ? '.claude/skills/impeccable' : 'tidak ada', 'npx --yes impeccable install --providers=claude --scope=project -y ; hapus .claude/agents/impeccable-*.md (docs/setup/BOOTSTRAP.md)');
 }
 
 function checkMcp(settings) {
@@ -237,6 +242,7 @@ async function collectResults() {
     checkNoClaudeMem(settings),
     checkFindSkills(),
     checkSecurityReview(),
+    checkImpeccable(),
     checkMcp(settings),
   ];
 }

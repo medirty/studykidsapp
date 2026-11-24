@@ -37,3 +37,8 @@ desktop.ini
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# impeccable: output sementara & state runtime
+**/.impeccable/config.local.json
+**/.impeccable/hook.cache.json
+**/.impeccable/hook.pending.json

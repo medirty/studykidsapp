@@ -15,7 +15,6 @@ export const REQUIRED_ENV_KEYS = ['PHP_BIN', 'DB_HOST', 'DB_NAME', 'DB_USER', 'D
 
 export const REQUIRED_PLUGINS = [
   'superpowers@claude-plugins-official',
-  'frontend-design@claude-plugins-official',
   'ponytail@ponytail',
 ];
 

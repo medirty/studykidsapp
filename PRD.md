@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.10 · **Tanggal:** 23 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.11 · **Tanggal:** 24 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -790,7 +790,7 @@ Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/
 | Jenis | Item | Cara dipasang | Tersimpan di |
 |---|---|---|---|
 | Plugin | **superpowers** (brainstorming, writing-plans, TDD, systematic-debugging, code review, verification) | `claude plugin install superpowers@claude-plugins-official --scope project` | `.claude/settings.json` → `enabledPlugins` |
-| Plugin | **frontend-design** | `claude plugin install frontend-design@claude-plugins-official --scope project` | idem |
+| Skill | **impeccable** (desain UI, `/impeccable critique|polish|audit`, detektor "AI slop") | `npx impeccable install --providers=claude --scope=project -y` (tanpa subagent bawaannya, lihat D-010) | `.claude/skills/impeccable/` |
 | Skill | **find-skills** | `npx -y skills add https://github.com/vercel-labs/skills --skill find-skills -a claude-code -y` | `.claude/skills/` |
 | Skill | **refactor** | dicari via `npx skills find refactor`; Bimo memilih dari 3 kandidat teratas | `.claude/skills/` |
 | MCP | **Playwright**, **Context7**, **Chrome DevTools** | disalin dari `docs/setup/mcp.json` ke `.mcp.json` (root), pakai `cmd /c npx` untuk Windows | `.mcp.json` |
@@ -808,13 +808,13 @@ Semua tooling dipasang **otomatis oleh Claude Code** mengikuti prosedur **`docs/
 
 #### 16.4.1 Kapan memakai skill apa (berlaku untuk Opus & Sonnet, sesi utama & subagent)
 
-**Urutan prioritas:** PRD & CLAUDE.md (termasuk DoD) → skill proses superpowers (brainstorming, writing-plans, TDD, systematic-debugging, verification) → skill implementasi (ponytail, frontend-design, security-review). Jika skill bertentangan dengan PRD, **PRD yang berlaku**.
+**Urutan prioritas:** PRD & CLAUDE.md (termasuk DoD) → skill proses superpowers (brainstorming, writing-plans, TDD, systematic-debugging, verification) → skill implementasi (ponytail, impeccable, security-review). Jika skill bertentangan dengan PRD, **PRD yang berlaku**.
 
 | Situasi | Skill yang WAJIB dipakai |
 |---|---|
 | Merencanakan fase / task baru | `superpowers:writing-plans` (+ `brainstorming` bila ada keputusan desain) |
 | Menulis kode apa pun (fitur, generator, komponen, backend) | `superpowers:test-driven-development` + **`ponytail`** (pilih solusi paling sederhana yang memenuhi AC) |
-| Membuat/mengubah UI | `frontend-design` + `ponytail` |
+| Membuat/mengubah UI | `impeccable` + `ponytail` (konteks desain: `PRODUCT.md`, `DESIGN.md`) |
 | Bug | `superpowers:systematic-debugging` |
 | Sebelum bilang selesai | `superpowers:verification-before-completion` |
 | Review akhir task besar & `/gate` | `/ponytail-review` (kode berlebihan/tidak perlu) + `superpowers:requesting-code-review` |
@@ -1110,3 +1110,4 @@ Masih terbuka:
 | 1.8 | 22 Nov 2026 | CR-002: protokol bantuan langsung saat task terblokir tindakan manual Bimo — jelaskan sederhana, cek kondisi nyata, coba sendiri, jika diblokir beri langkah klik-demi-klik, lalu verifikasi (§16.5). |
 | 1.9 | 23 Nov 2026 | CR-003: tambah plugin **ponytail** (kode minimal) dan skill **security-review** (selektif dari ECC); **graphify** dijadwalkan evaluasi di awal Fase 4; ECC paket penuh tidak dipakai. Tabel "kapan memakai skill apa" + batas ponytail (§16.4.1–16.4.2). |
 | 1.10 | 23 Nov 2026 | CR-004: XAMPP diganti **MariaDB 11.8 standalone** (sama dengan Hostinger & CI); CI pindah dari MySQL 8.0 ke `mariadb:11.8`; koneksi DB mengatur sql_mode/UTC/collation sendiri; `scripts/db-setup.ps1`; HeidiSQL pengganti phpMyAdmin. Alur deploy tidak berubah. |
+| 1.11 | 24 Nov 2026 | CR-005: plugin **frontend-design** diganti skill **impeccable** (desain UI + detektor "AI slop"); tanpa subagent bawaannya (§16.2). Lihat D-010. |

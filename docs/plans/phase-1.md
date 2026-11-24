@@ -20,7 +20,7 @@ Dibuat: 24 Nov 2026 lewat `/plan-phase`. Checklist ringkas ada di `docs/PROGRESS
 - Tiap layar: lebar 360 px tanpa scroll horizontal, target sentuh ≥ 48 px, fokus terlihat, ✓/✗ + warna (§8.5), aksi utama di bawah (§9.1).
 - Kelas 1–2 vs 5–6 (§9.1 no. 2): beranda & layar soal punya **dua varian** (kecil: ikon besar, minim teks; besar: lebih "dewasa").
 - Data contoh fiktif, tanpa data anak asli. Tanpa logo/teks/soal Cambridge (§6.1). Aset baru dicatat di `docs/ASSET_LICENSES.md`.
-- Skill: `frontend-design` untuk arah visual; `design:accessibility-review` di T1.15.
+- Skill: `impeccable` (shape, critique, polish) untuk arah visual; `design:accessibility-review` di T1.15.
 - **Kategori wajib review (§17.5):** PR mockup/logo **tidak** di-auto-merge — tunggu persetujuan Bimo. Agar Bimo tidak menunggu per layar, PR boleh di-merge setelah CI hijau dengan label "draft visual"; persetujuan formal dikumpulkan di B10 (logo) dan B11 (semua mockup). *(Disetujui Bimo 24 Nov 2026.)*
 - Mockup dilihat lewat GitHub Pages `/studykidsapp/mockups/` (HP & laptop); avatar cukup 4 contoh di fase ini (Bimo, 24 Nov 2026).
 
