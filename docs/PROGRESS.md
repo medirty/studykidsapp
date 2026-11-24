@@ -5,9 +5,9 @@
 
 ## Status
 
-- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.1 selesai, siap `/next` → T1.2)
+- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.2 selesai, siap `/next` → T1.3)
 - **Posisi terakhir (tutup hari 24 Nov 2026):** Fase 0 disetujui & ber-tag. Hari ini: gate Fase 0 + B8 (PR #25–26), rencana Fase 1 (PR #27, `docs/plans/phase-1.md`), jawaban Bimo atas pertanyaan Fase 1 (PR #28), CR-005 ganti frontend-design → impeccable (PR #29). Semua ter-merge ke `main`; tidak ada task setengah jalan. Fase 1 belum dimulai (T1.0 belum dikerjakan). Dependabot #19 (setup-node, bentrok) & #20 (TypeScript 7) masih terbuka → ditangani di T1.0.
-- **Task berikutnya:** `/next` → T1.2 `[sonnet]` logo final Kiko. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** `/next` → T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
@@ -17,7 +17,8 @@
   - Bukti (24 Nov 2026): PR #31 (job deploy dipecah + `docs/mockups/` ke artefak Pages) & #19 (setup-node 7) di-merge; #20 (TS 7) ditutup atas perintah Bimo (alasan D-004). Run Deploy Pages sukses; `https://medirty.github.io/studykidsapp/` → 200, `/mockups/` → 200. Tidak ada PR Dependabot terbuka.
 - [x] T1.1 `[sonnet]` Design tokens final + self-host Baloo 2/Nunito + test kontras AA (§9.2, §8.5)
   - Bukti (24 Nov 2026): `npm run check` hijau — vitest 28/28 (22 test kontras baru `contrast.test.ts`), JS awal 16,81 KB / CSS 1,06 KB gzip. Font variabel latin self-host 72 KB (di luar budget awal), lisensi OFL dicatat. Tabel kontras: `docs/brand/tokens.md`. **Temuan:** English `#8B5CF6` gagal 4,5:1 (putih 4,23) → dipakai teks besar saja; usulan `#7C3AED` menunggu keputusan Bimo (T1.15). Belum diverifikasi: path font di build `VITE_BASE=/studykidsapp/` (isi `dist/` diblok deny rule) — cek visual saat Pages ter-deploy.
-- [ ] T1.2 `[sonnet]` Logo final Kiko: ikon, horizontal, satu warna/putih, wordmark path, favicon & PWA PNG (§9.4)
+- [x] T1.2 `[sonnet]` Logo final Kiko: ikon, horizontal, satu warna/putih, wordmark path, favicon & PWA PNG (§9.4)
+  - Bukti (24 Nov 2026): 6 SVG + favicon.svg + `maskable-source.svg` + PNG (favicon-32, pwa-192/512, maskable-512) di `docs/brand/`; galeri `docs/brand/index.html` (terang/gelap, 32/48/192) dicek lewat screenshot — Kiko terbaca di 32×32, tanpa ikon terlarang. Ikon SVG 574–680 byte (≤ 4 KB), horizontal ±5,8 KB. Wordmark = path dari Baloo 2 ExtraBold (tanpa elemen `<text>`). Versi satu warna memakai mask (mata/senyum bolong), jadi jalan di latar apa pun. PNG dirender `node scripts/render-brand.mjs` (Playwright, tanpa dependency baru). Lisensi dicatat. Menunggu B10 (setelah T1.3).
 - [ ] T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar contoh (§9.4, FR-2) → B10
 - [ ] T1.4 `[sonnet]` Kerangka `docs/mockups/` (galeri, mockup.css dari token) + Playwright 360/1280 + axe (§9.3, §8.5)
 - [ ] T1.5 `[sonnet]` Layar 1 Landing page (FR-1)

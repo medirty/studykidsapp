@@ -8,6 +8,6 @@ Setiap aset (logo, ikon, font, gambar, suara, soal) wajib tercatat di sini sebel
 | Konsep logo v2 (Kiko + wordmark) | [brand/logo-concept-v2.svg](brand/logo-concept-v2.svg) | Sama seperti v1 | Sama seperti v1 | Konsep, belum final |
 | Font Baloo 2 (variabel, subset latin) | `frontend/public/fonts/baloo2-latin.woff2` | Google Fonts (fonts.gstatic.com), © The Baloo Project Authors | SIL Open Font License 1.1 | Dipakai (judul) |
 | Font Nunito (variabel, subset latin) | `frontend/public/fonts/nunito-latin.woff2` | Google Fonts (fonts.gstatic.com), © The Nunito Project Authors | SIL Open Font License 1.1 | Dipakai (teks) |
-| Wordmark logo | — | — | — | Wordmark final diubah ke path tanpa font (PRD §9.4, T1.2) |
+| Logo final Kiko (ikon, horizontal, Ink, putih, favicon, PWA, maskable) | `docs/brand/` (`kiko-icon*.svg`, `logo-horizontal*.svg`, `favicon.svg`, `*.png`) | Turunan konsep v2 (karya orisinal StudyKids, dibantu AI). Wordmark = outline glyph Baloo 2 ExtraBold (`study`, `kids`), tanpa font di SVG | Milik StudyKids; outline font diizinkan OFL 1.1 | Menunggu persetujuan B10 |
 
 Catatan: status hak cipta karya buatan AI perlu dipastikan Bimo sebelum logo final dipakai komersial.
