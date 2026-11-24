@@ -30,13 +30,13 @@
 ```markdown
 #### 16.4.1 Kapan memakai skill apa (berlaku untuk Opus & Sonnet, sesi utama & subagent)
 
-**Urutan prioritas:** PRD & CLAUDE.md (termasuk DoD) → skill proses superpowers (brainstorming, writing-plans, TDD, systematic-debugging, verification) → skill implementasi (ponytail, frontend-design, security-review). Jika skill bertentangan dengan PRD, **PRD yang berlaku**.
+**Urutan prioritas:** PRD & CLAUDE.md (termasuk DoD) → skill proses superpowers (brainstorming, writing-plans, TDD, systematic-debugging, verification) → skill implementasi (ponytail, impeccable, security-review). Jika skill bertentangan dengan PRD, **PRD yang berlaku**.
 
 | Situasi | Skill yang WAJIB dipakai |
 |---|---|
 | Merencanakan fase / task baru | `superpowers:writing-plans` (+ `brainstorming` bila ada keputusan desain) |
 | Menulis kode apa pun (fitur, generator, komponen, backend) | `superpowers:test-driven-development` + **`ponytail`** (pilih solusi paling sederhana yang memenuhi AC) |
-| Membuat/mengubah UI | `frontend-design` + `ponytail` |
+| Membuat/mengubah UI | `impeccable` + `ponytail` (konteks desain: `PRODUCT.md`, `DESIGN.md`) |
 | Bug | `superpowers:systematic-debugging` |
 | Sebelum bilang selesai | `superpowers:verification-before-completion` |
 | Review akhir task besar & `/gate` | `/ponytail-review` (kode berlebihan/tidak perlu) + `superpowers:requesting-code-review` |

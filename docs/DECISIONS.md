@@ -219,3 +219,11 @@ D-001 s.d. D-007 dibuat di T0.3 (22 Nov 2026) sebagai acuan T0.4–T0.11. Rencan
 - **Status:** disetujui (CR-004, Bimo)
 - **Keputusan:** MariaDB **11.8.2** dipasang lewat `winget` (MSI, service `MariaDB`, Running + Automatic) di `C:\Program Files\MariaDB 11.8` (path sesuai rencana, tidak berbeda). Password root acak di `%USERPROFILE%\.studykids\mariadb-root.txt` (ACL hanya user Windows), di luar repo. `scripts/db-setup.ps1` membuat DB dev/test + user `studykids`. `Database::pdo()` mengeset `sql_mode` ketat, `time_zone='+00:00'`, `utf8mb4_unicode_ci` (test: `DatabaseSessionTest`). CI memakai `mariadb:11.8`. Nama job CI tidak diubah.
 - **Catatan:** user `studykids` dibuat untuk `'localhost'` saja; koneksi `127.0.0.1` tetap diterima MariaDB (diverifikasi doctor). XAMPP tidak di-uninstall (rollback: start MySQL XAMPP + kembalikan `backend/.env`).
+
+## D-010 — Skill impeccable menggantikan frontend-design (CR-005, 24 Nov 2026)
+- **Status:** disetujui (CR-005, Bimo)
+- **Keputusan:** `npx impeccable install --providers=claude --scope=project -y` (impeccable skill `4.10.0`, engine `v0.1.27`, Apache-2.0). Plugin `frontend-design` di-uninstall dan dihapus dari `enabledPlugins`; `doctor` tidak lagi memintanya, tetapi mengecek `.claude/skills/impeccable/SKILL.md`.
+- **Penyimpangan dari installer:** installer menambah 5 subagent `impeccable-*` di `.claude/agents/`. Dihapus karena PRD §16.2 hanya mengizinkan 4 subagent (maks 1 bersamaan). Skill punya jalur tanpa subagent.
+- **Efek samping yang diketahui:** (1) engine biner diunduh ke `~/.impeccable/bin/` (di luar project); (2) hook SessionStart/PostToolUse/Stop ditulis ke `.claude/settings.local.json` (git-ignored, hanya laptop ini) dan memindai file UI setelah Edit/Write; (3) skill menulis `PRODUCT.md`, `DESIGN.md`, `.impeccable/` saat `/impeccable init` / `document`; (4) mode `live` dan Apply menjalankan CLI `claude`/`codex` dengan izin dilewati: **jangan dipakai** (set `IMPECCABLE_LIVE_COPY_AGENT=off`). Hook tidak dipakai di CI.
+- **Aturan pakai:** impeccable tidak boleh menang atas PRD §8.5/§9, `tokens.css`, i18n, dan brand (PRD yang berlaku). Hasil desain tetap lewat persetujuan Bimo (§17.5).
+- **Belum dikerjakan:** `/impeccable init` (menulis `PRODUCT.md`) dijalankan di awal Fase 1, bersama Bimo.

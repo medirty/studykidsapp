@@ -24,6 +24,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 | CR-001 | Aturan subagent & auto-merge PR | Diterapkan (21 Nov 2026) | v1.7 |
 | CR-002 | Bantuan langsung saat task terblokir tindakan manual | Diterapkan (22 Nov 2026) | v1.8 |
 | CR-003 | Skill tambahan: ponytail, security-review, graphify (ditunda) | Diterapkan dokumen (23 Nov 2026); instalasi menunggu verifikasi | v1.9 |
+| CR-005 | Ganti skill frontend-design dengan impeccable | Diterapkan (24 Nov 2026) | v1.11 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -70,3 +71,12 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 - **Analisis dampak:** PRD K9, §10.1, §17.1, §17.2, riwayat → v1.10; `CLAUDE.md`; `ci.yml`; `Database.php`; `doctor.mjs`; `SETUP_LOCAL.md`; BOOTSTRAP; PANDUAN. Skema DB tidak berubah. Alur deploy tidak berubah.
 - **Keputusan Bimo:** diterima (23 Nov 2026), syarat: deploy tidak boleh lebih susah.
 - **Status:** diterapkan di PRD v1.10. Arsip rinci: [plans/CR-004-mariadb-tanpa-xampp.md](plans/CR-004-mariadb-tanpa-xampp.md).
+
+## CR-005 — Ganti skill frontend-design dengan impeccable
+- **Tanggal / Pengaju:** 24 Nov 2026 / Bimo
+- **Deskripsi:** Plugin `frontend-design` dilepas; skill **impeccable** (`github.com/pbakaus/impeccable`, Apache-2.0) dipasang di `.claude/skills/impeccable/` sebagai skill desain UI (perintah `critique`, `audit`, `polish`, dst. + detektor "AI slop").
+- **Alasan:** Fase 1 (Mockup & Brand) menuntut kualitas desain; impeccable punya perintah review terukur dan detektor aturan deterministik.
+- **Prioritas:** disarankan
+- **Analisis dampak:** PRD §16.4, §16.4.1, riwayat → v1.11; `CLAUDE.md`; `docs/setup/BOOTSTRAP.md`; `scripts/doctor.mjs` + `doctor-utils.mjs`; `docs/PANDUAN_VIBE_CODING.md`; `docs/SETUP_LOCAL.md`; `docs/plans/phase-1.md`; `.claude/settings.json`. Tanpa kode aplikasi. Risiko dan mitigasi: lihat D-010.
+- **Keputusan Bimo:** diterima (24 Nov 2026)
+- **Status:** diterapkan di PRD v1.11. Instalasi: D-010.
