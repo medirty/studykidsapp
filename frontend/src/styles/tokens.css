@@ -9,6 +9,9 @@
   --color-error: #d93a4a;
   --color-bg: #fff8f2;
   --color-surface: #ffffff;
+  --color-ink-soft: #5a5278; /* teks sekunder */
+  --color-line: #e6dccf; /* garis/pembatas (dekoratif, bukan teks) */
+  --color-ink-on-dark: #ffffff; /* teks di atas Ink */
 
   --subject-math: #2459d6;
   --subject-english: #8b5cf6;
@@ -31,7 +34,56 @@
   --space-6: 32px;
   --space-7: 48px;
 
-  /* Baloo 2 & Nunito di-self-host menyusul; sementara fallback sistem. */
   --font-heading: 'Baloo 2', system-ui, sans-serif;
   --font-body: 'Nunito', system-ui, sans-serif;
+
+  /* Tipografi: skala kecil (kelas 1-2 lebih besar), semua rem */
+  --text-xs: 0.875rem;
+  --text-sm: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.375rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: 3rem;
+  --leading-tight: 1.2;
+  --leading-body: 1.5;
+  --weight-body: 400;
+  --weight-strong: 700;
+  --weight-heading: 800;
+
+  --shadow-sm: 0 1px 2px rgb(27 19 64 / 12%);
+  --shadow-md: 0 4px 12px rgb(27 19 64 / 16%);
+  --shadow-lg: 0 12px 28px rgb(27 19 64 / 20%);
+
+  --duration-fast: 100ms; /* feedback tap < 100 ms (PRD 9.1) */
+  --duration-base: 200ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --focus-ring: 3px solid var(--color-ink);
+  --focus-offset: 2px;
+  --tap-min: 48px; /* target sentuh minimum (PRD 8.5) */
+}
+
+/* Kelas 5-6: tampilan lebih dewasa, teks lebih rapat */
+[data-grade-band='upper'] {
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+}
+
+/* Kelas 1-2: teks lebih besar */
+[data-grade-band='lower'] {
+  --text-md: 1.25rem;
+  --text-lg: 1.625rem;
+  --text-xl: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
 }

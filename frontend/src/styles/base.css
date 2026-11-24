@@ -27,6 +27,6 @@ h3 {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-ink);
-  outline-offset: 2px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
 }
