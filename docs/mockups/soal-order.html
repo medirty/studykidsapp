@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soal urutkan — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<script src="assets/mockup.js" defer></script>
+<script src="assets/soal.js" defer></script>
+</head>
+<body>
+<header class="q-top">
+  <a class="close" href="peta-belajar.html" aria-label="Keluar dari sesi / Leave session">✕</a>
+  <div class="q-progress">
+    <span class="label"><span lang="id">Soal 6 dari 10</span><span lang="en">Question 6 of 10</span></span>
+    <div class="bar" role="progressbar" aria-label="Progres sesi" aria-valuemin="0" aria-valuemax="10" aria-valuenow="6"><span style="width:60%"></span></div>
+  </div>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container q-main stack">
+  <div class="q-prompt">
+    <h1><span lang="id">Urutkan dari yang terkecil!</span><span lang="en">Put them in order, smallest first!</span></h1>
+    <button class="btn btn-secondary speak" type="button" aria-label="Dengarkan soal / Read aloud">🔊</button>
+  </div>
+  <ol class="slots" data-slots aria-label="Urutanmu / Your order">
+    <li class="slot filled" aria-label="Urutan 1: 3">3</li><li class="slot filled" aria-label="Urutan 2: 5">5</li><li class="slot" aria-label="Urutan 3, kosong">3</li><li class="slot" aria-label="Urutan 4, kosong">4</li>
+  </ol>
+  <p class="hint"><span lang="id">Seret angka ke kotak, <strong>atau ketuk angka</strong> — angka masuk ke kotak kosong berikutnya.</span><span lang="en">Drag a number into a box, <strong>or just tap it</strong> — it goes to the next empty box.</span></p>
+  <ul class="chips tray" data-order-tray aria-label="Angka yang tersisa / Remaining numbers"><li><button class="choice chip" type="button" data-n="9">9</button></li><li><button class="choice chip" type="button" data-n="7">7</button></li></ul>
+  <p class="hint design-note"><strong><span lang="id">Catatan desain:</span><span lang="en">Design note:</span></strong> <span lang="id">kotak kosong menampilkan nomor urutan (samar) sebagai petunjuk; keadaan awal = 2 kotak terisi. Alternatif ketuk wajib ada untuk Fase 2/3.</span><span lang="en">empty boxes show their position number (faint) as a cue; the initial state has 2 filled boxes. A tap alternative is required for Phase 2/3.</span></p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><button class="btn btn-block" type="button"><span lang="id">Periksa</span><span lang="en">Check</span></button></nav>
+</body>
+</html>
