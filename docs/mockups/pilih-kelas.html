@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pilih kelas &amp; profil — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<script src="assets/mockup.js" defer></script>
+<style>
+  .grid { display: grid; gap: var(--space-3); list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grade { min-height: 88px; font-size: var(--text-lg); padding-inline: var(--space-2); }
+  .profiles { display: grid; gap: var(--space-3); list-style: none; padding: 0; margin: 0; }
+  .profile { display: flex; align-items: center; gap: var(--space-4); text-decoration: none; color: inherit; min-height: var(--tap-min); }
+  .profile img { width: 64px; height: 64px; flex: none; }
+  .profile strong { font: var(--weight-heading) var(--text-lg) var(--font-heading); display: block; }
+  .hello { display: flex; align-items: center; gap: var(--space-4); }
+  .hello img { width: 96px; flex: none; }
+  .note { font-size: var(--text-xs); }
+  @media (min-width: 768px) { .grid { grid-template-columns: repeat(6, 1fr); } .profiles { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <a href="index.html"><img src="../brand/logo-horizontal.svg" alt="StudyKids"></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <div class="hello">
+    <img src="../brand/kiko/kiko-semangat.svg" alt="Kiko bersemangat">
+    <h1><span lang="id">Hai! Kamu kelas berapa?</span><span lang="en">Hi! Which grade are you in?</span></h1>
+  </div>
+
+  <!-- Tap 1: kelas → Beranda (mode demo, tanpa akun). Tap 2: mapel. Tap 3: mulai soal (FR-2: ≤ 3 tap). -->
+  <section aria-labelledby="h-grade" class="stack">
+    <h2 id="h-grade"><span lang="id">Pilih kelas</span><span lang="en">Choose grade</span></h2>
+    <ul class="grid">
+      <li><a class="btn btn-block grade" href="beranda.html"><span lang="id">Kelas</span><span lang="en">Grade</span> 1</a></li>
+      <li><a class="btn btn-block grade" href="beranda.html"><span lang="id">Kelas</span><span lang="en">Grade</span> 2</a></li>
+      <li><a class="btn btn-block grade" href="beranda.html"><span lang="id">Kelas</span><span lang="en">Grade</span> 3</a></li>
+      <li><a class="btn btn-block grade" href="beranda.html"><span lang="id">Kelas</span><span lang="en">Grade</span> 4</a></li>
+      <li><a class="btn btn-block grade" href="beranda-besar.html"><span lang="id">Kelas</span><span lang="en">Grade</span> 5</a></li>
+      <li><a class="btn btn-block grade" href="beranda-besar.html"><span lang="id">Kelas</span><span lang="en">Grade</span> 6</a></li>
+    </ul>
+    <p class="note muted"><span lang="id">Coba gratis tanpa daftar. Kelas 1–2 dan 5–6 punya tampilan Beranda berbeda (kelas 3–4 memakai tampilan kelas 1–2 di mockup ini).</span><span lang="en">Try for free without signing up. Grades 1–2 and 5–6 have different Home layouts (grades 3–4 reuse the 1–2 layout in this mockup).</span></p>
+  </section>
+
+  <section aria-labelledby="h-prof" class="stack">
+    <h2 id="h-prof"><span lang="id">Atau pilih profil</span><span lang="en">Or pick a profile</span></h2>
+    <ul class="profiles">
+      <li><a class="card profile" href="beranda.html"><img src="../brand/avatar/avatar-pipo.svg" alt=""><span><strong>Pipo</strong><span class="muted"><span lang="id">Kelas 1</span><span lang="en">Grade 1</span></span></span></a></li>
+      <li><a class="card profile" href="beranda.html"><img src="../brand/avatar/avatar-luna.svg" alt=""><span><strong>Luna</strong><span class="muted"><span lang="id">Kelas 2 · 🔒 PIN</span><span lang="en">Grade 2 · 🔒 PIN</span></span></span></a></li>
+      <li><a class="card profile" href="beranda-besar.html"><img src="../brand/avatar/avatar-bima.svg" alt=""><span><strong>Bima</strong><span class="muted"><span lang="id">Kelas 5</span><span lang="en">Grade 5</span></span></span></a></li>
+      <li><a class="card profile" href="beranda-besar.html"><img src="../brand/avatar/avatar-momo.svg" alt=""><span><strong>Momo</strong><span class="muted"><span lang="id">Kelas 6 · 🔒 PIN</span><span lang="en">Grade 6 · 🔒 PIN</span></span></span></a></li>
+    </ul>
+    <p class="note muted"><span lang="id">Profil dibuat orang tua: nama panggilan, kelas, avatar, PIN 4 digit opsional. Tidak ada email, foto, atau nomor HP anak.</span><span lang="en">Profiles are created by a parent: nickname, grade, avatar, optional 4-digit PIN. No child email, photo or phone number.</span></p>
+  </section>
+</main>
+<nav class="bottom-bar" aria-label="Aksi utama">
+  <a class="btn btn-secondary btn-block" href="landing.html"><span lang="id">Kembali</span><span lang="en">Back</span></a>
+</nav>
+</body>
+</html>
