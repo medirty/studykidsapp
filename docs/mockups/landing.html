@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landing page — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<script src="assets/mockup.js" defer></script>
+<style>
+  .hero { display: grid; gap: var(--space-5); align-items: center; }
+  .hero img { width: 160px; justify-self: center; }
+  .hero h1 { font-size: var(--text-2xl); }
+  .grid { display: grid; gap: var(--space-3); list-style: none; padding: 0; margin: 0; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .subject { border-left: 8px solid var(--subject-color); font-family: var(--font-heading); font-weight: var(--weight-heading); }
+  .subject small { display: block; font-family: var(--font-body); font-weight: var(--weight-body); color: var(--color-ink-soft); font-size: var(--text-xs); }
+  .choices { display: grid; gap: var(--space-3); }
+  .choices .btn { background: var(--color-surface); }
+  .choices .btn[aria-pressed='true'] { background: var(--color-sunny); }
+  .price { text-align: center; }
+  .price strong { font: var(--weight-heading) var(--text-3xl) var(--font-heading); display: block; }
+  details { border-bottom: 1px solid var(--color-line); padding: var(--space-3) 0; }
+  summary { cursor: pointer; font-weight: var(--weight-strong); min-height: var(--tap-min); display: flex; align-items: center; }
+  .note { font-size: var(--text-xs); color: var(--color-ink-soft); }
+  @media (min-width: 768px) {
+    .hero { grid-template-columns: 1fr 1fr; }
+    .hero img { width: 280px; }
+    .grid-2 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <a href="index.html"><img src="../brand/logo-horizontal.svg" alt="StudyKids"></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="stack">
+      <h1 id="h-hero"><span lang="id">Belajar SD jadi seru bareng Kiko!</span><span lang="en">Primary learning gets fun with Kiko!</span></h1>
+      <p><span lang="id">Latihan soal kelas 1–6, 8 mata pelajaran, dalam Bahasa Indonesia &amp; English. Cukup beberapa menit sehari.</span><span lang="en">Practice for grades 1–6, 8 subjects, in Indonesian &amp; English. Just a few minutes a day.</span></p>
+      <a class="btn btn-block" href="pilih-kelas.html"><span lang="id">Coba Gratis</span><span lang="en">Try for Free</span></a>
+    </div>
+    <img src="../brand/kiko/kiko-senang.svg" alt="Kiko, maskot StudyKids, tersenyum">
+  </section>
+
+  <section class="stack" aria-labelledby="h-why">
+    <h2 id="h-why"><span lang="id">Kenapa StudyKids?</span><span lang="en">Why StudyKids?</span></h2>
+    <ul class="grid grid-3">
+      <li class="card"><strong><span lang="id">Seru, bukan menakutkan</span><span lang="en">Fun, not scary</span></strong><p class="muted"><span lang="id">Salah itu wajar. Kiko selalu menyemangati.</span><span lang="en">Mistakes are okay. Kiko always cheers you on.</span></p></li>
+      <li class="card"><strong><span lang="id">Soal selalu baru</span><span lang="en">Always fresh questions</span></strong><p class="muted"><span lang="id">Latihan menyesuaikan kemampuan anak.</span><span lang="en">Practice adapts to your child's level.</span></p></li>
+      <li class="card"><strong><span lang="id">Aman untuk anak</span><span lang="en">Safe for kids</span></strong><p class="muted"><span lang="id">Tanpa iklan dan tanpa pelacak pihak ketiga.</span><span lang="en">No ads and no third-party trackers.</span></p></li>
+    </ul>
+  </section>
+
+  <section class="stack" aria-labelledby="h-subj">
+    <h2 id="h-subj"><span lang="id">8 mata pelajaran</span><span lang="en">8 subjects</span></h2>
+    <ul class="grid grid-2">
+      <li class="card subject" style="--subject-color: var(--subject-math)">Math<small><span lang="id">Gratis</span><span lang="en">Free</span></small></li>
+      <li class="card subject" style="--subject-color: var(--subject-english)">English</li>
+      <li class="card subject" style="--subject-color: var(--subject-science)">Science</li>
+      <li class="card subject" style="--subject-color: var(--subject-gp)">Global Perspectives<small><span lang="id">Gratis</span><span lang="en">Free</span></small></li>
+      <li class="card subject" style="--subject-color: var(--subject-wellbeing)">Wellbeing</li>
+      <li class="card subject" style="--subject-color: var(--subject-art)">Art &amp; Design<small><span lang="id">Gratis</span><span lang="en">Free</span></small></li>
+      <li class="card subject" style="--subject-color: var(--subject-music)">Music</li>
+      <li class="card subject" style="--subject-color: var(--subject-computing)">Computing &amp; Technology</li>
+    </ul>
+    <p class="note"><span lang="id">Versi gratis: Math, Global Perspectives, dan Art &amp; Design, unit 1–2.</span><span lang="en">Free version: Math, Global Perspectives, and Art &amp; Design, units 1–2.</span></p>
+  </section>
+
+  <section class="card stack" aria-labelledby="h-try">
+    <h2 id="h-try"><span lang="id">Coba satu soal!</span><span lang="en">Try one question!</span></h2>
+    <p><span lang="id">Berapa 6 + 3?</span><span lang="en">What is 6 + 3?</span></p>
+    <div class="choices" id="try">
+      <button class="btn" type="button" data-ok="0">8</button>
+      <button class="btn" type="button" data-ok="1">9</button>
+      <button class="btn" type="button" data-ok="0">10</button>
+    </div>
+    <p class="status" id="try-result" role="status"></p>
+  </section>
+
+  <section class="card price stack" aria-labelledby="h-price">
+    <h2 id="h-price"><span lang="id">Akses penuh, sekali bayar</span><span lang="en">Full access, one-time payment</span></h2>
+    <strong>Rp50.000</strong>
+    <p class="status" style="justify-content: center"><span lang="id">Sisa 63 slot harga Rp50.000, lalu Rp100.000</span><span lang="en">63 slots left at Rp50,000, then Rp100,000</span></p>
+    <p class="note"><span lang="id">Angka contoh. Aslinya diambil dari server (/api/settings/public); di mode lokal dari config.</span><span lang="en">Sample numbers. Real values come from the server (/api/settings/public); in local mode from config.</span></p>
+  </section>
+
+  <section aria-labelledby="h-faq">
+    <h2 id="h-faq"><span lang="id">Pertanyaan umum</span><span lang="en">FAQ</span></h2>
+    <details><summary><span lang="id">Cocok untuk kelas berapa?</span><span lang="en">Which grades is it for?</span></summary><p><span lang="id">Kelas 1 sampai 6 SD, dengan materi terinspirasi kurikulum Cambridge Primary.</span><span lang="en">Primary grades 1 to 6, with content inspired by the Cambridge Primary curriculum.</span></p></details>
+    <details><summary><span lang="id">Apakah data anak aman?</span><span lang="en">Is my child's data safe?</span></summary><p><span lang="id">Kami hanya menyimpan nama panggilan, kelas, dan avatar. Tidak ada email, foto, atau lokasi anak.</span><span lang="en">We only store a nickname, grade and avatar. No child email, photo or location.</span></p></details>
+    <details><summary><span lang="id">Perlu internet terus?</span><span lang="en">Do I need internet all the time?</span></summary><p><span lang="id">Tidak. Setelah dibuka sekali, belajar tetap bisa saat sinyal lemah.</span><span lang="en">No. After the first visit, learning still works with a weak signal.</span></p></details>
+  </section>
+</main>
+<nav class="bottom-bar" aria-label="Aksi utama">
+  <a class="btn btn-block" href="pilih-kelas.html"><span lang="id">Coba Gratis</span><span lang="en">Try for Free</span></a>
+</nav>
+<script>
+  // Soal contoh statis: hanya tampilan mockup, bukan engine soal.
+  document.getElementById('try').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var ok = b.dataset.ok === '1', r = document.getElementById('try-result');
+    r.className = 'status ' + (ok ? 'status-ok' : 'status-retry');
+    r.innerHTML = ok ? '<span lang="id">Benar, hebat!</span><span lang="en">Correct, great job!</span>' : '<span lang="id">Hampir! Coba lagi, ya.</span><span lang="en">Almost! Try again.</span>';
+  });
+</script>
+</body>
+</html>
