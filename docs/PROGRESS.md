@@ -5,9 +5,9 @@
 
 ## Status
 
-- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.12 selesai, B10 disetujui, siap `/next` → T1.13)
+- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.13 selesai, B10 disetujui, siap `/next` → T1.14)
 - **Posisi terakhir (tutup hari 24 Nov 2026, sesi ke-2):** T1.0 (PR #31, #32), T1.1 (PR #33), T1.2 (PR #34) selesai & ter-merge ke `main`; PR #35 (duplikat logo) ditutup. Tidak ada PR terbuka, tidak ada task setengah jalan. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** `/next` → T1.13 `[sonnet]` Layar 10 Parent Gate, paywall, kritik & saran (T1.12 selesai). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** `/next` → T1.14 `[sonnet]` Layar 11 Admin (T1.13 selesai). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
@@ -39,7 +39,8 @@
   - Bukti (25 Nov 2026): 3 halaman `game-balon.html` (soal, 6 balon 72×84 px, skor, timer, tombol Jeda selalu di atas), `game-balon-pause.html` (Lanjut/Selesai/Keluar), `game-balon-hasil.html` (bintang, XP, skor, skill naik). Jawaban benar = ✓ + border (bukan warna saja); salah tidak mengurangi skor; `prefers-reduced-motion` dicatat. `npm run test:e2e` → 54 lolos (3 halaman baru × 360/1280: tanpa scroll horizontal + axe bersih); `npm run check` hijau (JS 16,81 KB). Galeri ditautkan. Belum dicek visual (cek di Pages).
 - [x] T1.12 `[sonnet]` Layar 9 Laporan anak & ortu (FR-9)
   - Bukti (25 Nov 2026): 4 halaman `laporan.html` (anak: "Kamu jago di…" 3 teratas + "Ayo latih…" 3 terendah + "Latih sekarang"), `laporan-belum.html` (data < 10 soal, tanpa angka), `laporan-ortu.html` (Full: grafik mingguan SVG statis, waktu belajar, mapel terkuat/terlemah, riwayat 30 hari), `laporan-ortu-demo.html` (per skill & riwayat terkunci = ikon + teks). Bahasa positif; nilai = angka + bar. `npm run test:e2e` → 62 lolos (4 halaman baru × 360/1280: tanpa scroll horizontal + axe bersih); `npm run check` hijau (JS 16,81 KB). Galeri ditautkan; tautan Laporan dari beranda/peta kini tidak rusak. Belum dicek visual (cek di Pages).
-- [ ] T1.13 `[sonnet]` Layar 10 Parent Gate, paywall langganan (bulanan/tahunan)/kode aktivasi, status & batal langganan, kritik & saran (FR-2, FR-10, FR-12; CR-006)
+- [x] T1.13 `[sonnet]` Layar 10 Parent Gate, paywall langganan (bulanan/tahunan)/kode aktivasi, status & batal langganan, kritik & saran (FR-2, FR-10, FR-12; CR-006)
+  - Bukti (25 Nov 2026): 4 halaman `parent-gate.html` (soal 38 × 7, keypad, alternatif password ortu), `paywall.html` (manfaat Full, paket bulanan Rp50.000/tahunan Rp500.000 contoh "dari settings", sisa slot, kode `SK-XXXX-XXXX`, tombol Langganan bertanda Fase 6), `langganan.html` (aktif + Perpanjang/Batalkan, masa tenggang, kedaluwarsa: progres aman), `saran.html` (bintang, kategori, teks, keadaan terkirim, batas 5/hari). `npm run test:e2e` → 70 lolos (4 halaman baru × 360/1280: tanpa scroll horizontal + axe bersih); `npm run check` hijau. Galeri ditautkan (baris "Segera" layar 9 yang basi dihapus). Belum dicek visual (cek di Pages).
 - [ ] T1.14 `[sonnet]` Layar 11 Admin: dashboard, penjualan + MRR/churn, marketing tools (FR-13, FR-14; CR-006)
 - [ ] T1.15 `[sonnet]` Review aksesibilitas & konsistensi + paket persetujuan → B11
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 1 disetujui" → tag `phase-1-approved`

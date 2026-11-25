@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paywall langganan — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<link rel="stylesheet" href="assets/bayar.css">
+<script src="assets/mockup.js" defer></script>
+<script src="assets/soal.js" defer></script>
+</head>
+<body>
+<header class="app-header">
+  <strong><span lang="id">Buka semua materi</span><span lang="en">Unlock everything</span></strong>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<div class="gate-bar">🔒 <span lang="id">Area orang tua · sudah lolos Parent Gate</span><span lang="en">Parent area · Parent Gate passed</span></div>
+<main class="container q-main stack">
+  <section class="card">
+    <h1><span lang="id">Versi Full: belajar tanpa batas</span><span lang="en">Full version: learning without limits</span></h1>
+    <ul class="perks">
+      <li><span lang="id">Semua 8 mapel, semua unit kelas 1–6</span><span lang="en">All 8 subjects, every unit in grades 1–6</span></li>
+      <li><span lang="id">Semua mini game</span><span lang="en">All mini games</span></li>
+      <li><span lang="id">Laporan lengkap per mapel &amp; skill + riwayat</span><span lang="en">Full report per subject &amp; skill + history</span></li>
+      <li><span lang="id">Sampai 4 profil anak, update konten gratis</span><span lang="en">Up to 4 child profiles, free content updates</span></li>
+    </ul>
+  </section>
+  <p class="status status-ok"><span lang="id">Sisa 37 slot harga early bird</span><span lang="en">37 early-bird slots left</span></p>
+  <!-- Harga contoh; di aplikasi dibaca dari settings/server (PRD §4.2). -->
+  <ul class="plans" aria-label="Pilih paket / Choose plan" data-choices>
+    <li><button class="choice plan" type="button" aria-pressed="false"><span class="p-name"><span lang="id">Bulanan</span><span lang="en">Monthly</span></span><span class="p-price">Rp50.000<small> <span lang="id">/ bulan</span><span lang="en">/ month</span></small></span><s class="muted">Rp100.000</s></button></li>
+    <li><button class="choice plan" type="button" aria-pressed="true"><span class="p-name"><span lang="id">Tahunan</span><span lang="en">Yearly</span></span><span class="p-price">Rp500.000<small> <span lang="id">/ tahun</span><span lang="en">/ year</span></small></span><span class="badge"><span lang="id">Hemat 2 bulan</span><span lang="en">Save 2 months</span></span></button></li>
+  </ul>
+  <p class="hint"><span lang="id">Harga terkunci selama langgananmu tidak terputus. Perpanjangan manual, tidak ada tagihan otomatis.</span><span lang="en">Your price stays locked while your subscription is continuous. Manual renewal, no automatic charges.</span></p>
+  <section class="card stack">
+    <h2><span lang="id">Punya kode aktivasi?</span><span lang="en">Have an activation code?</span></h2>
+    <label for="kode"><span lang="id">Kode (contoh: SK-AB12-CD34)</span><span lang="en">Code (e.g. SK-AB12-CD34)</span></label>
+    <input class="field" id="kode" type="text" inputmode="text" autocomplete="off" placeholder="SK-XXXX-XXXX">
+    <a class="btn btn-secondary btn-block" href="langganan.html"><span lang="id">Pakai kode</span><span lang="en">Redeem code</span></a>
+  </section>
+  <p class="design-note"><strong>Catatan desain:</strong> tombol "Langganan" aktif hanya setelah <em>Fase 6</em> (pembayaran); sebelumnya ortu memakai kode dari admin (1 periode). Teks harga selalu dari server, bukan hardcode. Progres anak tidak pernah dihapus bila tidak berlangganan.</p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><a class="btn btn-secondary" href="peta-belajar.html"><span lang="id">Nanti saja</span><span lang="en">Not now</span></a><button class="btn" type="button" aria-disabled="true"><span lang="id">Langganan (Fase 6)</span><span lang="en">Subscribe (Phase 6)</span></button></nav>
+</body>
+</html>
