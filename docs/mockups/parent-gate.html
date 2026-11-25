@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parent Gate — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<script src="assets/mockup.js" defer></script>
+<script src="assets/soal.js" defer></script>
+</head>
+<body>
+<header class="q-top">
+  <a class="close" href="beranda.html" aria-label="Kembali / Back">✕</a>
+  <strong class="q-progress"><span lang="id">Area orang tua</span><span lang="en">Parent area</span></strong>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container q-main stack">
+  <div class="q-prompt">
+    <h1><span lang="id">🔒 Khusus orang tua. Ketik hasil: 38 × 7 = ?</span><span lang="en">🔒 Grown-ups only. Type the answer: 38 × 7 = ?</span></h1>
+  </div>
+  <p class="hint"><span lang="id">Soal ini sengaja untuk orang dewasa. Belum hafal? Masuk dengan password orang tua.</span><span lang="en">This question is meant for adults. Rather not solve it? Use the parent password.</span></p>
+  <div class="answer-box" id="ans" role="status" aria-label="Jawabanmu">?</div>
+  <div class="keypad" data-keypad="ans"><button class="choice" type="button" data-key="1">1</button><button class="choice" type="button" data-key="2">2</button><button class="choice" type="button" data-key="3">3</button><button class="choice" type="button" data-key="4">4</button><button class="choice" type="button" data-key="5">5</button><button class="choice" type="button" data-key="6">6</button><button class="choice" type="button" data-key="7">7</button><button class="choice" type="button" data-key="8">8</button><button class="choice" type="button" data-key="9">9</button><button class="choice" type="button" data-key="del" aria-label="Hapus">⌫</button><button class="choice" type="button" data-key="0">0</button></div>
+  <p><a href="paywall.html"><span lang="id">Pakai password orang tua</span><span lang="en">Use parent password</span></a></p>
+  <p class="design-note"><strong>Catatan desain:</strong> soal perkalian 2 digit, dibuat acak tiap kali (tidak bisa dihafal anak). Salah → soal baru, tanpa pesan menakutkan. Berlaku untuk laporan, pembelian, dan pengaturan (FR-2). Pemeriksaan tetap di server/sesi, bukan hanya UI.</p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><a class="btn btn-block" href="paywall.html"><span lang="id">Buka</span><span lang="en">Open</span></a></nav>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kritik &amp; saran — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<link rel="stylesheet" href="assets/bayar.css">
+<script src="assets/mockup.js" defer></script>
+<script src="assets/soal.js" defer></script>
+</head>
+<body>
+<header class="app-header">
+  <strong><span lang="id">Kritik &amp; saran</span><span lang="en">Feedback</span></strong>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container q-main stack">
+  <h1><span lang="id">Bantu kami jadi lebih baik</span><span lang="en">Help us get better</span></h1>
+  <fieldset class="card stack" style="border: 1px solid var(--color-line)">
+    <legend><span lang="id">Seberapa puas kamu? (1–5)</span><span lang="en">How happy are you? (1–5)</span></legend>
+    <ul class="stars-pick" data-choices>
+      <li><button class="choice" type="button" aria-pressed="false" aria-label="1 bintang / 1 star">1 ★</button></li>
+      <li><button class="choice" type="button" aria-pressed="false" aria-label="2 bintang / 2 stars">2 ★</button></li>
+      <li><button class="choice" type="button" aria-pressed="false" aria-label="3 bintang / 3 stars">3 ★</button></li>
+      <li><button class="choice" type="button" aria-pressed="true" aria-label="4 bintang / 4 stars">4 ★</button></li>
+      <li><button class="choice" type="button" aria-pressed="false" aria-label="5 bintang / 5 stars">5 ★</button></li>
+    </ul>
+  </fieldset>
+  <fieldset class="card stack" style="border: 1px solid var(--color-line)">
+    <legend><span lang="id">Tentang apa?</span><span lang="en">What about?</span></legend>
+    <ul class="cats" data-choices>
+      <li><button class="choice" type="button" aria-pressed="false"><span lang="id">Bug</span><span lang="en">Bug</span></button></li>
+      <li><button class="choice" type="button" aria-pressed="true"><span lang="id">Konten</span><span lang="en">Content</span></button></li>
+      <li><button class="choice" type="button" aria-pressed="false"><span lang="id">Ide</span><span lang="en">Idea</span></button></li>
+      <li><button class="choice" type="button" aria-pressed="false"><span lang="id">Lainnya</span><span lang="en">Other</span></button></li>
+    </ul>
+  </fieldset>
+  <div class="stack">
+    <label for="msg"><span lang="id">Ceritakan (boleh singkat)</span><span lang="en">Tell us (short is fine)</span></label>
+    <textarea class="field" id="msg" maxlength="1000"></textarea>
+    <p class="hint"><span lang="id">Jangan tulis data pribadi anak (nama lengkap, nomor HP, alamat).</span><span lang="en">Please don't include your child's personal data (full name, phone, address).</span></p>
+  </div>
+  <section class="empty" aria-label="Contoh keadaan terkirim / Sent state example">
+    <img src="../brand/kiko/senang.svg" alt="">
+    <p class="status status-ok"><span lang="id">Terkirim. Terima kasih, Bu/Pak!</span><span lang="en">Sent. Thank you!</span></p>
+    <p class="muted"><span lang="id">Keadaan setelah tombol Kirim ditekan.</span><span lang="en">State after pressing Send.</span></p>
+  </section>
+  <p class="design-note"><strong>Catatan desain:</strong> bisa dibuka dari menu ortu dan sekali setelah 5 sesi pertama (bisa ditutup). Maks. 5 kiriman per akun per hari: jika terlampaui tampil "Sudah 5 kiriman hari ini, coba lagi besok" (FR-12). Status di admin: baru / dibaca / ditindaklanjuti.</p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><a class="btn btn-secondary" href="langganan.html"><span lang="id">Batal</span><span lang="en">Cancel</span></a><button class="btn" type="button"><span lang="id">Kirim</span><span lang="en">Send</span></button></nav>
+</body>
+</html>
