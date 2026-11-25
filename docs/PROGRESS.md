@@ -5,10 +5,32 @@
 
 ## Status
 
-- **Fase aktif:** 2 — Fondasi FE (belum ada rencana: jalankan `/plan-phase`). Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
+- **Fase aktif:** 2 — Fondasi FE (rencana dibuat 25 Nov 2026: `docs/plans/phase-2.md`). Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
 - **Posisi terakhir (tutup hari 24 Nov 2026, sesi ke-2):** T1.0 (PR #31, #32), T1.1 (PR #33), T1.2 (PR #34) selesai & ter-merge ke `main`; PR #35 (duplikat logo) ditutup. Tidak ada PR terbuka, tidak ada task setengah jalan. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** `/plan-phase` untuk Fase 2. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** T2.0 `[opus]` (`/next`). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
+
+## Fase 2 — Fondasi FE (rencana: `docs/plans/phase-2.md`)
+
+### Task
+- [ ] T2.0 `[opus]` ADR arsitektur FE: route, store, skema Dexie v1, `api.ts` adapter, set ikon, DOM test env (§10, §11, §12.2)
+- [ ] T2.1 `[sonnet]` Infrastruktur test komponen (Testing Library + DOM env, ADR dependency) (§15.1)
+- [ ] T2.2 `[sonnet]` i18n reaktif + `<html lang>` + penjaga teks hardcode (FR-3)
+- [ ] T2.3 `[sonnet]` Ikon SVG + komponen Kiko/Avatar + 12 avatar (FR-2, §9.4)
+- [ ] T2.4 `[sonnet]` Komponen UI dasar: Button, Card, Chip, ProgressBar, Stars, Modal, SubjectCard (§9.1, §9.2, §8.5)
+- [ ] T2.5 `[sonnet]` Routing `svelte-spa-router` + app shell + header ID/EN (§10.1, §9.1)
+- [ ] T2.6 `[opus]` Dexie + `api.ts` adapter lokal + antrian event idempoten (§12.2, §10.2, §8.2)
+- [ ] T2.7 `[sonnet]` Store profil, pengaturan, entitlement lokal (FR-2, FR-3, FR-8)
+- [ ] T2.8 `[sonnet]` Speech wrapper + `SpeakButton` (FR-8)
+- [ ] T2.9 `[sonnet]` PWA: manifest, service worker, prompt update (§8.2)
+- [ ] T2.10 `[sonnet]` Layar Landing (FR-1; Lighthouse ≥ 90, SEO ≥ 95)
+- [ ] T2.11 `[sonnet]` Layar Pilih kelas/profil + Beranda, mode lokal (FR-2, FR-7)
+- [ ] T2.12 `[sonnet]` Verifikasi akhir di Pages + bukti Exit Criteria E1–E4
+- [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 2 disetujui" → tag `phase-2-approved`
+
+### Default yang dipakai (bisa diubah Bimo)
+1. Komponen soal (`components/question/*`) dikerjakan di Fase 3 bersama engine.
+2. Ikon = SVG buatan sendiri (tanpa library baru), menggantikan emoji mockup.
 
 ## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
 
