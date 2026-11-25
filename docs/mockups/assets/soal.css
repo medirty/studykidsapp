@@ -56,3 +56,16 @@
 .delta { font-weight: var(--weight-strong); }
 @keyframes fb-bounce { 0% { transform: translateY(16px) scale(0.9); } 60% { transform: translateY(-8px); } 100% { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .fb-kiko { animation: none; } }
+/* T1.11: mini game Balon Angka. Target balon >= 72 px; tombol Jeda selalu di atas. */
+.g-top { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4); background: var(--color-surface); border-bottom: 1px solid var(--color-line); }
+.g-stats { flex: 1; display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.g-top .pause { flex: none; min-width: var(--tap-min); min-height: var(--tap-min); padding: 0 var(--space-3); }
+.g-sum { text-align: center; font: var(--weight-heading) var(--text-2xl) var(--font-heading); margin: 0; }
+.sky { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin: 0; padding: var(--space-3); list-style: none; border: 3px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-surface); min-height: 280px; align-content: space-around; justify-items: center; }
+.balloon { display: grid; place-items: center; width: 72px; height: 84px; border: 3px solid var(--color-ink); border-radius: 50% 50% 48% 48%; color: var(--color-ink); font: var(--weight-heading) var(--text-xl) var(--font-heading); cursor: pointer; }
+.balloon.b1 { background: var(--color-sunny); }
+.balloon.b2 { background: var(--color-teal); }
+.balloon.b3 { background: var(--color-bubblegum); }
+.balloon.popped { background: var(--color-surface); border-style: dashed; box-shadow: 0 0 0 4px var(--color-success); }
+.balloon.popped::after { content: '✓'; }
+.overlay { justify-items: center; padding: var(--space-4); text-align: center; border: 3px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-surface); box-shadow: var(--shadow-lg); }
