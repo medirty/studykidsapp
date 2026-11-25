@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketing admin — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/bayar.css">
+<link rel="stylesheet" href="assets/admin.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body class="admin">
+<header class="admin-bar">
+  <strong>StudyKids Admin</strong>
+  <nav aria-label="Menu admin"><ul class="admin-nav">
+    <li><a href="admin-dashboard.html">Dashboard</a></li>
+    <li><a href="admin-penjualan.html"><span lang="id">Penjualan</span><span lang="en">Sales</span></a></li>
+    <li><a href="admin-marketing.html" aria-current="page">Marketing</a></li>
+  </ul></nav>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <h1>Marketing</h1>
+  <section class="stack">
+    <h2><span lang="id">Kalender konten 30 hari</span><span lang="en">30-day content calendar</span></h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Kalender konten / Content calendar">
+      <table>
+        <thead><tr><th><span lang="id">Tanggal</span><span lang="en">Date</span></th><th><span lang="id">Tema</span><span lang="en">Theme</span></th><th>Platform</th></tr></thead>
+        <tbody>
+          <tr><td>Rab 25 Nov</td><td><span lang="id">Contoh soal seru</span><span lang="en">Fun sample question</span></td><td>IG, TikTok</td></tr>
+          <tr><td>Kam 26 Nov</td><td><span lang="id">Promo early bird (sisa 37 slot)</span><span lang="en">Early-bird promo (37 slots left)</span></td><td>IG, FB, WA</td></tr>
+          <tr><td>Jum 27 Nov</td><td><span lang="id">Fakta sains</span><span lang="en">Science fact</span></td><td>TikTok</td></tr>
+          <tr><td>Sab 28 Nov</td><td><span lang="id">Tips belajar</span><span lang="en">Study tip</span></td><td>IG, FB</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <div class="grid-2">
+    <section class="card stack">
+      <h2><span lang="id">Gambar post 1080×1080</span><span lang="en">Post image 1080×1080</span></h2>
+      <div class="post-preview"><img src="../brand/kiko/semangat.svg" alt=""><p>Anak kelas 3 bisa jawab ini? 24 × 5 = ?</p></div>
+      <label for="cap"><span lang="id">Caption IG (ID)</span><span lang="en">IG caption (ID)</span></label>
+      <textarea class="field" id="cap">Sisa 37 slot harga early bird Rp50.000/bulan! Coba gratis di studykids.id #belajarSD #StudyKids</textarea>
+      <div class="row"><button class="btn" type="button"><span lang="id">Unduh PNG</span><span lang="en">Download PNG</span></button><button class="btn btn-secondary" type="button"><span lang="id">Soal acak lain</span><span lang="en">Another random question</span></button></div>
+    </section>
+    <section class="card stack">
+      <h2>UTM builder</h2>
+      <div class="stack"><label for="src">utm_source</label><input class="field" id="src" value="instagram"></div>
+      <div class="stack"><label for="med">utm_medium</label><input class="field" id="med" value="social"></div>
+      <div class="stack"><label for="camp">utm_campaign</label><input class="field" id="camp" value="earlybird-nov"></div>
+      <p><code>https://studykids.id/?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=earlybird-nov</code></p>
+      <p class="muted"><span lang="id">earlybird-nov: 412 kunjungan · 58 daftar · 9 langganan</span><span lang="en">earlybird-nov: 412 visits · 58 sign-ups · 9 subscriptions</span></p>
+    </section>
+  </div>
+  <section class="card stack">
+    <h2>Voucher</h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Voucher">
+      <table>
+        <thead><tr><th><span lang="id">Kode</span><span lang="en">Code</span></th><th><span lang="id">Diskon</span><span lang="en">Discount</span></th><th><span lang="id">Terpakai / kuota</span><span lang="en">Used / quota</span></th><th><span lang="id">Kedaluwarsa</span><span lang="en">Expires</span></th></tr></thead>
+        <tbody><tr><td>TEMAN10</td><td>Rp10.000</td><td>12 / 50</td><td>31 Des 2026</td></tr></tbody>
+      </table>
+    </div>
+    <button class="btn" type="button"><span lang="id">Buat voucher</span><span lang="en">Create voucher</span></button>
+  </section>
+  <p class="design-note"><strong>Catatan desain:</strong> hanya menyiapkan konten, tidak auto-post (FR-14). Template urgensi memakai angka asli dan berhenti saat kuota habis. Konten tanpa data pribadi anak. Gambar dirender Canvas dari template brand di Fase 5.</p>
+</main>
+</body>
+</html>

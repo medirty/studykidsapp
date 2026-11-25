@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard admin — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/bayar.css">
+<link rel="stylesheet" href="assets/admin.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body class="admin">
+<header class="admin-bar">
+  <strong>StudyKids Admin</strong>
+  <nav aria-label="Menu admin"><ul class="admin-nav">
+    <li><a href="admin-dashboard.html" aria-current="page">Dashboard</a></li>
+    <li><a href="admin-penjualan.html"><span lang="id">Penjualan</span><span lang="en">Sales</span></a></li>
+    <li><a href="admin-marketing.html">Marketing</a></li>
+  </ul></nav>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <h1>Dashboard</h1>
+  <ul class="kpis">
+    <li><b>1.284</b><span><span lang="id">Pengguna (ortu 412 · profil anak 872)</span><span lang="en">Users (parents 412 · child profiles 872)</span></span></li>
+    <li><b>318 / 696</b><span><span lang="id">DAU / WAU</span><span lang="en">DAU / WAU</span></span></li>
+    <li><b>540</b><span><span lang="id">Sesi hari ini</span><span lang="en">Sessions today</span></span></li>
+    <li><b>17,2%</b><span><span lang="id">Konversi demo→Full</span><span lang="en">Demo→Full conversion</span></span></li>
+    <li><b>71</b><span><span lang="id">Pelanggan aktif (baru 63 · perpanjang 8)</span><span lang="en">Active subscribers (new 63 · renewal 8)</span></span></li>
+    <li><b>Rp3.950.000</b><span><span lang="id">Penjualan bulan ini</span><span lang="en">Sales this month</span></span></li>
+    <li><b>Rp150.000</b><span><span lang="id">Penjualan hari ini</span><span lang="en">Sales today</span></span></li>
+    <li><b>63 / 100</b><span><span lang="id">Slot early bird terjual (sisa 37)</span><span lang="en">Early-bird slots sold (37 left)</span></span></li>
+  </ul>
+  <section class="stack">
+    <h2><span lang="id">Sesi per hari, 30 hari terakhir</span><span lang="en">Sessions per day, last 30 days</span></h2>
+    <svg class="chart" viewBox="0 0 330 124" role="img" aria-label="Grafik batang sesi harian 30 hari, naik dari sekitar 200 menjadi 540 / Daily sessions bar chart over 30 days, rising from about 200 to 540">
+      <rect x="5" y="67" width="8" height="33"/><rect x="15.8" y="65" width="8" height="35"/><rect x="26.6" y="63" width="8" height="37"/><rect x="37.400000000000006" y="61" width="8" height="39"/><rect x="48.2" y="59" width="8" height="41"/><rect x="59" y="57" width="8" height="43"/><rect x="69.80000000000001" y="55" width="8" height="45"/><rect x="80.60000000000001" y="53" width="8" height="47"/><rect x="91.4" y="51" width="8" height="49"/><rect x="102.2" y="49" width="8" height="51"/><rect x="113" y="47" width="8" height="53"/><rect x="123.80000000000001" y="45" width="8" height="55"/><rect x="134.60000000000002" y="43" width="8" height="57"/><rect x="145.4" y="41" width="8" height="59"/><rect x="156.20000000000002" y="39" width="8" height="61"/><rect x="167" y="37" width="8" height="63"/><rect x="177.8" y="35" width="8" height="65"/><rect x="188.60000000000002" y="33" width="8" height="67"/><rect x="199.4" y="31" width="8" height="69"/><rect x="210.20000000000002" y="29" width="8" height="71"/><rect x="221" y="28" width="8" height="72"/><rect x="231.8" y="26" width="8" height="74"/><rect x="242.60000000000002" y="24" width="8" height="76"/><rect x="253.4" y="22" width="8" height="78"/><rect x="264.20000000000005" y="20" width="8" height="80"/><rect x="275" y="18" width="8" height="82"/><rect x="285.8" y="16" width="8" height="84"/><rect x="296.6" y="14" width="8" height="86"/><rect x="307.40000000000003" y="12" width="8" height="88"/><rect x="318.20000000000005" y="10" width="8" height="90"/>
+      <text x="5" y="12">540</text><text x="5" y="120">26 Okt</text><text x="290" y="120">25 Nov</text>
+    </svg>
+  </section>
+  <section class="card">
+    <h2><span lang="id">Posting hari ini</span><span lang="en">Post today</span></h2>
+    <p><span lang="id">Rabu: contoh soal seru (IG + TikTok). Sisa 37 slot early bird.</span><span lang="en">Wednesday: fun sample question (IG + TikTok). 37 early-bird slots left.</span> <a href="admin-marketing.html"><span lang="id">Buka marketing</span><span lang="en">Open marketing</span></a></p>
+  </section>
+  <p class="design-note"><strong>Catatan desain:</strong> angka finance dihitung dari tabel <code>orders</code> berstatus <code>paid</code> (bukan diisi manual). Grafik punya teks alternatif. Angka contoh sama dengan layar penjualan dan paywall. Halaman admin lain (pengguna, konten, saran, pengaturan) memakai pola kartu/tabel yang sama dan tidak dimockup terpisah.</p>
+</main>
+</body>
+</html>

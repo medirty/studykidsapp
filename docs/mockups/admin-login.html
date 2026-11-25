@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masuk admin — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/bayar.css">
+<link rel="stylesheet" href="assets/admin.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body class="admin">
+<header class="admin-bar"><strong>StudyKids Admin</strong><button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button></header>
+<main class="container stack" style="max-width: 420px">
+  <h1><span lang="id">Masuk admin</span><span lang="en">Admin sign-in</span></h1>
+  <form class="card stack" action="admin-dashboard.html">
+    <div class="stack"><label for="em">Email</label><input class="field" id="em" type="email" autocomplete="username" value="admin@studykids.id"></div>
+    <div class="stack"><label for="pw">Password</label><input class="field" id="pw" type="password" autocomplete="current-password" value="contohpassword"></div>
+    <div class="stack"><label for="otp"><span lang="id">Kode 2FA (6 digit dari aplikasi autentikator)</span><span lang="en">2FA code (6 digits from authenticator app)</span></label><input class="field" id="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" value="123456"></div>
+    <button class="btn btn-block" type="submit"><span lang="id">Masuk</span><span lang="en">Sign in</span></button>
+  </form>
+  <p class="design-note"><strong>Catatan desain:</strong> password kuat + 2FA TOTP (FR-13). Pesan gagal umum ("Email, password, atau kode salah") dan dibatasi rate limit. Halaman admin = chunk lazy terpisah, tidak ikut bundle aplikasi anak.</p>
+</main>
+</body>
+</html>
