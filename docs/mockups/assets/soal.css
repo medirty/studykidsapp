@@ -69,3 +69,27 @@
 .balloon.popped { background: var(--color-surface); border-style: dashed; box-shadow: 0 0 0 4px var(--color-success); }
 .balloon.popped::after { content: '✓'; }
 .overlay { justify-items: center; padding: var(--space-4); text-align: center; border: 3px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-surface); box-shadow: var(--shadow-lg); }
+/* T1.12: laporan anak & ortu. Nilai selalu angka + bar (bukan warna saja). */
+.mastery { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-3); }
+.mastery li { display: grid; gap: var(--space-1); }
+.mastery .m-head { display: flex; justify-content: space-between; gap: var(--space-3); font-weight: var(--weight-strong); }
+.meter { height: 14px; border-radius: var(--radius-full); background: var(--color-line); overflow: hidden; }
+.meter > span { display: block; height: 100%; border-radius: var(--radius-full); background: var(--subject-math); }
+.meter.practice > span { background: var(--color-sunny); border-right: 2px solid var(--color-ink); }
+.m-action { justify-self: start; min-height: var(--tap-min); padding: var(--space-1) var(--space-4); font-size: var(--text-sm); }
+.empty { display: grid; justify-items: center; gap: var(--space-2); padding: var(--space-4); text-align: center; border: 3px dashed var(--color-ink-soft); border-radius: var(--radius-md); background: var(--color-surface); }
+.empty img { width: 120px; height: 120px; }
+.empty p { margin: 0; }
+.chart { width: 100%; height: auto; }
+.chart .axis { stroke: var(--color-line); stroke-width: 2; }
+.chart .col { fill: var(--subject-math); }
+.chart .col.today { fill: var(--color-sunny); stroke: var(--color-ink); stroke-width: 2; }
+.chart text { fill: var(--color-ink); font: var(--weight-strong) 12px var(--font-body); text-anchor: middle; }
+.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin: 0; }
+.kpis > div { padding: var(--space-3); border: 1px solid var(--color-line); border-radius: var(--radius-md); background: var(--color-surface); }
+.kpis dt { font-size: var(--text-xs); color: var(--color-ink-soft); font-weight: var(--weight-strong); }
+.kpis dd { margin: 0; font: var(--weight-heading) var(--text-xl) var(--font-heading); }
+.gate-bar { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); background: var(--color-sunny); font-weight: var(--weight-strong); font-size: var(--text-sm); }
+.history { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-2); }
+.history li { display: flex; justify-content: space-between; gap: var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--color-line); font-size: var(--text-sm); }
+.locked-row { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3); border: 2px dashed var(--color-ink-soft); border-radius: var(--radius-md); background: var(--color-surface); font-weight: var(--weight-strong); }
