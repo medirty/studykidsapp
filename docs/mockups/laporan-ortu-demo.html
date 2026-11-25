@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laporan orang tua, Demo — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body>
+<header class="app-header">
+  <strong><span lang="id">Laporan Pipo</span><span lang="en">Pipo's report</span></strong>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<div class="gate-bar">🔒 <span lang="id">Area orang tua · sudah lolos Parent Gate</span><span lang="en">Parent area · Parent Gate passed</span></div>
+<main class="container q-main stack">
+  <dl class="kpis">
+    <div><dt><span lang="id">Waktu belajar minggu ini</span><span lang="en">Study time this week</span></dt><dd>35 m</dd></div>
+    <div><dt><span lang="id">Soal dikerjakan</span><span lang="en">Questions done</span></dt><dd>24</dd></div>
+  </dl>
+  <section class="card">
+    <h2><span lang="id">Menit belajar per hari</span><span lang="en">Minutes studied per day</span></h2>
+    <svg class="chart" viewBox="0 0 280 140" role="img" aria-label="Menit belajar per hari: Sen 10, Sel 0, Rab 5, Kam 0, Jum 0, Sab 12, Min 8 / Minutes per day: Mon 10, Tue 0, Wed 5, Thu 0, Fri 0, Sat 12, Sun 8">
+      <line class="axis" x1="0" y1="110" x2="280" y2="110"/>
+      <rect class="col" x="14" y="88" width="28" height="22" rx="4"/><rect class="col" x="54" y="108" width="28" height="2" rx="1"/><rect class="col" x="94" y="99" width="28" height="11" rx="4"/><rect class="col" x="134" y="108" width="28" height="2" rx="1"/><rect class="col" x="174" y="108" width="28" height="2" rx="1"/><rect class="col" x="214" y="83" width="28" height="27" rx="4"/><rect class="col today" x="254" y="92" width="24" height="18" rx="4"/>
+      <g lang="id"><text x="28" y="128">Sen</text><text x="68" y="128">Sel</text><text x="108" y="128">Rab</text><text x="148" y="128">Kam</text><text x="188" y="128">Jum</text><text x="228" y="128">Sab</text><text x="266" y="128">Min</text></g>
+      <g lang="en"><text x="28" y="128">Mon</text><text x="68" y="128">Tue</text><text x="108" y="128">Wed</text><text x="148" y="128">Thu</text><text x="188" y="128">Fri</text><text x="228" y="128">Sat</text><text x="266" y="128">Sun</text></g>
+    </svg>
+  </section>
+  <section class="card">
+    <h2><span lang="id">Mapel Demo</span><span lang="en">Demo subjects</span></h2>
+    <ul class="mastery">
+      <li><div class="m-head"><span>Math</span><span>70</span></div><div class="meter" role="img" aria-label="70 dari 100 / 70 of 100"><span style="width:70%"></span></div></li>
+      <li><div class="m-head"><span>Art &amp; Design</span><span><span lang="id">Data belum cukup</span><span lang="en">Not enough data</span></span></div></li>
+    </ul>
+  </section>
+  <p class="locked-row">🔒 <span lang="id">Laporan per skill &amp; riwayat 30 hari ada di versi Full.</span><span lang="en">Per-skill report and 30-day history are in Full.</span></p>
+  <p class="design-note"><strong>Catatan desain:</strong> Demo hanya unit 1–2 dan 3 mapel, jadi laporan per skill &amp; riwayat terkunci (ikon + teks). Progres tetap tersimpan setelah upgrade.</p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><a class="btn btn-secondary" href="beranda.html"><span lang="id">Keluar area ortu</span><span lang="en">Exit parent area</span></a><a class="btn" href="pilih-kelas.html"><span lang="id">Buka semua materi</span><span lang="en">Unlock everything</span></a></nav>
+</body>
+</html>
