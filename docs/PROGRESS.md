@@ -55,7 +55,7 @@
 
 ### Tindakan manual Bimo
 - [x] B10 Logo final + 4 ekspresi Kiko disetujui Bimo ("Logo disetujui", 25 Nov 2026)
-- [ ] B11 Setujui semua mockup (setelah T1.15)
+- [x] B11 Setujui semua mockup (setelah T1.15) — Bimo: "sudah saya review, mockup oke" (25 Nov 2026)
 
 ### Keputusan Bimo untuk Fase 1 (24 Nov 2026)
 1. ~~Cara melihat mockup~~ — **dipasang di GitHub Pages** (`/studykidsapp/mockups/`). Izin mengubah workflow deploy sudah diberikan; dikerjakan di T1.0 (bersama pecah job deploy, M-1).

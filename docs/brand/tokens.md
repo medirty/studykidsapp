@@ -25,7 +25,7 @@ Aturan: teks biasa ≥ 4,5:1; teks besar (≥ 24 px, atau ≥ 18,66 px tebal) & 
 | Mapel | Hex | Ink di atasnya | Putih di atasnya | Teks yang dipakai |
 |---|---|---|---|---|
 | Math | `#2459D6` | 2,86 | 6,04 | putih |
-| English | `#8B5CF6` | 4,09 | 4,23 | putih, **hanya teks besar/tebal** (pengecualian) |
+| English | `#7C3AED` | 4,31 | 5,70 | putih |
 | Science | `#22A55B` | 5,44 | 3,18 | Ink |
 | GP | `#0EA5E9` | 6,24 | 2,77 | Ink |
 | Wellbeing | `#EC4899` | 4,90 | 3,53 | Ink |
@@ -33,7 +33,7 @@ Aturan: teks biasa ≥ 4,5:1; teks besar (≥ 24 px, atau ≥ 18,66 px tebal) & 
 | Music | `#F43F5E` | 4,71 | 3,67 | Ink |
 | Computing | `#14B8A6` | 6,95 | 2,49 | Ink |
 
-**Temuan untuk Bimo:** English `#8B5CF6` tidak lolos 4,5:1 dengan Ink maupun putih. Nilai PRD tidak diubah; sementara dipakai dengan teks putih besar/tebal saja. Usulan perbaikan (perlu persetujuan): `#7C3AED` (putih 5,70:1) — ubah di T1.15 bila disetujui.
+**Keputusan Bimo (25 Nov 2026):** English diganti dari `#8B5CF6` (putih 4,23:1) ke `#7C3AED` (putih 5,70:1), lolos AA. PRD §9.2 diperbarui.
 
 ## Font (self-host)
 

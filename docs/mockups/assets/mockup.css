@@ -39,8 +39,8 @@ img { max-width: 100%; height: auto; }
 :focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
 
 /* Bahasa: ID default, EN lewat tombol di header (mockup.js) */
-html[data-lang='id'] [lang='en'],
-html[data-lang='en'] [lang='id'] { display: none; }
+html[data-lang='id'] :is(span, g)[lang='en'],
+html[data-lang='en'] :is(span, g)[lang='id'] { display: none; }
 
 .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: var(--space-4); }
 .stack > * + * { margin-top: var(--space-4); }

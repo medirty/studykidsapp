@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.12 · **Tanggal:** 25 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.13 · **Tanggal:** 25 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -439,7 +439,7 @@ Font: maksimal 2 keluarga font, self-hosted, `font-display: swap`, subset Latin.
 | Success | `#22A55B` |
 | Error (lembut, selalu disertai ikon) | `#D93A4A` |
 | Background | `#FFF8F2` (krem hangat) |
-| Warna per mapel | Math `#2459D6`, English `#8B5CF6`, Science `#22A55B`, GP `#0EA5E9`, Wellbeing `#EC4899`, Art `#FF8A1F`, Music `#F43F5E`, Computing `#14B8A6` |
+| Warna per mapel | Math `#2459D6`, English `#7C3AED`, Science `#22A55B`, GP `#0EA5E9`, Wellbeing `#EC4899`, Art `#FF8A1F`, Music `#F43F5E`, Computing `#14B8A6` |
 | Radius | 12 / 20 / 999 px |
 | Font | **Baloo 2** (judul), **Nunito** (teks) — self-hosted |
 | Spacing | skala 4 px (4, 8, 12, 16, 24, 32, 48) |
@@ -1124,3 +1124,4 @@ Masih terbuka:
 | 1.10 | 23 Nov 2026 | CR-004: XAMPP diganti **MariaDB 11.8 standalone** (sama dengan Hostinger & CI); CI pindah dari MySQL 8.0 ke `mariadb:11.8`; koneksi DB mengatur sql_mode/UTC/collation sendiri; `scripts/db-setup.ps1`; HeidiSQL pengganti phpMyAdmin. Alur deploy tidak berubah. |
 | 1.11 | 24 Nov 2026 | CR-005: plugin **frontend-design** diganti skill **impeccable** (desain UI + detektor "AI slop"); tanpa subagent bawaannya (§16.2). Lihat D-010. |
 | 1.12 | 25 Nov 2026 | CR-006: model bisnis **sekali bayar → langganan** (bulanan & tahunan = 10× bulanan). Early bird 100 pelanggan pertama (Rp50.000/bln) terkunci selama langganan tidak terputus; normal Rp100.000/bln; perpanjangan manual + pengingat email; masa tenggang 3 hari; progres tetap tersimpan saat kedaluwarsa. §1, §4.1 (K11), §4.2, §5.1–5.2, FR-10/11/13/14, §12 (`subscriptions`, `entitlements.expires_at`, `orders.type/period`, `activation_codes.duration_days`), §13, Fase 4 & 6. |
+| 1.13 | 25 Nov 2026 | CR-007: warna English `#8B5CF6` → `#7C3AED` (kontras putih 5,70:1, lolos AA). §9.2 diperbarui. |
