@@ -43,3 +43,16 @@
 .swatch[aria-pressed='true']::after { content: '✓'; color: var(--color-surface); text-shadow: 0 0 3px var(--color-ink); font-weight: var(--weight-heading); }
 .tools { display: flex; gap: var(--space-3); }
 .design-note { padding: var(--space-3); border-left: 4px solid var(--color-teal); background: var(--color-surface); }
+/* T1.10: feedback & ringkasan. Status = ikon + teks + warna. */
+.fb { display: grid; justify-items: center; gap: var(--space-2); padding: var(--space-4); text-align: center; border: 3px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-surface); }
+.fb-ok { box-shadow: 0 4px 0 var(--color-success); }
+.fb-retry { box-shadow: 0 4px 0 var(--color-error); }
+.fb-kiko { width: 140px; height: 140px; animation: fb-bounce 600ms var(--ease-out) 1; }
+.fb .status { justify-content: center; margin: 0; }
+.fb p { margin: 0; }
+.stars { font-size: var(--text-xl); font-weight: var(--weight-heading); }
+.skills { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-3); }
+.skills li { display: flex; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+.delta { font-weight: var(--weight-strong); }
+@keyframes fb-bounce { 0% { transform: translateY(16px) scale(0.9); } 60% { transform: translateY(-8px); } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .fb-kiko { animation: none; } }

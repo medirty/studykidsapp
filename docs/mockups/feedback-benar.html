@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feedback benar — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body>
+<header class="q-top">
+  <a class="close" href="peta-belajar.html" aria-label="Keluar dari sesi / Leave session">✕</a>
+  <div class="q-progress">
+    <span class="label"><span lang="id">Soal 4 dari 10</span><span lang="en">Question 4 of 10</span></span>
+    <div class="bar" role="progressbar" aria-label="Progres sesi" aria-valuemin="0" aria-valuemax="10" aria-valuenow="4"><span style="width:40%"></span></div>
+  </div>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container q-main stack">
+  <section class="fb fb-ok" aria-live="polite">
+    <img class="fb-kiko" src="../brand/kiko/kiko-senang.svg" alt="Kiko senang" width="140" height="140">
+    <h1 class="status status-ok"><span lang="id">Betul! Hebat!</span><span lang="en">Correct! Great job!</span></h1>
+    <p><span class="badge">+10 XP ⭐</span></p>
+    <p class="muted"><span lang="id">Segitiga punya 3 sisi.</span><span lang="en">A triangle has 3 sides.</span></p>
+  </section>
+  <p class="design-note"><strong>Catatan desain:</strong> animasi Kiko melompat + bintang berhamburan (±600 ms) dan suara singkat. Dengan <code>prefers-reduced-motion</code>: tanpa animasi, Kiko diam dan bintang muncul statis; suara mengikuti pengaturan. Feedback muncul &lt; 100 ms.</p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><a class="btn btn-block" href="soal-mcq.html"><span lang="id">Lanjut</span><span lang="en">Next</span></a></nav>
+</body>
+</html>
