@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soal seret ke kelompok — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<script src="assets/mockup.js" defer></script>
+<script src="assets/soal.js" defer></script>
+</head>
+<body>
+<header class="q-top">
+  <a class="close" href="peta-belajar.html" aria-label="Keluar dari sesi / Leave session">✕</a>
+  <div class="q-progress">
+    <span class="label"><span lang="id">Soal 3 dari 10</span><span lang="en">Question 3 of 10</span></span>
+    <div class="bar" role="progressbar" aria-label="Progres sesi" aria-valuemin="0" aria-valuemax="10" aria-valuenow="3"><span style="width:30%"></span></div>
+  </div>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container q-main stack">
+  <div class="q-prompt">
+    <h1><span lang="id">Kelompokkan hewan: di darat atau di air?</span><span lang="en">Sort the animals: land or water?</span></h1>
+    <button class="btn btn-secondary speak" type="button" aria-label="Dengarkan soal / Read aloud">🔊</button>
+  </div>
+  <div class="zones" data-dropzones>
+    <section class="zone" data-zone aria-label="Di darat / On land"><h2><span lang="id">Di darat</span><span lang="en">On land</span></h2><ul class="chips"><li><button class="choice chip" type="button" aria-pressed="false"><span aria-hidden="true">🐱</span><span lang="id">Kucing</span><span lang="en">Cat</span></button></li></ul></section>
+    <section class="zone" data-zone aria-label="Di air / In water"><h2><span lang="id">Di air</span><span lang="en">In water</span></h2><ul class="chips"></ul></section>
+  </div>
+  <p class="hint"><span lang="id">Seret hewan ke kotak, <strong>atau ketuk hewan lalu ketuk kotaknya</strong>.</span><span lang="en">Drag an animal to a box, <strong>or tap the animal, then tap the box</strong>.</span></p>
+  <ul class="chips tray" data-tray aria-label="Hewan yang tersisa / Remaining animals"><li><button class="choice chip dragging" type="button" aria-pressed="false"><span aria-hidden="true">🐟</span><span lang="id">Ikan</span><span lang="en">Fish</span></button></li><li><button class="choice chip" type="button" aria-pressed="false"><span aria-hidden="true">🐄</span><span lang="id">Sapi</span><span lang="en">Cow</span></button></li><li><button class="choice chip" type="button" aria-pressed="false"><span aria-hidden="true">🐙</span><span lang="id">Gurita</span><span lang="en">Octopus</span></button></li></ul>
+  <p class="hint design-note"><strong><span lang="id">Catatan desain:</span><span lang="en">Design note:</span></strong> <span lang="id">kartu Ikan miring + bayangan = sedang diseret. Alternatif ketuk-lalu-ketuk wajib ada (aksesibilitas, Fase 2/3). Area kotak ≥ 72 px.</span><span lang="en">the tilted, shadowed Fish card is being dragged. A tap-then-tap alternative is required (accessibility, Phase 2/3). Drop areas ≥ 72 px.</span></p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><button class="btn btn-block" type="button"><span lang="id">Periksa</span><span lang="en">Check</span></button></nav>
+</body>
+</html>

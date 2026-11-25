@@ -5,9 +5,9 @@
 
 ## Status
 
-- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.8 selesai, B10 disetujui, siap `/next` → T1.9)
+- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.9 selesai, B10 disetujui, siap `/next` → T1.10)
 - **Posisi terakhir (tutup hari 24 Nov 2026, sesi ke-2):** T1.0 (PR #31, #32), T1.1 (PR #33), T1.2 (PR #34) selesai & ter-merge ke `main`; PR #35 (duplikat logo) ditutup. Tidak ada PR terbuka, tidak ada task setengah jalan. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** `/next` → T1.9 `[sonnet]` Layar 5b Soal dragdrop/match/order/draw (T1.8 selesai). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** `/next` → T1.10 `[sonnet]` Layar 6–7 Feedback + Ringkasan sesi (T1.9 selesai). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
@@ -31,7 +31,8 @@
   - Bukti (25 Nov 2026): `peta-belajar.html` (Math kelas 1: unit 1 selesai ⭐1–3, unit 2 ▶ tersedia + 🔒, unit 3+ gembok + CTA "Buka semua materi"). Status = ikon + teks + legenda (bukan hanya warna). `npm run test:e2e` → 22 lolos (peta 360 & 1280: tanpa scroll horizontal + axe bersih); `npm run check` hijau (JS 16,81 KB). Galeri ditautkan. Tombol skill belum menuju layar soal (T1.8); CTA → `pilih-kelas.html` sementara (paywall di T1.13). Belum dicek visual (cek di Pages).
 - [x] T1.8 `[sonnet]` Layar 5a Soal mcq/input/tf/tap/listen (FR-5, FR-8)
   - Bukti (25 Nov 2026): 6 halaman `soal-mcq.html` (kelas 1–2), `soal-mcq-besar.html` (kelas 5–6), `soal-input.html` (keypad angka, jawaban bisa diketik), `soal-tf.html`, `soal-tap.html`, `soal-listen.html` (pesan ramah jika suara tak tersedia, FR-8). Progres "Soal x dari 10", 🔊, tombol Periksa di bawah; pilihan ≥ 56–72 px; terpilih = border + ✓ (bukan warna saja). Soal orisinal. `npm run test:e2e` → 34 lolos (tiap halaman 360 & 1280: tanpa scroll horizontal + axe bersih); `npm run check` hijau (JS 16,81 KB). Peta belajar → soal-mcq; galeri ditautkan. Tombol Periksa belum menuju feedback (T1.10). Belum dicek visual (cek di Pages).
-- [ ] T1.9 `[sonnet]` Layar 5b Soal dragdrop/match/order/draw (FR-5)
+- [x] T1.9 `[sonnet]` Layar 5b Soal dragdrop/match/order/draw (FR-5)
+  - Bukti (25 Nov 2026): 4 halaman `soal-dragdrop.html` (kartu miring+bayangan = sedang diseret), `soal-match.html` (pasangan bernomor, tanpa garis), `soal-order.html` (kotak bernomor), `soal-draw.html` (palet 8 warna ≥ 48 px, atap oranye = warna Art, tombol "Selesai", tanpa nilai). Tiap halaman punya alternatif ketuk-untuk-pilih (JS contoh kecil) + catatan desain untuk Fase 2/3. `npm run test:e2e` → 42 lolos (4 halaman baru × 360/1280: tanpa scroll horizontal + axe bersih); `npm run check` hijau. Galeri ditautkan. Belum dicek visual (cek di Pages).
 - [ ] T1.10 `[sonnet]` Layar 6–7 Feedback benar/salah + Ringkasan sesi (FR-5, FR-7)
 - [ ] T1.11 `[sonnet]` Layar 8 Mini game "Balon Angka" (FR-6)
 - [ ] T1.12 `[sonnet]` Layar 9 Laporan anak & ortu (FR-9)
