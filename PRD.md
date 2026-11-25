@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.11 · **Tanggal:** 24 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.12 · **Tanggal:** 25 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -40,7 +40,7 @@ Istilah wajib: **HARUS** = wajib, **TIDAK BOLEH** = dilarang, **SEBAIKNYA** = re
 
 **StudyKids** adalah web app belajar interaktif untuk anak **SD kelas 1–6**, dengan kurikulum **terinspirasi oleh Cambridge Primary** (bukan afiliasi resmi). Belajar dibuat seperti bermain: soal yang selalu berbeda, mini games, bintang & lencana, serta laporan untuk orang tua tentang **keunggulan anak** dan **apa yang perlu ditingkatkan**.
 
-- **Model bisnis:** Demo gratis selamanya (3 mapel) + **sekali bayar** untuk membuka semua mapel kelas 1–6.
+- **Model bisnis:** Demo gratis selamanya (3 mapel) + **langganan** (bulanan atau tahunan) untuk membuka semua mapel kelas 1–6 (CR-006). Perpanjangan **manual** dengan pengingat email, bukan auto-debit.
 - **Bahasa:** Indonesia & Inggris (bisa diganti kapan saja).
 - **Platform:** Web app, mobile-first, ringan, bisa di-install (PWA), sebagian bisa offline.
 - **Hosting target:** **Hostinger Indonesia** (rekomendasi final, lihat §17.2). Kode tetap hosting-agnostic sehingga pindah ke IDwebhost tidak mengubah kode.
@@ -80,7 +80,7 @@ Istilah wajib: **HARUS** = wajib, **TIDAK BOLEH** = dilarang, **SEBAIKNYA** = re
 
 | # | Keputusan | Alasan |
 |---|---|---|
-| K1 | **Akun orang tua + profil anak** (maks. 4 profil per akun). Anak masuk dengan memilih avatar (+ PIN 4 digit opsional). | Anak SD tidak perlu email/password. Satu pembelian berlaku untuk semua anak di keluarga. |
+| K1 | **Akun orang tua + profil anak** (maks. 4 profil per akun). Anak masuk dengan memilih avatar (+ PIN 4 digit opsional). | Anak SD tidak perlu email/password. Satu langganan berlaku untuk semua anak di keluarga. |
 | K2 | **Demo bisa dicoba tanpa login** (progress disimpan di perangkat). Daftar akun diminta saat ingin menyimpan progress lintas perangkat atau membeli. | Mengurangi hambatan awal. |
 | K3 | Frontend **SPA statis** (Svelte + Vite) + backend **PHP 8.4** (kode tetap kompatibel 8.2+) + **MySQL/MariaDB** bawaan hosting. | Jalan di semua shared hosting Indonesia, tanpa biaya database tambahan. |
 | K4 | **Soal dibuat oleh generator** (template + angka/kata acak ber-seed), bukan bank soal statis saja. | Soal tidak monoton dan hampir tak terbatas. |
@@ -90,26 +90,34 @@ Istilah wajib: **HARUS** = wajib, **TIDAK BOLEH** = dilarang, **SEBAIKNYA** = re
 | K8 | **Hosting: Hostinger** (paket Business Web Hosting; minimal Premium), data center Indonesia. Keputusan harus final **sebelum Fase 4**; Fase 0–3 tidak butuh hosting (pakai lokal + GitHub Pages). | SSH, Git deploy, cron, PHP 8.2+, MySQL, SSL gratis; opsi Node.js di masa depan. Detail §17.2. |
 | K9 | **Dev lokal: MariaDB 11.8 standalone** (service Windows, versi sama dengan Hostinger) + PHP 8.4 di `C:\php-8.4`; server dijalankan dari terminal (`npm run dev`). XAMPP tidak dipakai (CR-004). Tanpa MCP database. | Laptop = CI = produksi (MariaDB 11.8), tidak perlu start manual, Claude Code akses DB lewat CLI. Detail §17.1. |
 | K10 | **Routing model Opus/Sonnet otomatis** lewat konfigurasi `.claude/` (opusplan + subagent + slash command ber-model). Bimo tidak perlu mengganti model manual. | Detail §16.2. |
+| K11 | **Langganan, bukan sekali bayar** (CR-006): paket bulanan & tahunan; 100 pelanggan pertama mendapat harga early bird yang **terkunci selama langganan tidak terputus**; perpanjangan manual + pengingat email; setelah masa tenggang konten Full terkunci tetapi progres tetap tersimpan. | Pendapatan berulang untuk hosting & konten baru. QRIS/VA/e-wallet umumnya tidak mendukung auto-debit. Detail §4.2, FR-10, FR-11. |
 
-### 4.2 Harga (FINAL)
+### 4.2 Harga & langganan (FINAL, CR-006)
 
-| Tahap | Harga | Syarat |
-|---|---|---|
-| **Early bird** | **Rp50.000** | **100 pembeli pertama** (dihitung dari order berstatus `paid`) |
-| **Normal** | **Rp100.000** | Setelah kuota early bird habis |
+Harga **per paket langganan**. Tahunan = **10 × harga bulanan** (diskon 2 bulan).
 
-Hitungan kasar: biaya gateway QRIS ±0,7% (≈ Rp350–700) atau VA ≈ Rp4.000–4.500 per transaksi; hosting + domain tertutup oleh ±2 penjualan/bulan. Biaya server per user hampir nol karena soal dibuat di browser.
+| Tahap | Bulanan | Tahunan | Syarat |
+|---|---|---|---|
+| **Early bird** | **Rp50.000** | **Rp500.000** | **100 pelanggan pertama** (pembayaran pertama berstatus `paid`) |
+| **Normal** | **Rp100.000** | **Rp1.000.000** | Setelah kuota early bird habis |
 
-**Aturan teknis early bird (WAJIB):**
+Hitungan kasar: biaya gateway QRIS ±0,7% (≈ Rp350–700) atau VA ≈ Rp4.000–4.500 per transaksi; hosting + domain tertutup oleh sebagian kecil pelanggan. Biaya server per user hampir nol karena soal dibuat di browser.
 
-1. Harga dikunci **saat order dibuat**: jika `paid_count + pending_aktif < 100` → harga early bird, selain itu harga normal. Order `pending` kedaluwarsa setelah **60 menit** dan slotnya kembali tersedia.
+**Aturan teknis early bird & langganan (WAJIB):**
+
+1. Harga dikunci **saat order pertama dibuat**: jika `early_used + pending_early_aktif < early_quota` → harga early bird, selain itu harga normal. Order `pending` kedaluwarsa setelah **60 menit** dan slotnya kembali tersedia. Slot terpakai = langganan early bird yang pembayaran pertamanya `paid`; **perpanjangan tidak memakai slot baru**.
 2. Pengecekan kuota dilakukan **di server dalam transaksi DB** (row lock pada counter di tabel `settings`) agar tidak terjual > 100 saat banyak orang bayar bersamaan.
-3. Landing page & paywall menampilkan **"Sisa X slot harga Rp50.000"** (dari `/api/settings/public`), lalu otomatis berganti ke Rp100.000 saat habis.
-4. Pengguna **kode aktivasi manual** (sebelum Fase 6) TIDAK mengurangi kuota early bird kecuali admin menandainya sebagai penjualan.
-5. Voucher/referral dihitung dari harga yang berlaku saat itu, dan harga akhir tidak boleh < Rp25.000 (`min_price`).
-6. Semua angka di atas disimpan di tabel `settings` dan bisa diubah dari admin: `price_early = 50000`, `price_normal = 100000`, `early_quota = 100`, `pending_ttl_minutes = 60`, `min_price = 25000`.
+3. Landing page & paywall menampilkan **"Sisa X slot harga early bird"** (dari `/api/settings/public`), lalu otomatis berganti ke harga normal saat habis.
+4. Pengguna **kode aktivasi manual** (sebelum Fase 6) TIDAK mengurangi kuota early bird kecuali admin menandainya sebagai penjualan. Kode memberi akses **1 periode** (default 30 hari; `duration_days` diatur admin saat membuat kode).
+5. Voucher/referral dihitung dari harga yang berlaku saat itu; harga akhir paket bulanan tidak boleh < `min_price` (tahunan: `min_price × yearly_multiplier`).
+6. **Harga terkunci** (`locked_price`) selama langganan **tidak terputus**: perpanjangan sebelum `current_period_end + grace_days` memakai harga terkunci. Jika terputus melewati masa tenggang lalu berlangganan lagi → **harga normal yang berlaku saat itu** (slot early bird tidak kembali).
+7. **Perubahan harga di admin** hanya berlaku untuk **order pertama berikutnya** (pelanggan baru atau yang kembali setelah terputus). Pelanggan aktif tetap memakai `locked_price` saat mendaftar.
+8. **Perpanjangan manual:** tanpa auto-debit. Sistem mengirim email pengingat `renewal_reminder_days` hari (default 7 dan 1) sebelum `current_period_end`, dan menyediakan tombol "Perpanjang" (order bertipe `renewal`). Perpanjangan menambah periode dari `current_period_end` jika masih aktif.
+9. **Setelah masa aktif habis:** masa tenggang `grace_days` (default 3 hari) masih akses penuh. Lewat itu status `expired`: konten Full terkunci, kembali ke Demo; **progres, profil, dan laporan tetap tersimpan** dan langsung berlanjut saat berlangganan lagi. Profil anak melebihi batas Demo (1 profil) hanya disembunyikan, tidak dihapus.
+10. **Berhenti berlangganan:** tombol "Batalkan" di menu ortu menghentikan pengingat perpanjangan; akses tetap sampai akhir periode berjalan.
+11. Semua angka di tabel `settings`, bisa diubah dari admin: `price_early_monthly = 50000`, `price_normal_monthly = 100000`, `yearly_multiplier = 10`, `early_quota = 100`, `pending_ttl_minutes = 60`, `min_price = 25000`, `grace_days = 3`, `renewal_reminder_days = 7,1`, `activation_default_days = 30`.
 
-**Kebijakan:** "seumur hidup" = akses penuh selama layanan StudyKids beroperasi, termasuk update konten, maks. 4 profil anak. "Tanpa refund" SEBAIKNYA tetap dengan pengecualian **kegagalan teknis** (sudah bayar tapi akses tidak bisa dibuka). Untuk aspek hukum perlindungan konsumen, konsultasikan dengan ahli.
+**Kebijakan:** Langganan = akses penuh selama periode berbayar aktif, termasuk update konten, maks. 4 profil anak. Refund: **tanpa refund per periode** dengan pengecualian **kegagalan teknis** (sudah bayar tapi akses tidak bisa dibuka). Karena perpanjangan manual, tidak ada penagihan otomatis tanpa persetujuan ortu. Untuk aspek hukum perlindungan konsumen dan aplikasi anak, konsultasikan dengan ahli sebelum Fase 6 selesai.
 
 ---
 
@@ -117,7 +125,7 @@ Hitungan kasar: biaya gateway QRIS ±0,7% (≈ Rp350–700) atau VA ≈ Rp4.000�
 
 ### 5.1 Demo vs Full
 
-| Fitur | Demo (gratis selamanya) | Full (sekali bayar) |
+| Fitur | Demo (gratis selamanya) | Full (langganan) |
 |---|---|---|
 | Mapel | Math, Global Perspectives, Art & Design | Semua 8 mapel |
 | Kelas | 1–6 | 1–6 |
@@ -134,7 +142,6 @@ Hitungan kasar: biaya gateway QRIS ±0,7% (≈ Rp350–700) atau VA ≈ Rp4.000�
 - Aplikasi native Android/iOS (PWA sudah cukup).
 - Live class, chat, forum, atau konten buatan pengguna.
 - AI generatif berbayar di runtime.
-- Langganan bulanan.
 - Multi-bahasa selain ID/EN.
 - Posting otomatis ke media sosial via API (marketing tools hanya menyiapkan konten; lihat FR-13).
 
@@ -304,20 +311,22 @@ AC:
 
 ### FR-10 Paywall & unlock
 
-- Konten Full terkunci untuk akun tanpa `entitlement`.
-- Sebelum Fase 6: ortu memasukkan **kode aktivasi** (format `SK-XXXX-XXXX`, sekali pakai) yang dibuat admin.
-- Setelah Fase 6: tombol "Beli" → payment gateway → webhook → entitlement aktif otomatis.
-- AC: pengecekan entitlement dilakukan **di server** untuk data yang disinkronkan; konten Full di frontend di-*bundle* terpisah dan hanya diunduh setelah entitlement terverifikasi (token bertanda tangan).
+- Konten Full terkunci untuk akun tanpa `entitlement` **yang masih aktif** (`expires_at` belum lewat + masa tenggang, §4.2).
+- Sebelum Fase 6: ortu memasukkan **kode aktivasi** (format `SK-XXXX-XXXX`, sekali pakai, memberi `duration_days`) yang dibuat admin; untuk memperpanjang, ortu memasukkan kode baru.
+- Menu ortu menampilkan status langganan (paket, tanggal berakhir, tombol Perpanjang/Batalkan).
+- Setelah Fase 6: tombol "Langganan" (pilih bulanan/tahunan) → payment gateway → webhook → entitlement aktif sampai `current_period_end`.
+- AC: pengecekan entitlement dilakukan **di server** untuk data yang disinkronkan; konten Full di frontend di-*bundle* terpisah dan hanya diunduh setelah entitlement terverifikasi (token bertanda tangan **dengan masa berlaku**; konten Full di cache perangkat dikunci lagi saat online setelah masa aktif + masa tenggang lewat).
 
 ### FR-11 Pembayaran (Fase 6 — terakhir)
 
 - **Rekomendasi gateway:** **Midtrans Snap** (bisa daftar sebagai **individu dengan KTP**; mendukung QRIS, GoPay, ShopeePay, VA bank). Alternatif: **Mayar.id** atau **Tripay** jika verifikasi Midtrans lama.
 - Kode integrasi dibuat di balik interface `PaymentProvider` agar gateway bisa diganti tanpa ubah logika lain.
-- Alur: buat order (status `pending`, harga dikunci sesuai aturan early bird §4.2) → Snap token → bayar → **webhook** (verifikasi signature) → status `paid` → entitlement aktif → email kuitansi.
+- Alur: buat order (`type` = `initial`/`renewal`, status `pending`, harga sesuai §4.2) → Snap token → bayar → **webhook** (verifikasi signature) → status `paid` → langganan dibuat/diperpanjang & entitlement aktif → email kuitansi.
+- **Cron harian:** tandai langganan `past_due`/`expired`, kirim email pengingat perpanjangan (§4.2 no. 8); berjalan bersama cron kedaluwarsa order.
 - Order `pending` > 60 menit otomatis `expired` (cron tiap 5 menit + pengecekan saat order baru dibuat).
 - Idempotensi: webhook yang sama datang 2× tidak membuat entitlement/penjualan ganda.
 - Panduan daftar gateway ditulis di `docs/PAYMENT_SETUP.md` (langkah demi langkah untuk Bimo) pada awal Fase 6.
-- AC: diuji penuh di **sandbox**; skenario sukses, gagal, kedaluwarsa, webhook ganda, webhook palsu (signature salah) semuanya ter-test.
+- AC: diuji penuh di **sandbox**; skenario sukses, gagal, kedaluwarsa, webhook ganda, webhook palsu (signature salah), **perpanjangan tepat waktu, perpanjangan saat masa tenggang, perpanjangan setelah terputus (harga normal), pembatalan** semuanya ter-test.
 
 ### FR-12 Kritik & saran
 
@@ -329,12 +338,12 @@ AC:
 
 Login admin terpisah (password kuat + 2FA TOTP). Halaman:
 
-1. **Dashboard:** total pengguna (ortu & profil anak), DAU/WAU, sesi hari ini, konversi demo→full, total pembelian, **total penjualan (Rp)** hari ini/bulan ini/semua, grafik 30 hari.
-2. **Penjualan/Finance:** daftar order (filter status/tanggal), total kotor, perkiraan fee gateway, total bersih, export CSV.
-3. **Pengguna:** cari akun, lihat status entitlement, buat/cabut kode aktivasi, reset akses (untuk support).
+1. **Dashboard:** total pengguna (ortu & profil anak), DAU/WAU, sesi hari ini, konversi demo→full, total langganan baru & perpanjangan, **total penjualan (Rp)** hari ini/bulan ini/semua, grafik 30 hari.
+2. **Penjualan/Finance:** daftar order (filter status/tanggal/tipe), total kotor, perkiraan fee gateway, total bersih, export CSV; **pelanggan aktif, MRR, churn bulanan, langganan yang berakhir 7 hari ke depan**.
+3. **Pengguna:** cari akun, lihat status langganan/entitlement, buat/cabut kode aktivasi (+ durasi), reset akses (untuk support).
 4. **Konten analytics:** skill dengan tingkat salah tertinggi (indikasi soal sulit/bug), mapel terpopuler.
 5. **Kritik & saran:** list, filter, ubah status.
-6. **Pengaturan:** harga early bird & normal, kuota early bird (tampilkan "terjual X/100"), teks banner pengumuman.
+6. **Pengaturan:** harga bulanan early bird & normal (tahunan dihitung dari pengali), kuota early bird (tampilkan "terjual X/100"), masa tenggang, jadwal pengingat, teks banner pengumuman.
 7. **Marketing tools** (FR-14).
 
 AC: semua angka finance dihitung dari tabel `orders` berstatus `paid` (bukan disimpan manual); halaman admin tidak ikut di bundle aplikasi anak.
@@ -345,11 +354,11 @@ Target audiens: **orang tua 28–45 th** di Instagram, TikTok, Facebook, WhatsAp
 
 1. **Generator konten otomatis (template-based, tanpa API berbayar):**
    - Kalender konten 30 hari otomatis dengan tema bergilir: tips belajar, contoh soal seru ("Anak kelas 3 bisa jawab ini?"), fakta sains, testimoni (hanya dari feedback asli yang disetujui), promo. Maskot **Kiko** jadi "wajah" setiap post.
-   - **Template urgensi early bird** otomatis memakai angka asli ("Tinggal 23 slot Rp50.000!"); otomatis berhenti dipakai saat kuota habis.
+   - **Template urgensi early bird** otomatis memakai angka asli ("Tinggal 23 slot harga early bird Rp50.000/bulan!"); otomatis berhenti dipakai saat kuota habis.
    - Caption otomatis per platform (panjang & hashtag berbeda untuk IG/TikTok/FB/WA) dalam ID/EN.
    - **Gambar post otomatis** (1080×1080 & 1080×1920) dirender dengan Canvas dari template brand + **soal acak dari generator** atau **statistik nyata** ("12.000 soal dikerjakan minggu ini"). Tombol unduh PNG.
-2. **Link tracking (UTM builder):** buat link dengan `utm_source/medium/campaign`; dashboard menampilkan kunjungan, daftar, dan pembelian per kampanye.
-3. **Kode referral & voucher:** setiap ortu pembeli dapat kode referral (mis. diskon Rp10.000 untuk teman); admin bisa buat voucher dengan kuota & tanggal kedaluwarsa.
+2. **Link tracking (UTM builder):** buat link dengan `utm_source/medium/campaign`; dashboard menampilkan kunjungan, daftar, dan langganan per kampanye.
+3. **Kode referral & voucher:** setiap ortu pelanggan dapat kode referral (mis. diskon Rp10.000 untuk teman); admin bisa buat voucher dengan kuota & tanggal kedaluwarsa.
 4. **Share card anak:** setelah dapat lencana, ortu bisa share kartu pencapaian (tanpa nama lengkap/foto anak) yang berisi link referral.
 5. **Pengingat jadwal posting:** daftar "hari ini posting apa" di dashboard admin (bukan auto-post).
 
@@ -601,9 +610,10 @@ studykidsapp/                   # root repo github.com/medirty/studykidsapp
 |---|---|
 | `parents` | id, name, email (unique), password_hash, email_verified_at, locale, referral_code, created_at |
 | `children` | id, parent_id (FK), nickname, grade (1–6), avatar_id, pin_hash (nullable), locale, xp, level, created_at |
-| `entitlements` | id, parent_id, plan (`full`), source (`payment`/`code`/`admin`), order_id (nullable), granted_at, revoked_at |
-| `activation_codes` | id, code (unique), created_by, used_by_parent_id, used_at, expires_at |
-| `orders` | id, parent_id, order_code (unique), amount, voucher_id, status (`pending/paid/failed/expired`), provider, provider_ref, fee_estimate, utm_campaign, paid_at, created_at |
+| `entitlements` | id, parent_id, plan (`full`), source (`payment`/`code`/`admin`), order_id (nullable), granted_at, **expires_at**, revoked_at |
+| `subscriptions` | id, parent_id (unique), period (`monthly`/`yearly`), status (`active`/`past_due`/`expired`/`canceled`), locked_price, is_early_bird, current_period_end, canceled_at, created_at |
+| `activation_codes` | id, code (unique), **duration_days**, created_by, used_by_parent_id, used_at, expires_at |
+| `orders` | id, parent_id, order_code (unique), **type** (`initial`/`renewal`), **period** (`monthly`/`yearly`), amount, voucher_id, status (`pending/paid/failed/expired`), provider, provider_ref, fee_estimate, utm_campaign, paid_at, created_at |
 | `payment_events` | id, order_id, provider_event_id (unique, untuk idempotensi), payload_json, received_at |
 | `progress_events` | id, child_id, skill_id, correct (bool), format, difficulty, duration_ms, client_event_id (unique), created_at |
 | `skill_mastery` | child_id, skill_id, mastery (0–100), attempts, last_practiced_at (PK: child_id+skill_id) |
@@ -643,7 +653,9 @@ Base: `/api`. Format JSON. Error: `{ "error": { "code": "STRING", "message": "..
 | GET | `/children/{id}/report?range=30d` | Laporan |
 | POST | `/activation/redeem` | Tukar kode aktivasi |
 | GET | `/entitlement/token` | Token bertanda tangan untuk unduh konten Full |
-| POST | `/orders` | Buat order (Fase 6) |
+| POST | `/orders` | Buat order `initial`/`renewal` + pilih periode (Fase 6) |
+| GET | `/subscription` | Status langganan (paket, berakhir, harga terkunci) |
+| POST | `/subscription/cancel` | Hentikan perpanjangan (akses sampai akhir periode) |
 | POST | `/payments/webhook` | Webhook gateway (Fase 6) |
 | POST | `/vouchers/check` | Cek voucher |
 | POST | `/feedback` | Kirim kritik & saran |
@@ -665,9 +677,9 @@ Detail request/response tiap endpoint HARUS ditulis di `backend/API.md` sebelum 
 | **1** | Mockup & Brand | Logo final, design tokens, mockup HTML statis semua layar §9.3 (mobile & desktop) di `docs/mockups/` | Bimo menyetujui mockup & logo secara tertulis |
 | **2** | Fondasi Frontend | Komponen UI, i18n, routing, Dexie, PWA, speech wrapper, mode lokal | Unit test komponen; Lighthouse ≥ 90; i18n test lolos; install PWA berfungsi |
 | **3** | Engine Soal + Demo | Seeded RNG, session engine, adaptif, anti-repeat, mastery, semua format soal, konten **3 mapel demo** kelas 1–6, 2 mini game, laporan ringkas | Generator test (≥ 50 unik, 100% jawaban valid); E2E: anak menyelesaikan sesi offline; **demo dirilis ke GitHub Pages** untuk diuji Bimo & 3–5 anak |
-| **4** | Backend & Akun | **Beli hosting (keputusan K8 final)**; DB + migrasi, auth ortu, profil anak, Parent Gate, sinkron, laporan ortu, kode aktivasi, kritik & saran | PHPUnit & E2E lolos; uji keamanan dasar (§15.3) lolos; deploy staging di hosting berhasil |
+| **4** | Backend & Akun | **Beli hosting (keputusan K8 final)**; DB + migrasi, auth ortu, profil anak, Parent Gate, sinkron, laporan ortu, kode aktivasi (+ durasi), **skema `subscriptions`/`entitlements.expires_at` & `EntitlementService` yang mengecek masa aktif**, kritik & saran | PHPUnit & E2E lolos; uji keamanan dasar (§15.3) lolos; deploy staging di hosting berhasil |
 | **5** | Konten Full + Admin + Marketing | 5 mapel sisanya, semua mini game, gamifikasi lengkap, admin panel, marketing tools | Konten minimum §6.5 terpenuhi (laporan otomatis); admin dashboard angka cocok dengan data uji |
-| **6** | Pembayaran | `PAYMENT_SETUP.md`, integrasi gateway (sandbox → production), **logika early bird 100 slot**, voucher, referral, email kuitansi | Semua skenario FR-11 lolos di sandbox; **test konkurensi: 20 order bersamaan saat sisa 3 slot → tepat 3 dapat Rp50.000**; 1 transaksi nyata nominal kecil berhasil end-to-end |
+| **6** | Pembayaran | `PAYMENT_SETUP.md`, integrasi gateway (sandbox → production), **logika early bird 100 slot**, **langganan bulanan/tahunan (perpanjangan manual, harga terkunci, masa tenggang, batal)**, cron pengingat email, voucher, referral, email kuitansi | Semua skenario FR-11 lolos di sandbox; **test konkurensi: 20 order bersamaan saat sisa 3 slot → tepat 3 dapat harga early bird**; perpanjangan memakai harga terkunci & tidak memakai slot; langganan terputus > masa tenggang → harga normal; 1 transaksi nyata nominal kecil berhasil end-to-end |
 | **7** | Hardening & Launch | Audit performa/aksesibilitas/keamanan, kebijakan privasi & S&K, backup, monitoring, deploy produksi | Checklist launch (§17.4) 100%; 0 bug kritis/tinggi terbuka |
 | **8** | Pasca-launch | Update konten berkala, perbaikan dari feedback | Siklus rilis berjalan (§17.3) |
 
@@ -1111,3 +1123,4 @@ Masih terbuka:
 | 1.9 | 23 Nov 2026 | CR-003: tambah plugin **ponytail** (kode minimal) dan skill **security-review** (selektif dari ECC); **graphify** dijadwalkan evaluasi di awal Fase 4; ECC paket penuh tidak dipakai. Tabel "kapan memakai skill apa" + batas ponytail (§16.4.1–16.4.2). |
 | 1.10 | 23 Nov 2026 | CR-004: XAMPP diganti **MariaDB 11.8 standalone** (sama dengan Hostinger & CI); CI pindah dari MySQL 8.0 ke `mariadb:11.8`; koneksi DB mengatur sql_mode/UTC/collation sendiri; `scripts/db-setup.ps1`; HeidiSQL pengganti phpMyAdmin. Alur deploy tidak berubah. |
 | 1.11 | 24 Nov 2026 | CR-005: plugin **frontend-design** diganti skill **impeccable** (desain UI + detektor "AI slop"); tanpa subagent bawaannya (§16.2). Lihat D-010. |
+| 1.12 | 25 Nov 2026 | CR-006: model bisnis **sekali bayar → langganan** (bulanan & tahunan = 10× bulanan). Early bird 100 pelanggan pertama (Rp50.000/bln) terkunci selama langganan tidak terputus; normal Rp100.000/bln; perpanjangan manual + pengingat email; masa tenggang 3 hari; progres tetap tersimpan saat kedaluwarsa. §1, §4.1 (K11), §4.2, §5.1–5.2, FR-10/11/13/14, §12 (`subscriptions`, `entitlements.expires_at`, `orders.type/period`, `activation_codes.duration_days`), §13, Fase 4 & 6. |

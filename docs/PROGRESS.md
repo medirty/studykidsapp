@@ -33,10 +33,16 @@
 - [ ] T1.10 `[sonnet]` Layar 6–7 Feedback benar/salah + Ringkasan sesi (FR-5, FR-7)
 - [ ] T1.11 `[sonnet]` Layar 8 Mini game "Balon Angka" (FR-6)
 - [ ] T1.12 `[sonnet]` Layar 9 Laporan anak & ortu (FR-9)
-- [ ] T1.13 `[sonnet]` Layar 10 Parent Gate, paywall/kode aktivasi, kritik & saran (FR-2, FR-10, FR-12)
-- [ ] T1.14 `[sonnet]` Layar 11 Admin: dashboard, penjualan, marketing tools (FR-13, FR-14)
+- [ ] T1.13 `[sonnet]` Layar 10 Parent Gate, paywall langganan (bulanan/tahunan)/kode aktivasi, status & batal langganan, kritik & saran (FR-2, FR-10, FR-12; CR-006)
+- [ ] T1.14 `[sonnet]` Layar 11 Admin: dashboard, penjualan + MRR/churn, marketing tools (FR-13, FR-14; CR-006)
 - [ ] T1.15 `[sonnet]` Review aksesibilitas & konsistensi + paket persetujuan → B11
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 1 disetujui" → tag `phase-1-approved`
+
+### Perubahan model bisnis (CR-006, PRD v1.12, 25 Nov 2026)
+- [x] `[sonnet]` Dokumen: PRD v1.12, `CHANGE_REQUESTS.md`, `phase-1.md`, teks harga `landing.html` (langganan bulanan/tahunan)
+- [ ] **Saat `/plan-phase` Fase 4:** tambah task `[opus]` skema (`subscriptions`, `entitlements.expires_at`, `orders.type/period`, `activation_codes.duration_days`, `settings` baru) + `EntitlementService` cek masa aktif + token konten berbatas waktu
+- [ ] **Saat `/plan-phase` Fase 6:** task `[opus]` `SubscriptionService` (harga terkunci, slot early bird tidak terpakai perpanjangan, masa tenggang), webhook `renewal`, cron pengingat email, batal langganan, test konkurensi & skenario FR-11; `security-review` wajib; konsultasi hukum perpanjangan/aplikasi anak
+- [ ] **Saat `/plan-phase` Fase 5:** admin pelanggan aktif, MRR, churn; template marketing "per bulan"
 
 ### Tindakan manual Bimo
 - [x] B10 Logo final + 4 ekspresi Kiko disetujui Bimo ("Logo disetujui", 25 Nov 2026)
