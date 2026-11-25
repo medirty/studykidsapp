@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feedback salah — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body>
+<header class="q-top">
+  <a class="close" href="peta-belajar.html" aria-label="Keluar dari sesi / Leave session">✕</a>
+  <div class="q-progress">
+    <span class="label"><span lang="id">Soal 5 dari 10</span><span lang="en">Question 5 of 10</span></span>
+    <div class="bar" role="progressbar" aria-label="Progres sesi" aria-valuemin="0" aria-valuemax="10" aria-valuenow="5"><span style="width:50%"></span></div>
+  </div>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container q-main stack">
+  <section class="fb fb-retry" aria-live="polite">
+    <img class="fb-kiko" src="../brand/kiko/kiko-semangat.svg" alt="Kiko menyemangati" width="140" height="140">
+    <h1 class="status status-retry"><span lang="id">Hampir! Ayo kita lihat bareng.</span><span lang="en">Almost! Let's look together.</span></h1>
+    <p><span lang="id">Jawabanmu: <strong>12</strong></span><span lang="en">Your answer: <strong>12</strong></span></p>
+    <p class="status status-ok"><span lang="id">Jawaban yang benar: <strong>15</strong></span><span lang="en">Correct answer: <strong>15</strong></span></p>
+  </section>
+  <section class="card">
+    <h2><span lang="id">Penjelasan</span><span lang="en">Explanation</span></h2>
+    <p><span lang="id">8 + 7: mulai dari 8, lalu hitung maju 7 kali → 9, 10, 11, 12, 13, 14, 15. Jadi 8 + 7 = 15.</span><span lang="en">8 + 7: start at 8, count up 7 times → 9, 10, 11, 12, 13, 14, 15. So 8 + 7 = 15.</span></p>
+    <button class="btn btn-secondary" type="button" aria-label="Dengarkan penjelasan / Listen to explanation">🔊 <span lang="id">Dengarkan</span><span lang="en">Listen</span></button>
+  </section>
+  <p class="design-note"><strong>Catatan desain:</strong> tanpa nyawa/hukuman dan tanpa suara buzzer; Kiko menyemangati, bukan sedih. Setelah 2 salah berturut-turut: tingkat turun + petunjuk. Dengan <code>prefers-reduced-motion</code>: Kiko diam, panel muncul tanpa goyangan.</p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><a class="btn btn-block" href="soal-mcq.html"><span lang="id">Lanjut</span><span lang="en">Next</span></a></nav>
+</body>
+</html>
