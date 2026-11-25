@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peta belajar Math — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<script src="assets/mockup.js" defer></script>
+<style>
+  .island { border-top: 8px solid var(--subject-math); }
+  .island.locked { border-top-color: var(--color-line); background: var(--color-bg); }
+  .island h2 { font-size: var(--text-lg); margin: 0; }
+  .path { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  .node { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-height: 64px; padding: var(--space-2) var(--space-3); border: 2px solid var(--color-line); border-radius: var(--radius-lg, 16px); background: var(--color-surface, #fff); color: inherit; font: inherit; text-align: left; }
+  .node:nth-child(even) { margin-left: var(--space-6); }
+  .node .dot { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-full); background: var(--color-line); font-size: var(--text-lg); }
+  .node .name { font: var(--weight-heading) var(--text-md, 1rem) var(--font-heading); display: block; }
+  .node small { display: block; color: var(--color-ink-soft); font-size: var(--text-xs); }
+  .node.done .dot { background: var(--subject-math); color: #fff; }
+  .node.open { border-color: var(--subject-math); }
+  .node.lock { border-style: dashed; color: var(--color-ink-soft); }
+  .legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); list-style: none; margin: 0; padding: 0; font-size: var(--text-sm); }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <a href="beranda.html"><img src="../brand/logo-horizontal.svg" alt="StudyKids"></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <p><a href="beranda.html">← <span lang="id">Beranda</span><span lang="en">Home</span></a></p>
+  <h1><span lang="id">Math · Kelas 1</span><span lang="en">Math · Grade 1</span></h1>
+  <p class="muted"><span lang="id">Contoh isi peta. Daftar unit &amp; skill hanya ilustrasi.</span><span lang="en">Sample map. Units and skills are illustrative only.</span></p>
+
+  <!-- FR-4: status dibedakan ikon + teks, bukan hanya warna -->
+  <ul class="legend" aria-label="Arti tanda">
+    <li>⭐⭐⭐ <span lang="id">bintang 1–3</span><span lang="en">1–3 stars</span></li>
+    <li>▶ <span lang="id">siap dimainkan</span><span lang="en">ready to play</span></li>
+    <li>🔒 <span lang="id">terkunci</span><span lang="en">locked</span></li>
+  </ul>
+
+  <section class="card island stack" aria-labelledby="u1">
+    <h2 id="u1"><span lang="id">Unit 1 · Bilangan sampai 10</span><span lang="en">Unit 1 · Numbers to 10</span></h2>
+    <ol class="path">
+      <li class="node done"><span class="dot" aria-hidden="true">✓</span><span><span class="name"><span lang="id">Menghitung benda</span><span lang="en">Counting objects</span></span><small>⭐⭐⭐ <span lang="id">3 bintang</span><span lang="en">3 stars</span></small></span></li>
+      <li class="node done"><span class="dot" aria-hidden="true">✓</span><span><span class="name"><span lang="id">Membaca angka</span><span lang="en">Reading numbers</span></span><small>⭐⭐ <span lang="id">2 bintang</span><span lang="en">2 stars</span></small></span></li>
+      <li class="node done"><span class="dot" aria-hidden="true">✓</span><span><span class="name"><span lang="id">Lebih besar, lebih kecil</span><span lang="en">Greater, smaller</span></span><small>⭐ <span lang="id">1 bintang</span><span lang="en">1 star</span></small></span></li>
+    </ol>
+  </section>
+
+  <section class="card island stack" aria-labelledby="u2">
+    <h2 id="u2"><span lang="id">Unit 2 · Tambah &amp; kurang</span><span lang="en">Unit 2 · Add &amp; subtract</span></h2>
+    <ol class="path">
+      <li><button class="node open" type="button"><span class="dot" aria-hidden="true">▶</span><span><span class="name"><span lang="id">Menambah sampai 10</span><span lang="en">Adding to 10</span></span><small><span lang="id">Siap dimainkan · 10 soal</span><span lang="en">Ready to play · 10 questions</span></small></span></button></li>
+      <li class="node lock"><span class="dot" aria-hidden="true">🔒</span><span><span class="name"><span lang="id">Mengurang sampai 10</span><span lang="en">Subtracting to 10</span></span><small><span lang="id">Selesaikan skill sebelumnya</span><span lang="en">Finish the previous skill first</span></small></span></li>
+    </ol>
+  </section>
+
+  <!-- Demo: unit 3+ terkunci + CTA (PRD §5.1, demo.unit_limit = 2) -->
+  <section class="card island locked stack" aria-labelledby="u3">
+    <h2 id="u3">🔒 <span lang="id">Unit 3 dan seterusnya</span><span lang="en">Unit 3 and beyond</span></h2>
+    <p class="muted"><span lang="id">Masih banyak pulau seru menunggu di Math kelas 1.</span><span lang="en">Many more fun islands wait in Grade 1 Math.</span></p>
+    <a class="btn btn-block" href="pilih-kelas.html"><span lang="id">Buka semua materi</span><span lang="en">Unlock all lessons</span></a>
+  </section>
+</main>
+<nav class="bottom-bar" aria-label="Menu">
+  <a class="btn btn-secondary" href="beranda.html"><span lang="id">Beranda</span><span lang="en">Home</span></a>
+  <a class="btn btn-secondary" href="laporan.html"><span lang="id">Laporan</span><span lang="en">Report</span></a>
+</nav>
+</body>
+</html>
