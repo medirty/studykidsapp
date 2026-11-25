@@ -92,3 +92,5 @@ html[data-lang='en'] [lang='id'] { display: none; }
   .bottom-bar { justify-content: center; }
   .bottom-bar > * { flex: 0 1 360px; }
 }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

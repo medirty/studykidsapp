@@ -5,9 +5,9 @@
 
 ## Status
 
-- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.14 selesai, B10 disetujui, siap `/next` → T1.15)
+- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, menunggu B11 → `/gate`)
 - **Posisi terakhir (tutup hari 24 Nov 2026, sesi ke-2):** T1.0 (PR #31, #32), T1.1 (PR #33), T1.2 (PR #34) selesai & ter-merge ke `main`; PR #35 (duplikat logo) ditutup. Tidak ada PR terbuka, tidak ada task setengah jalan. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** `/next` → T1.15 `[sonnet]` Review aksesibilitas & konsistensi + paket persetujuan (T1.14 selesai). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** B11 (Bimo review galeri mockup di Pages & tulis persetujuan/revisi + putuskan warna English) → `/gate`. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
@@ -43,7 +43,8 @@
   - Bukti (25 Nov 2026): 4 halaman `parent-gate.html` (soal 38 × 7, keypad, alternatif password ortu), `paywall.html` (manfaat Full, paket bulanan Rp50.000/tahunan Rp500.000 contoh "dari settings", sisa slot, kode `SK-XXXX-XXXX`, tombol Langganan bertanda Fase 6), `langganan.html` (aktif + Perpanjang/Batalkan, masa tenggang, kedaluwarsa: progres aman), `saran.html` (bintang, kategori, teks, keadaan terkirim, batas 5/hari). `npm run test:e2e` → 70 lolos (4 halaman baru × 360/1280: tanpa scroll horizontal + axe bersih); `npm run check` hijau. Galeri ditautkan (baris "Segera" layar 9 yang basi dihapus). Belum dicek visual (cek di Pages).
 - [x] T1.14 `[sonnet]` Layar 11 Admin: dashboard, penjualan + MRR/churn, marketing tools (FR-13, FR-14; CR-006)
   - Bukti (25 Nov 2026): 4 halaman `admin-login.html` (password + 2FA), `admin-dashboard.html` (kartu angka + grafik 30 hari SVG beralt-teks, posting hari ini), `admin-penjualan.html` (pelanggan aktif 71, MRR Rp3.950.000, churn, berakhir 7 hari, filter status/tipe/tanggal, export CSV, tabel order), `admin-marketing.html` (kalender konten, preview post 1080×1080, UTM builder, voucher). Gaya admin terpisah (`assets/admin.css`, padat & netral, token). Angka konsisten: slot early bird terjual 63/100 (sisa 37) — teks sisa slot di `landing.html` (sebelumnya 63) disamakan dengan paywall. `npm run test:e2e` → 78 lolos (4 halaman baru × 360/1280: tanpa scroll horizontal + axe bersih); `npm run check` hijau. Belum dicek visual (cek di Pages).
-- [ ] T1.15 `[sonnet]` Review aksesibilitas & konsistensi + paket persetujuan → B11
+- [x] T1.15 `[sonnet]` Review aksesibilitas & konsistensi + paket persetujuan → B11
+  - Bukti (25 Nov 2026): skrip cek tautan/gambar 36 halaman → 2 gambar rusak (`admin-marketing`, `saran`; lolos axe) diperbaiki → 0 rusak; semua halaman ada di galeri, punya title/main/toggle EN/alt. `npm run test:e2e` → 78 lolos; `npm run check` hijau (JS 16,81 KB). `docs/mockups/README.md`: checklist 11 layar × mobile/desktop, daftar komponen Fase 2, reduced-motion global ditambah. **Keputusan terbuka Bimo:** warna English `#7C3AED` (kontras AA) menggantikan `#8B5CF6`. Skill `design:*` tidak dijalankan penuh (review dilakukan lewat skrip + axe); belum dicek visual di browser.
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 1 disetujui" → tag `phase-1-approved`
 
 ### Perubahan model bisnis (CR-006, PRD v1.12, 25 Nov 2026)
