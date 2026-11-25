@@ -63,3 +63,11 @@ Fase 1 hanya HTML/CSS statis; auth, pembayaran, webhook, IDOR, kuota early bird 
 ## 5. Verdict
 
 **Belum siap** — perbaiki B-1 (disarankan sekaligus B-2, B-3, B-4), jalankan ulang `npm run test:e2e` + `npm run check`, lalu Bimo melakukan B11 (review galeri `https://medirty.github.io/studykidsapp/mockups/`, tulis persetujuan/revisi, putuskan warna English). Setelah itu Bimo menulis "Fase 1 disetujui" → tag `phase-1-approved`.
+
+## 4. Pembaruan setelah perbaikan (PR #53, 25 Nov 2026)
+
+- B-1 s/d B-4 diperbaiki; warna English → `#7C3AED` (CR-007, PRD v1.13). Spec e2e baru mengecek elemen ber-lang non-span tidak tersembunyi di mode ID dan EN.
+- Bukti: `npm run check` hijau (vitest 28/28, Budget OK); `npm run test:e2e` 150 passed; CI PR #53 hijau (frontend, lighthouse, backend 8.2 & 8.4).
+- Tidak diperbaiki (rekomendasi, tidak memblokir): paywall harga tahunan tidak dicoret, catatan MRR admin, `<html lang>` mode EN, setup-node@v4 di deploy-pages, emoji sebagai ikon.
+
+**Verdict akhir: Siap untuk persetujuan Bimo**
