@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini game Balon Angka — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/soal.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body>
+<header class="g-top">
+  <div class="g-stats"><span class="badge"><span lang="id">Skor</span><span lang="en">Score</span> 40</span><span class="badge" role="timer" aria-label="Sisa waktu / Time left">⏱ 0:45</span></div>
+  <a class="btn btn-secondary pause" href="game-balon-pause.html" aria-label="Jeda / Pause">⏸ <span lang="id">Jeda</span><span lang="en">Pause</span></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container q-main stack">
+  <div class="q-prompt">
+    <h1><span lang="id">Pecahkan balon yang hasilnya 12!</span><span lang="en">Pop the balloon that makes 12!</span></h1>
+    <button class="btn btn-secondary speak" type="button" aria-label="Dengarkan soal / Read aloud">🔊</button>
+  </div>
+  <p class="g-sum">7 + 5 = ?</p>
+  <ul class="sky" aria-label="Balon jawaban / Answer balloons">
+    <li><button class="balloon b1" type="button" aria-label="10">10</button></li>
+    <li><button class="balloon b2" type="button" aria-label="12">12</button></li>
+    <li><button class="balloon b3" type="button" aria-label="14">14</button></li>
+    <li><button class="balloon b2" type="button" aria-label="11">11</button></li>
+    <li><button class="balloon popped" type="button" aria-label="9, sudah dipecahkan / already popped">9</button></li>
+    <li><button class="balloon b1" type="button" aria-label="13">13</button></li>
+  </ul>
+  <p class="design-note"><strong>Catatan desain:</strong> balon 72×84 px (batas ≥ 48 px), bergerak pelan naik; jawaban salah = balon bergoyang &amp; Kiko menyemangati, tanpa mengurangi skor. Dengan <code>prefers-reduced-motion</code> balon diam. Soal dari skill Math (seeded RNG); durasi 60–120 dtk; tombol Jeda selalu terlihat.</p>
+</main>
+</body>
+</html>
