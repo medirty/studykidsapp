@@ -5,9 +5,9 @@
 
 ## Status
 
-- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.3 selesai, B10 disetujui, siap `/next` → T1.4)
+- **Fase aktif:** 1 — Mockup & Brand (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.4 selesai, B10 disetujui, siap `/next` → T1.5)
 - **Posisi terakhir (tutup hari 24 Nov 2026, sesi ke-2):** T1.0 (PR #31, #32), T1.1 (PR #33), T1.2 (PR #34) selesai & ter-merge ke `main`; PR #35 (duplikat logo) ditutup. Tidak ada PR terbuka, tidak ada task setengah jalan. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** `/next` → T1.4 `[sonnet]` kerangka mockup + Playwright/axe (T1.3 selesai, PR #37; B10 disetujui 25 Nov 2026). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** `/next` → T1.5 `[sonnet]` Layar 1 Landing page (T1.4 selesai; ganti badge "Segera" di galeri jadi tautan). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 1 — Mockup & Brand (rencana: `docs/plans/phase-1.md`)
@@ -21,7 +21,8 @@
   - Bukti (24 Nov 2026): 7 SVG + 4 PNG (favicon-32, 192, 512, maskable-512) + galeri `docs/brand/index.html` (screenshot dicek: Kiko terbaca di 32 px, satu warna & putih jalan). Ikon ≤ 0,7 KB; logo horizontal ±6 KB; wordmark = path (outline Baloo 2 w800, tanpa tag `<text>`). Tanpa ikon terlarang. Lisensi dicatat. Belum disetujui resmi → B10 (setelah T1.3). Kiko di favicon tanpa bintang/titik agar bersih di 32 px.
 - [x] T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar contoh (§9.4, FR-2) → B10
   - Bukti (25 Nov 2026): 8 SVG baru (`docs/brand/kiko/` senang/semangat/kaget/tidur; `docs/brand/avatar/` Pipo/Luna/Bima/Momo), semua ≤ 1 KB (batas 6 KB), XML valid, tanpa `<text>`/`<script>`. Tampil di `docs/brand/index.html` (screenshot dicek; aksesori avatar & percikan "semangat" diperbaiki setelah cek pertama). "Semangat" = alis naik + senyum lebar terbuka, tanpa air mata/cemberut (§9.1 no. 4). Lisensi dicatat. B10 disetujui 25 Nov 2026.
-- [ ] T1.4 `[sonnet]` Kerangka `docs/mockups/` (galeri, mockup.css dari token) + Playwright 360/1280 + axe (§9.3, §8.5)
+- [x] T1.4 `[sonnet]` Kerangka `docs/mockups/` (galeri, mockup.css dari token) + Playwright 360/1280 + axe (§9.3, §8.5)
+  - Bukti (25 Nov 2026): `npm run check` hijau (JS 16,81 KB gzip). `npm run test:e2e` → 12 lolos (6 smoke + 6 mockup: 3 halaman × 360/1280, dijalankan di project desktop; glob `docs/mockups/*.html`). Axe sempat menangkap pelanggaran nyata (aria-label tombol ID/EN tidak memuat teks terlihat) → diperbaiki. Screenshot 360 px dicek (font Baloo/Nunito termuat). Halaman: galeri, `contoh-komponen.html`, `frame.html` (bingkai HP). **Perubahan workflow Pages:** `deploy-pages.yml` kini juga menyalin `docs/brand/` dan `tokens.css` ke artefak agar mockup jalan di Pages — belum diuji di Pages (cek setelah merge).
 - [ ] T1.5 `[sonnet]` Layar 1 Landing page (FR-1)
 - [ ] T1.6 `[sonnet]` Layar 2–3 Pilih kelas/profil + Beranda anak, varian kelas 1–2 & 5–6 (FR-2, FR-7)
 - [ ] T1.7 `[sonnet]` Layar 4 Peta belajar (FR-4)

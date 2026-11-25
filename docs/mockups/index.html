@@ -1,14 +1,42 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" data-lang="id">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mockup StudyKids</title>
+<title>Galeri mockup — StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<script src="assets/mockup.js" defer></script>
+<style>
+  .grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); list-style: none; padding: 0; margin: 0; }
+</style>
 </head>
 <body>
-<main>
-<h1>Mockup StudyKids</h1>
-<p>Galeri mockup segera hadir (Fase 1).</p>
+<header class="app-header">
+  <img src="../brand/logo-horizontal.svg" alt="StudyKids">
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <h1><span lang="id">Galeri mockup</span><span lang="en">Mockup gallery</span></h1>
+  <p class="muted"><span lang="id">11 layar utama (PRD §9.3). Buka langsung untuk layar penuh, atau pakai "Bingkai HP" untuk tampilan 360 px.</span><span lang="en">11 main screens (PRD §9.3). Open directly for full screen, or use "Phone frame" for the 360 px view.</span></p>
+  <!-- Layar baru: ganti badge "Segera" jadi tautan; spec Playwright otomatis ikut (glob *.html). -->
+  <ol class="grid">
+    <li class="card"><h2>1. Landing page</h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+    <li class="card"><h2>2–3. <span lang="id">Pilih kelas &amp; Beranda</span><span lang="en">Choose grade &amp; Home</span></h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+    <li class="card"><h2>4. <span lang="id">Peta belajar</span><span lang="en">Learning map</span></h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+    <li class="card"><h2>5. <span lang="id">Layar soal</span><span lang="en">Question screens</span></h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+    <li class="card"><h2>6–7. <span lang="id">Feedback &amp; Ringkasan</span><span lang="en">Feedback &amp; Summary</span></h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+    <li class="card"><h2>8. Mini game</h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+    <li class="card"><h2>9. <span lang="id">Laporan</span><span lang="en">Reports</span></h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+    <li class="card"><h2>10. Parent Gate &amp; paywall</h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+    <li class="card"><h2>11. Admin</h2><span class="badge"><span lang="id">Segera</span><span lang="en">Soon</span></span></li>
+  </ol>
+  <h2><span lang="id">Kerangka &amp; brand</span><span lang="en">Framework &amp; brand</span></h2>
+  <div class="row">
+    <a class="btn btn-secondary" href="contoh-komponen.html"><span lang="id">Contoh komponen</span><span lang="en">Component examples</span></a>
+    <a class="btn btn-secondary" href="frame.html?src=contoh-komponen.html"><span lang="id">Bingkai HP</span><span lang="en">Phone frame</span></a>
+    <a class="btn btn-secondary" href="../brand/index.html"><span lang="id">Logo &amp; Kiko</span><span lang="en">Logo &amp; Kiko</span></a>
+  </div>
 </main>
 </body>
 </html>

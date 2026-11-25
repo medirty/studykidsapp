@@ -27,7 +27,10 @@ jobs:
           VITE_BASE: /studykidsapp/
           VITE_API_MODE: local
       - name: Sertakan mockup di /mockups/
-        run: cp -r docs/mockups frontend/dist/mockups
+        run: |
+          cp -r docs/mockups frontend/dist/mockups
+          cp -r docs/brand frontend/dist/brand
+          cp frontend/src/styles/tokens.css frontend/dist/mockups/assets/tokens.css
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
