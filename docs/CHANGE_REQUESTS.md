@@ -25,6 +25,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 | CR-002 | Bantuan langsung saat task terblokir tindakan manual | Diterapkan (22 Nov 2026) | v1.8 |
 | CR-003 | Skill tambahan: ponytail, security-review, graphify (ditunda) | Diterapkan dokumen (23 Nov 2026); instalasi menunggu verifikasi | v1.9 |
 | CR-005 | Ganti skill frontend-design dengan impeccable | Diterapkan (24 Nov 2026) | v1.11 |
+| CR-006 | Model bisnis: sekali bayar → langganan | Diterapkan dokumen (25 Nov 2026); kode di Fase 4–6 | v1.12 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -80,3 +81,35 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 - **Analisis dampak:** PRD §16.4, §16.4.1, riwayat → v1.11; `CLAUDE.md`; `docs/setup/BOOTSTRAP.md`; `scripts/doctor.mjs` + `doctor-utils.mjs`; `docs/PANDUAN_VIBE_CODING.md`; `docs/SETUP_LOCAL.md`; `docs/plans/phase-1.md`; `.claude/settings.json`. Tanpa kode aplikasi. Risiko dan mitigasi: lihat D-010.
 - **Keputusan Bimo:** diterima (24 Nov 2026)
 - **Status:** diterapkan di PRD v1.11. Instalasi: D-010.
+
+## CR-006 — Model bisnis: dari sekali bayar menjadi langganan
+- **Tanggal / Pengaju:** 25 Nov 2026 / Bimo
+- **Deskripsi:** Demo gratis tetap. Akses Full berubah dari **sekali bayar seumur hidup** menjadi **berlangganan**. Kuota tetap: 100 pelanggan pertama Rp50.000, setelah itu Rp100.000. Harga dan kuota bisa diubah kapan saja (lewat tabel `settings`/admin).
+- **Alasan:** Pendapatan berulang untuk menutup biaya hosting & produksi konten berkelanjutan (konten baru 2 minggu sekali, PRD §15).
+- **Prioritas:** wajib (harus diputuskan sebelum skema DB Fase 4 dan pembayaran Fase 6)
+- **Analisis dampak:**
+  - **PRD:** §1 (model bisnis), §4.1 (keputusan baru), §4.2 (harga + kebijakan "seumur hidup/tanpa refund" ditulis ulang), §5.1 (kolom "Full (sekali bayar)"), §5.2 (hapus "Langganan bulanan" dari Out of Scope), FR-10, FR-11, FR-13 (template urgensi), FR-14 (admin: pendapatan berulang), §12 (tabel `entitlements`, `orders`, `settings`), §13 (API), Fase 4 & 6 + Exit Criteria, risiko, riwayat → v1.12.
+  - **Skema DB (migrasi Phinx baru, belum ada):** `entitlements` + `expires_at`; tabel `subscriptions` (status `active/past_due/canceled/expired`, `period`, `current_period_end`, `locked_price`, `is_early_bird`); `orders` + `type` (`initial/renewal`) & `period`; `settings` + `subscription_period_days`/jatuh tempo/masa tenggang.
+  - **Kode (belum ada, baru dibuat di Fase 4–6):** `EntitlementService` (cek masa aktif), `SubscriptionService`, cron perpanjangan + pengingat email, endpoint `/subscription` (status, batal), kuota early bird, token konten Full dengan masa berlaku.
+  - **Mockup Fase 1:** `landing.html` (T1.5, selesai: teks harga "Rp50.000" harus jadi "Rp50.000/periode"); T1.13 (paywall & kode aktivasi → pilih paket, status langganan, batal) dan T1.14 (admin: pelanggan aktif, MRR, churn) belum dikerjakan, cukup diubah isi task-nya. `phase-1.md` ikut diperbarui.
+  - **Jumlah task:** ± 1 docs (PRD+riwayat) + 2 mockup (edit landing, ubah T1.13/T1.14) + Fase 4: 2 (skema, EntitlementService) + Fase 6: 4–5 (SubscriptionService, perpanjangan/cron, pengingat email, batal, tes konkurensi & webhook perpanjangan) + admin 1 → ±10 task, mayoritas `[opus]` (skema, pembayaran, entitlement).
+  - **Risiko:**
+    1. Pembayaran berulang otomatis di Indonesia terbatas: QRIS/VA/e-wallet umumnya bukan auto-debit (Midtrans: hanya kartu/GoPay tertentu). Pilihan realistis = **perpanjangan manual** dengan pengingat email, bukan auto-debit.
+    2. Churn: pelanggan lapsed harus tetap punya data (progres anak jangan dihapus), hanya konten Full terkunci.
+    3. Hukum perlindungan konsumen untuk perpanjangan otomatis & aplikasi anak → konsultasi ahli (PRD §4.2).
+    4. Perubahan harga "kapan saja" tanpa aturan jelas bisa membingungkan pelanggan lama.
+    5. Kuota early bird: definisi "100 pertama" harus tegas (lihat pertanyaan).
+    6. Kategori wajib tanya Bimo: menyentuh harga/pembayaran/auth → `security-review` di Fase 6.
+  - **Fase aktif (1):** hampir tidak mengganggu. Hanya teks mockup yang diubah; tidak ada kode/skema yang sudah jadi.
+- **Pertanyaan untuk Bimo (jawaban menentukan isi PRD v1.12):**
+  1. **Periode langganan:** bulanan, tahunan, atau keduanya? Rp50.000/Rp100.000 itu per periode apa?
+  2. **Harga pelanggan awal:** apakah 100 pelanggan pertama **terkunci Rp50.000 selama tetap berlangganan** (rekomendasi, adil & jadi daya tarik), atau hanya periode pertama lalu ikut harga normal?
+  3. **Perubahan harga kapan saja:** berlaku untuk pelanggan **baru** saja (rekomendasi); pelanggan lama tetap di harga saat mendaftar (`locked_price`).
+  4. **Perpanjangan:** manual + pengingat email (rekomendasi, sesuai gateway QRIS/VA) atau auto-debit kartu?
+  5. **Lewat masa aktif:** masa tenggang (mis. 3 hari), lalu konten Full terkunci, progres tetap tersimpan; jika berlangganan lagi, progres lanjut. Setuju?
+  6. **Pelanggan early bird yang berhenti lalu kembali:** tetap Rp50.000 atau ikut harga normal? (rekomendasi: ikut harga normal)
+  7. **Refund & kode aktivasi:** kode aktivasi memberi masa berapa lama (mis. 1 periode)? Kebijakan refund per periode?
+- **Rekomendasi:** **diterima sekarang**, dijadwalkan dikerjakan: dokumen/mockup di Fase 1 (murah, tanpa kode), skema di Fase 4, logika langganan di Fase 6. Alasan: belum ada skema/kode pembayaran yang harus dibongkar; menunda sampai Fase 4+ akan membuat migrasi `entitlements` dan mockup harus diulang. Syarat: Bimo menjawab 7 pertanyaan di atas dulu. Saran isi tersingkat: bulanan + tahunan (diskon ±2 bulan), early bird terkunci selama aktif, perpanjangan manual dengan pengingat.
+- **Keputusan Bimo:** diterima sekarang (25 Nov 2026). Jawaban: bulanan + tahunan (tahunan = 10× bulanan, early bird Rp50.000/bln & Rp500.000/thn, normal Rp100.000/bln & Rp1.000.000/thn); early bird terkunci selama langganan tidak terputus; perpanjangan manual; sisanya sesuai rekomendasi (harga baru hanya untuk order pertama berikutnya, masa tenggang 3 hari lalu terkunci dengan progres aman, early bird yang kembali → harga normal, kode aktivasi 1 periode, tanpa refund kecuali kegagalan teknis).
+- **Status:** diterapkan di PRD v1.12, `phase-1.md`, `PROGRESS.md`, `landing.html`. Kode/skema menyusul di Fase 4 & 6.
+

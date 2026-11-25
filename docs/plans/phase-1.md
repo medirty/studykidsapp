@@ -96,12 +96,12 @@ Setiap task = 1 sesi `/next`, 1 branch (`feat/f1-...` / `docs/f1-...`), 1 PR.
 
 ### T1.13 `[sonnet]` Layar 10 — Parent Gate, paywall/kode aktivasi, kritik & saran
 - **PRD:** FR-2 (Parent Gate), FR-10, FR-12, §4.2, §9.3 no. 10.
-- **Isi:** Parent Gate (soal hitungan dewasa / password ortu); paywall (manfaat Full, harga early bird + sisa slot, tombol "Beli" bertanda *Fase 6*, input kode `SK-XXXX-XXXX`); form kritik & saran (bintang 1–5, kategori, teks) + keadaan terkirim.
+- **Isi:** Parent Gate (soal hitungan dewasa / password ortu); paywall (manfaat Full, pilih paket bulanan/tahunan, harga early bird + sisa slot, tombol "Langganan" bertanda *Fase 6*, input kode `SK-XXXX-XXXX`); status langganan di menu ortu (paket, tanggal berakhir, Perpanjang/Batalkan); keadaan kedaluwarsa (masa tenggang & terkunci, progres tetap aman) (CR-006); form kritik & saran (bintang 1–5, kategori, teks) + keadaan terkirim.
 - **AC:** keypad Parent Gate tidak mudah ditebak anak (soal perkalian 2 digit); harga dari "settings" (ditulis sebagai contoh).
 
 ### T1.14 `[sonnet]` Layar 11 — Admin: dashboard, penjualan, marketing tools
 - **PRD:** FR-13, FR-14, §9.3 no. 11.
-- **Isi:** desktop-first (tetap terbaca di 360 px): dashboard (kartu angka + grafik 30 hari), penjualan (tabel order + filter + export CSV), marketing tools (kalender konten, preview gambar post 1080×1080, UTM builder, voucher). Login admin + 2FA cukup satu layar sederhana.
+- **Isi:** desktop-first (tetap terbaca di 360 px): dashboard (kartu angka + grafik 30 hari), penjualan (tabel order + filter tipe initial/renewal + export CSV; pelanggan aktif, MRR, churn, langganan berakhir 7 hari), marketing tools (kalender konten, preview gambar post 1080×1080, UTM builder, voucher). Login admin + 2FA cukup satu layar sederhana.
 - **AC:** gaya admin terpisah dari gaya anak (lebih padat/netral, tetap pakai token); angka contoh konsisten antar layar.
 
 ### T1.15 `[sonnet]` Review aksesibilitas & konsistensi + paket persetujuan
