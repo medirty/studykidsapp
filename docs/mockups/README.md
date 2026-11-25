@@ -29,7 +29,7 @@ Setiap file diuji otomatis di **360 px (mobile) & 1280 px (desktop)**: tanpa scr
 
 ## Keputusan terbuka untuk Bimo
 
-1. **Warna English `#8B5CF6`** gagal kontras AA untuk teks biasa (putih 4,23:1). Sekarang dipakai hanya untuk teks besar/tebal. Usulan: `#7C3AED` (5,70:1) — mengubah nilai PRD §9.2, jadi perlu persetujuan; bila setuju, diubah sebagai CR kecil di Fase 2.
+1. ~~Warna English~~ — diputuskan Bimo 25 Nov 2026: `#7C3AED` (5,70:1), PRD §9.2 diperbarui.
 
 ## Komponen yang dibawa ke Fase 2
 

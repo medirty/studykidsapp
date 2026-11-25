@@ -54,15 +54,7 @@ describe('kontras WCAG AA', () => {
     expect(contrast(token(fg), token(bg))).toBeGreaterThanOrEqual(min);
   });
 
-  it.each(SUBJECTS.filter((s) => s !== 'english'))(
-    'mapel %s punya warna teks (Ink/putih) >= 4.5:1',
-    (s) => {
-      expect(subjectForeground(s)).not.toBeNull();
-    },
-  );
-
-  // Pengecualian tercatat (docs/brand/tokens.md): English #8B5CF6 hanya lolos 3:1 -> teks putih wajib besar/tebal.
-  it('mapel english: putih >= 3:1 (khusus teks besar/tebal)', () => {
-    expect(contrast('#ffffff', token('subject-english'))).toBeGreaterThanOrEqual(3);
+  it.each(SUBJECTS)('mapel %s punya warna teks (Ink/putih) >= 4.5:1', (s) => {
+    expect(subjectForeground(s)).not.toBeNull();
   });
 });

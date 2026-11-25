@@ -113,3 +113,8 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 - **Keputusan Bimo:** diterima sekarang (25 Nov 2026). Jawaban: bulanan + tahunan (tahunan = 10× bulanan, early bird Rp50.000/bln & Rp500.000/thn, normal Rp100.000/bln & Rp1.000.000/thn); early bird terkunci selama langganan tidak terputus; perpanjangan manual; sisanya sesuai rekomendasi (harga baru hanya untuk order pertama berikutnya, masa tenggang 3 hari lalu terkunci dengan progres aman, early bird yang kembali → harga normal, kode aktivasi 1 periode, tanpa refund kecuali kegagalan teknis).
 - **Status:** diterapkan di PRD v1.12, `phase-1.md`, `PROGRESS.md`, `landing.html`. Kode/skema menyusul di Fase 4 & 6.
 
+## CR-007 — Warna English #8B5CF6 → #7C3AED
+- **Alasan:** `#8B5CF6` hanya 4,23:1 dengan putih (gagal AA teks biasa). `#7C3AED` = 5,70:1.
+- **Dampak:** PRD §9.2, `tokens.css`, `docs/brand/tokens.md`, test kontras (pengecualian English dihapus). Tidak ada skema/kode lain.
+- **Keputusan Bimo:** disetujui 25 Nov 2026 ("ya #7C3AED").
+- **Status:** diterapkan di PRD v1.13.

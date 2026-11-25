@@ -31,3 +31,22 @@ for (const file of pages) {
     });
   }
 }
+
+// Regresi B-1: toggle bahasa hanya boleh menyembunyikan span/g, tidak elemen lain (mis. tombol jawaban).
+for (const file of pages) {
+  for (const lang of ['id', 'en']) {
+    test(`mockup ${file} [${lang}]: elemen ber-lang non-span tidak tersembunyi`, async ({
+      page,
+    }, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'dicek sekali di project desktop');
+      await page.goto(pathToFileURL(resolve(dir, file)).href);
+      await page.evaluate((l) => document.documentElement.setAttribute('data-lang', l), lang);
+      const hidden = await page.evaluate(() =>
+        [...document.querySelectorAll('[lang]:not(html):not(span):not(g)')]
+          .filter((el) => getComputedStyle(el).display === 'none')
+          .map((el) => el.outerHTML.slice(0, 80)),
+      );
+      expect(hidden).toEqual([]);
+    });
+  }
+}
