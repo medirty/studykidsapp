@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beranda anak kelas 5–6 — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<script src="assets/mockup.js" defer></script>
+<style>
+  .subjects { display: grid; gap: var(--space-3); list-style: none; padding: 0; margin: 0; }
+  .subject { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: var(--tap-min); border-left: 8px solid var(--subject-color); text-decoration: none; color: inherit; font: var(--weight-heading) var(--text-md) var(--font-heading); padding: var(--space-3) var(--space-4); }
+  .subject small { font: var(--weight-body) var(--text-xs) var(--font-body); color: var(--color-ink-soft); }
+  .locked { background: var(--color-bg); }
+  .stats { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin: 0; }
+  .xp { height: 8px; border-radius: var(--radius-full); background: var(--color-line); overflow: hidden; }
+  .xp > span { display: block; height: 100%; width: 60%; background: var(--color-teal); }
+  .hello { display: flex; align-items: center; gap: var(--space-3); }
+  .hello img { width: 56px; flex: none; }
+  .hello h1 { font-size: var(--text-xl); margin: 0; }
+  @media (min-width: 768px) { .subjects { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <a href="index.html"><img src="../brand/logo-horizontal.svg" alt="StudyKids"></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <!-- Varian kelas 5–6: daftar ringkas, lebih banyak informasi, tanpa 🔊 besar (PRD §9.1) -->
+  <section class="hello" aria-labelledby="h-hi">
+    <img src="../brand/avatar/avatar-bima.svg" alt="Avatar Bima">
+    <div>
+      <h1 id="h-hi"><span lang="id">Hai, Bima!</span><span lang="en">Hi, Bima!</span></h1>
+      <p class="muted" style="margin: 0"><span lang="id">Kelas 5</span><span lang="en">Grade 5</span></p>
+    </div>
+  </section>
+
+  <section class="card stack" aria-labelledby="h-stat">
+    <h2 id="h-stat" class="muted" style="font-size: var(--text-sm)"><span lang="id">Perjalananmu</span><span lang="en">Your journey</span></h2>
+    <ul class="stats">
+      <li class="badge">🔥 <span lang="id">12 hari belajar</span><span lang="en">12 learning days</span></li>
+      <li class="badge">⭐ 860 XP</li>
+      <li class="badge">Level 9 · <span lang="id">Petualang</span><span lang="en">Adventurer</span></li>
+    </ul>
+    <div class="xp" role="progressbar" aria-label="XP menuju level 10" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+    <!-- FR-7: bahasa positif, tidak ada pesan "streak hilang" -->
+    <p class="status status-ok"><span lang="id">Tantangan hari ini: 1 sesi = +20 XP. Kamu pasti bisa!</span><span lang="en">Today's challenge: 1 session = +20 XP. You've got this!</span></p>
+    <a class="btn btn-block" href="peta-belajar.html"><span lang="id">Lanjutkan: Math · Pecahan</span><span lang="en">Continue: Math · Fractions</span></a>
+  </section>
+
+  <section class="stack" aria-labelledby="h-sub">
+    <h2 id="h-sub"><span lang="id">Mata pelajaran</span><span lang="en">Subjects</span></h2>
+    <ul class="subjects">
+      <li><a class="card subject" style="--subject-color: var(--subject-math)" href="peta-belajar.html">Math<small><span lang="id">Gratis · Unit 1–2</span><span lang="en">Free · Units 1–2</span></small></a></li>
+      <li><a class="card subject locked" style="--subject-color: var(--subject-english)" href="pilih-kelas.html">English<small><span lang="id">🔒 Terkunci</span><span lang="en">🔒 Locked</span></small></a></li>
+      <li><a class="card subject locked" style="--subject-color: var(--subject-science)" href="pilih-kelas.html">Science<small><span lang="id">🔒 Terkunci</span><span lang="en">🔒 Locked</span></small></a></li>
+      <li><a class="card subject" style="--subject-color: var(--subject-gp)" href="peta-belajar.html">Global Perspectives<small><span lang="id">Gratis · Unit 1–2</span><span lang="en">Free · Units 1–2</span></small></a></li>
+      <li><a class="card subject locked" style="--subject-color: var(--subject-wellbeing)" href="pilih-kelas.html">Wellbeing<small><span lang="id">🔒 Terkunci</span><span lang="en">🔒 Locked</span></small></a></li>
+      <li><a class="card subject" style="--subject-color: var(--subject-art)" href="peta-belajar.html">Art &amp; Design<small><span lang="id">Gratis · Unit 1–2</span><span lang="en">Free · Units 1–2</span></small></a></li>
+      <li><a class="card subject locked" style="--subject-color: var(--subject-music)" href="pilih-kelas.html">Music<small><span lang="id">🔒 Terkunci</span><span lang="en">🔒 Locked</span></small></a></li>
+      <li><a class="card subject locked" style="--subject-color: var(--subject-computing)" href="pilih-kelas.html">Computing &amp; Technology<small><span lang="id">🔒 Terkunci</span><span lang="en">🔒 Locked</span></small></a></li>
+    </ul>
+  </section>
+</main>
+<nav class="bottom-bar" aria-label="Menu">
+  <a class="btn btn-secondary" href="pilih-kelas.html"><span lang="id">Ganti profil</span><span lang="en">Switch profile</span></a>
+  <a class="btn btn-secondary" href="laporan.html"><span lang="id">Laporan</span><span lang="en">Report</span></a>
+</nav>
+</body>
+</html>
