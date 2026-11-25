@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Penjualan admin — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/bayar.css">
+<link rel="stylesheet" href="assets/admin.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body class="admin">
+<header class="admin-bar">
+  <strong>StudyKids Admin</strong>
+  <nav aria-label="Menu admin"><ul class="admin-nav">
+    <li><a href="admin-dashboard.html">Dashboard</a></li>
+    <li><a href="admin-penjualan.html" aria-current="page"><span lang="id">Penjualan</span><span lang="en">Sales</span></a></li>
+    <li><a href="admin-marketing.html">Marketing</a></li>
+  </ul></nav>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <h1><span lang="id">Penjualan</span><span lang="en">Sales</span></h1>
+  <ul class="kpis">
+    <li><b>71</b><span><span lang="id">Pelanggan aktif</span><span lang="en">Active subscribers</span></span></li>
+    <li><b>Rp3.950.000</b><span><span lang="id">Pendapatan rutin per bulan</span><span lang="en">Recurring income per month</span></span></li>
+    <li><b>4,2%</b><span><span lang="id">Pelanggan berhenti bulan ini</span><span lang="en">Subscribers who left this month</span></span></li>
+    <li><b>3</b><span><span lang="id">Berakhir 7 hari ke depan</span><span lang="en">Ending in next 7 days</span></span></li>
+    <li><b>Rp4.050.000</b><span><span lang="id">Total sebelum potongan</span><span lang="en">Total before fees</span></span></li>
+    <li><b>Rp3.888.000</b><span><span lang="id">Diterima bersih (perkiraan biaya pembayaran 4%)</span><span lang="en">Net received (est. payment fee 4%)</span></span></li>
+  </ul>
+  <form class="filters" onsubmit="return false">
+    <label>Status<select class="field"><option>paid</option><option>pending</option><option>expired</option></select></label>
+    <label><span lang="id">Tipe</span><span lang="en">Type</span><select class="field"><option>Semua / All</option><option>initial</option><option>renewal</option></select></label>
+    <label><span lang="id">Dari</span><span lang="en">From</span><input class="field" type="date" value="2026-11-01"></label>
+    <label><span lang="id">Sampai</span><span lang="en">To</span><input class="field" type="date" value="2026-11-25"></label>
+    <button class="btn" type="button">Export CSV</button>
+  </form>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Daftar order / Order list">
+    <table>
+      <thead><tr><th>Order</th><th><span lang="id">Tanggal</span><span lang="en">Date</span></th><th><span lang="id">Tipe</span><span lang="en">Type</span></th><th><span lang="id">Paket</span><span lang="en">Plan</span></th><th>Status</th><th class="num"><span lang="id">Jumlah</span><span lang="en">Amount</span></th></tr></thead>
+      <tbody>
+        <tr><td>#1063</td><td>25 Nov 2026</td><td>initial</td><td><span lang="id">Bulanan</span><span lang="en">Monthly</span></td><td><span class="status status-ok">paid</span></td><td class="num">Rp50.000</td></tr>
+        <tr><td>#1062</td><td>25 Nov 2026</td><td>initial</td><td><span lang="id">Bulanan</span><span lang="en">Monthly</span></td><td><span class="status status-ok">paid</span></td><td class="num">Rp50.000</td></tr>
+        <tr><td>#1061</td><td>24 Nov 2026</td><td>renewal</td><td><span lang="id">Bulanan</span><span lang="en">Monthly</span></td><td><span class="status status-ok">paid</span></td><td class="num">Rp50.000</td></tr>
+        <tr><td>#1060</td><td>24 Nov 2026</td><td>initial</td><td><span lang="id">Tahunan</span><span lang="en">Yearly</span></td><td>pending</td><td class="num">Rp500.000</td></tr>
+        <tr><td>#1059</td><td>23 Nov 2026</td><td>initial</td><td><span lang="id">Bulanan</span><span lang="en">Monthly</span></td><td>expired</td><td class="num">Rp100.000</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="design-note"><strong>Catatan desain:</strong> status = teks (bukan warna saja). Perpanjangan tidak memakai slot early bird (FR-11). Pendapatan rutin bulanan = 63 × Rp50.000 + 8 × Rp100.000 = Rp3.950.000, dihitung dari <code>orders</code> berstatus <code>paid</code>. Tabel bisa digeser ke samping di 360 px.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,31 @@
+/* T1.14: gaya admin — padat & netral, terpisah dari gaya anak. Warna hanya dari token. */
+body.admin { font-size: var(--text-sm); }
+.admin h1 { font-size: var(--text-lg); }
+.admin h2 { font-size: var(--text-md); }
+.admin-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4); background: var(--color-ink); color: var(--color-ink-on-dark); }
+.admin-bar strong { font-family: var(--font-heading); margin-right: auto; }
+.admin-nav { display: flex; flex-wrap: wrap; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.admin-nav a { display: inline-flex; align-items: center; min-height: var(--tap-min); padding: 0 var(--space-3); border-radius: var(--radius-sm); color: var(--color-ink-on-dark); }
+.admin-nav a[aria-current='page'] { background: var(--color-ink-on-dark); color: var(--color-ink); font-weight: var(--weight-strong); text-decoration: none; }
+.admin .btn { box-shadow: none; font-size: var(--text-sm); padding: 0 var(--space-4); }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.kpis li { padding: var(--space-3); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
+.kpis b { display: block; font: var(--weight-heading) var(--text-lg) var(--font-heading); }
+.kpis span { color: var(--color-ink-soft); }
+.table-wrap { overflow-x: auto; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: var(--space-2) var(--space-3); text-align: left; border-bottom: 1px solid var(--color-line); white-space: nowrap; }
+th { background: var(--color-bg); }
+.num { text-align: right; }
+.filters { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: end; }
+.filters label { display: grid; gap: var(--space-1); }
+.filters .field { min-width: 140px; }
+.chart { width: 100%; height: auto; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
+.chart rect { fill: var(--subject-math); }
+.chart text { fill: var(--color-ink-soft); font: 11px var(--font-body); }
+.grid-2 { display: grid; gap: var(--space-4); }
+.post-preview { width: 100%; max-width: 320px; aspect-ratio: 1 / 1; display: grid; place-content: center; justify-items: center; gap: var(--space-2); padding: var(--space-4); text-align: center; background: var(--color-sunny); border: 2px solid var(--color-ink); border-radius: var(--radius-sm); }
+.post-preview img { width: 72px; }
+.post-preview p { margin: 0; font: var(--weight-heading) var(--text-md) var(--font-heading); }
+code { padding: 0 var(--space-1); background: var(--color-bg); border-radius: 4px; overflow-wrap: anywhere; }
+@media (min-width: 768px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
