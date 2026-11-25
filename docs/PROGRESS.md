@@ -19,7 +19,8 @@
   - Bukti (24 Nov 2026): `npm run check` hijau — vitest 28/28 (22 test kontras baru `contrast.test.ts`), JS awal 16,81 KB / CSS 1,06 KB gzip. Font variabel latin self-host 72 KB (di luar budget awal), lisensi OFL dicatat. Tabel kontras: `docs/brand/tokens.md`. **Temuan:** English `#8B5CF6` gagal 4,5:1 (putih 4,23) → dipakai teks besar saja; usulan `#7C3AED` menunggu keputusan Bimo (T1.15). Belum diverifikasi: path font di build `VITE_BASE=/studykidsapp/` (isi `dist/` diblok deny rule) — cek visual saat Pages ter-deploy.
 - [x] T1.2 `[sonnet]` Logo final Kiko: ikon, horizontal, satu warna/putih, wordmark path, favicon & PWA PNG (§9.4)
   - Bukti (24 Nov 2026): 7 SVG + 4 PNG (favicon-32, 192, 512, maskable-512) + galeri `docs/brand/index.html` (screenshot dicek: Kiko terbaca di 32 px, satu warna & putih jalan). Ikon ≤ 0,7 KB; logo horizontal ±6 KB; wordmark = path (outline Baloo 2 w800, tanpa tag `<text>`). Tanpa ikon terlarang. Lisensi dicatat. Belum disetujui resmi → B10 (setelah T1.3). Kiko di favicon tanpa bintang/titik agar bersih di 32 px.
-- [ ] T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar contoh (§9.4, FR-2) → B10
+- [x] T1.3 `[sonnet]` 4 ekspresi Kiko + 4 avatar contoh (§9.4, FR-2) → B10
+  - Bukti (25 Nov 2026): 8 SVG baru (`docs/brand/kiko/` senang/semangat/kaget/tidur; `docs/brand/avatar/` Pipo/Luna/Bima/Momo), semua ≤ 1 KB (batas 6 KB), XML valid, tanpa `<text>`/`<script>`. Tampil di `docs/brand/index.html` (screenshot dicek; aksesori avatar & percikan "semangat" diperbaiki setelah cek pertama). "Semangat" = alis naik + senyum lebar terbuka, tanpa air mata/cemberut (§9.1 no. 4). Lisensi dicatat. **Menunggu B10** (Bimo setujui logo + ekspresi) sebelum T1.4.
 - [ ] T1.4 `[sonnet]` Kerangka `docs/mockups/` (galeri, mockup.css dari token) + Playwright 360/1280 + axe (§9.3, §8.5)
 - [ ] T1.5 `[sonnet]` Layar 1 Landing page (FR-1)
 - [ ] T1.6 `[sonnet]` Layar 2–3 Pilih kelas/profil + Beranda anak, varian kelas 1–2 & 5–6 (FR-2, FR-7)
