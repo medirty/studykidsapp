@@ -59,6 +59,7 @@ test('bahasa pilihan bertahan setelah reload (tanpa dan dengan profil)', async (
       .catch((x) => String(x));
     throw new Error(
       `DIAG ${JSON.stringify(st)} LOGS ${logs.join(' | ')} ORIG ${String(e).slice(0, 200)}`,
+      { cause: e },
     );
   }
 });
