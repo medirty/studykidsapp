@@ -62,5 +62,22 @@
   "subject.wellbeing": "Wellbeing",
   "subject.art": "Art & Design",
   "subject.music": "Music",
-  "subject.computing": "Computing & Technology"
+  "subject.computing": "Computing & Technology",
+  "start.profiles": "Profil di perangkat ini",
+  "start.new": "Profil baru",
+  "start.nickname": "Nama panggilan",
+  "start.nicknameHint": "Pakai nama panggilan saja, bukan nama lengkap.",
+  "start.grade": "Kelas",
+  "start.gradeN": "Kelas {n}",
+  "start.avatar": "Pilih avatar",
+  "start.go": "Mulai belajar",
+  "start.error": "Tulis nama panggilan (1–20 huruf) dan pilih kelas.",
+  "home.hello": "Halo, {name}!",
+  "home.streak": "Seru! Kiko senang kamu datang lagi.",
+  "home.continue": "Lanjutan belajar akan muncul di sini setelah materi tersedia.",
+  "home.subjects": "Pilih pelajaran",
+  "home.free": "Gratis · Unit 1–{n}",
+  "home.switch": "Ganti profil",
+  "home.noProfile": "Pilih atau buat profil dulu ya.",
+  "profile.failed": "Penyimpanan di perangkat tidak bisa dibuka. Coba tutup mode penyamaran lalu muat ulang."
 }

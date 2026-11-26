@@ -1,0 +1,42 @@
+import AxeBuilder from '@axe-core/playwright';
+import { expect, test } from '@playwright/test';
+
+test('buat profil → beranda dalam 3 tap; profil bertahan setelah reload', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Coba Gratis' }).click(); // tap 1
+  await page.getByText('Kelas 3', { exact: true }).click(); // tap 2
+  await page.getByLabel('Nama panggilan').fill('Dina');
+  await page.getByRole('button', { name: 'Mulai belajar' }).click(); // tap 3
+  await expect(page.getByRole('heading', { level: 2, name: 'Halo, Dina!' })).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByRole('heading', { level: 2, name: 'Halo, Dina!' })).toBeVisible();
+
+  await page.goto('/#/start');
+  await expect(page.getByRole('button', { name: /Dina/ })).toBeVisible();
+});
+
+test('profil tanpa nama ditolak dengan pesan ramah', async ({ page }) => {
+  await page.goto('/#/start');
+  await page.getByRole('button', { name: 'Mulai belajar' }).click();
+  await expect(page.getByRole('alert')).toBeVisible();
+});
+
+test('Pilih kelas & Beranda: tanpa scroll horizontal + axe bersih', async ({ page }) => {
+  for (const hash of ['/#/start', null]) {
+    if (hash) await page.goto(hash);
+    else {
+      await page.getByText('Kelas 1', { exact: true }).click();
+      await page.getByLabel('Nama panggilan').fill('Dina');
+      await page.getByRole('button', { name: 'Mulai belajar' }).click();
+      await expect(page.getByRole('heading', { level: 2, name: 'Halo, Dina!' })).toBeVisible();
+    }
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    );
+    expect(overflow).toBe(false);
+    const { violations } = await new AxeBuilder({ page }).analyze();
+    const bad = violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+    expect(bad, JSON.stringify(bad, null, 2)).toEqual([]);
+  }
+});
