@@ -7,6 +7,7 @@
 
   import { brand } from './brand.config';
   import { t, type MessageKey } from './i18n';
+  import { profile } from './stores/profile.svelte';
   import { settings } from './stores/settings.svelte';
 
   settings.load();
@@ -29,6 +30,7 @@
 <svelte:window onhashchange={() => (path = pathOf())} />
 <AppHeader />
 <main>
+  {#if profile.failed}<p role="alert">{t('profile.failed')}</p>{/if}
   <Router {routes} />
 </main>
 <UpdatePrompt bind:needRefresh onreload={reload} />

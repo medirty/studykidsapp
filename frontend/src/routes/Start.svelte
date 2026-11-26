@@ -33,7 +33,6 @@
 </script>
 
 <h1>{t('start.title')}</h1>
-{#if profile.failed}<p role="alert">{t('profile.failed')}</p>{/if}
 
 {#if profile.list.length}
   <section aria-labelledby="h-prof">

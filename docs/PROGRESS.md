@@ -7,7 +7,7 @@
 
 - **Fase aktif:** 3 — Engine Soal + Demo (rencana dibuat 26 Nov 2026: `docs/plans/phase-3.md`, T3.0–T3.25 + B12, B13). Fase 2 — Fondasi FE **disetujui** Bimo 26 Nov 2026 (tag `phase-2-approved`; gate: `docs/plans/gate-phase-2.md`, temuan Minor L-1..L-9 dilebur ke T3.0, T3.1, T3.10; L-4 = T3.0). Rencana Fase 2: `docs/plans/phase-2.md`. Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
 - **Posisi terakhir (tutup hari 26 Nov 2026):** Fase 2 disetujui (tag `phase-2-approved`), CR-008 diterima (PRD v1.14, PR #74 ter-merge), rencana Fase 3 (`docs/plans/phase-3.md`, T3.0–T3.25 + B12, B13) di-merge lewat PR #75. Tidak ada task setengah jalan; belum ada kode Fase 3.
-- **Task berikutnya:** T3.1 (`/next`); T3.0 selesai 26 Nov 2026. T3.4–T3.7 boleh jalan sambil menunggu B12. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope); branch lokal basi bisa dihapus.
+- **Task berikutnya:** T3.2 (`/next`); T3.0–T3.1 selesai 26 Nov 2026. T3.4–T3.7 boleh jalan sambil menunggu B12. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope); branch lokal basi bisa dihapus.
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 3 — Engine Soal + Demo (rencana: `docs/plans/phase-3.md`)
@@ -17,7 +17,8 @@
 ### Task
 - [x] T3.0 `[sonnet]` Sisa gate Fase 2: L-1 token overlay + test `rgb()`, L-2 favicon, L-7 judul per route, L-9 LHCI (median, a11y, Beranda), teks debug Landing → `import.meta.env.DEV`
   - Bukti (26 Nov 2026): `--color-overlay` di `tokens.css` (Modal memakainya), test "tanpa warna literal" kini menangkap `rgb(`/`hsl(`; `<link rel="icon" href="favicon.svg">` relatif; judul tab per route di `App.svelte` (dari `t()`, ikut bahasa; tes baru `app.component.test.ts`); baris status API Landing hanya `import.meta.env.DEV`; `lighthouserc.json`: `aggregationMethod: median-run` + `categories:accessibility` ≥ 0,9. `npm run check` hijau (vitest 85, JS awal 33,87 KB gzip), `npm run test:e2e` 174 lolos, LHCI lokal lolos. **Belum (ditunda):** URL Beranda di LHCI via `puppeteerScript` (butuh dependency `puppeteer` + ADR; masuk T3.10 bersama E2E 360 px atau tugas terpisah bila Bimo setuju). Catatan: `svelte-spa-router` 5.1.1 tidak mengekspor `location` → App membaca `window.location.hash`.
-- [ ] T3.1 `[sonnet]` Penyimpanan gagal: L-8 (`setLocale` UI dulu) + L-6 (pesan `profile.failed`)
+- [x] T3.1 `[sonnet]` Penyimpanan gagal: L-8 (`setLocale` UI dulu) + L-6 (pesan `profile.failed`)
+  - Bukti (26 Nov 2026): `settings.setLocale` mengubah UI dulu, gagal simpan → `profiles.failed = true` tanpa unhandled rejection; pesan `profile.failed` dipindah ke `App.svelte` (tampil di semua layar, dihapus dari Start). 2 test baru (store api menolak; App menampilkan alert). `npm run check` hijau (vitest 87, JS awal 33,88 KB gzip), `npm run test:e2e` 174 lolos.
 - [ ] T3.2 `[sonnet]` Mockup v2 Beranda (kelas 1–2 & 5–6) + ubin mapel + 8 ilustrasi + hero Landing (T-CR8.1, L-5)
 - [ ] T3.3 `[sonnet]` Mockup v2 peta jalur + dunia Balon Angka + Pola Batik
 - [ ] B12 Bimo menyetujui mockup v2 (T3.2–T3.3)

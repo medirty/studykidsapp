@@ -80,6 +80,21 @@ describe('profile + settings stores', () => {
     await broken.load();
     expect(broken.failed).toBe(true);
   });
+
+  it('still switches language when saving fails (no unhandled rejection)', async () => {
+    const profiles = createProfileStore({
+      ...localApi,
+      setSetting: () => Promise.reject(new Error('IndexedDB blocked')),
+    });
+    const settings = createSettingsStore(
+      { ...localApi, setSetting: () => Promise.reject(new Error('blocked')) },
+      profiles,
+    );
+    await settings.setLocale('en');
+    expect(getLocale()).toBe('en');
+    expect(settings.locale).toBe('en');
+    expect(profiles.failed).toBe(true);
+  });
 });
 
 describe('entitlement store', () => {
