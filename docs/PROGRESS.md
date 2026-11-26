@@ -7,7 +7,7 @@
 
 - **Fase aktif:** 2 — Fondasi FE (rencana dibuat 25 Nov 2026: `docs/plans/phase-2.md`). Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
 - **Posisi terakhir (tutup hari 25 Nov 2026):** Fase 1 disetujui (PR #55 ter-merge, tag `phase-1-approved`); rencana Fase 2 (T2.0–T2.12) dibuat di PR #56 (belum di-merge). Tidak ada task setengah jalan; belum ada kode Fase 2. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** T2.3 `[sonnet]` (`/next`). T2.0–T2.2 selesai 26 Nov 2026. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** T2.4 `[sonnet]` (`/next`). T2.0–T2.3 selesai 26 Nov 2026. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 2 — Fondasi FE (rencana: `docs/plans/phase-2.md`)
@@ -19,7 +19,8 @@
   - Bukti (26 Nov 2026): ADR **D-012** (`jsdom` ^31.0.1 + `@testing-library/svelte` ^5.4.2, MIT, dev-only); `vitest.config.ts` + `svelte()` + `svelteTesting()`, default env `node`, jsdom per-file. Test contoh `app.component.test.ts`. `npm run check` hijau (vitest 29/29, JS awal 16,81 KB gzip — tidak berubah). Tanpa `jest-dom`.
 - [x] T2.2 `[sonnet]` i18n reaktif + `<html lang>` + penjaga teks hardcode (FR-3)
   - Bukti (26 Nov 2026): locale reaktif (`$state` di `i18n/state.svelte.ts`), `setLocale` memperbarui teks, `<html lang>`, dan `localStorage` (pindah ke profil di T2.7). Test: key ID=EN, tanpa nilai kosong, ganti locale, parameter, penjaga teks literal di semua `.svelte` (dites dengan contoh literal → terdeteksi). `npm run check` hijau (vitest 35/35, JS awal 16,89 KB gzip). Toggle ID/EN di UI menyusul di T2.5.
-- [ ] T2.3 `[sonnet]` Ikon SVG + komponen Kiko/Avatar + 12 avatar (FR-2, §9.4)
+- [x] T2.3 `[sonnet]` Ikon SVG + komponen Kiko/Avatar + 12 avatar (FR-2, §9.4)
+  - Bukti (26 Nov 2026): komponen `Icon` (10 ikon, dekoratif `aria-hidden` / bermakna `role=img`+label), `Kiko` (4 ekspresi, alt i18n), `Avatar` (12 id); 8 avatar baru (Kira, Rafi, Nala, Dito, Sari, Tiko, Mira, Zuzu) di `docs/brand/avatar/` + salinan `frontend/src/assets/`; galeri memuat 12 avatar; lisensi dicatat. Test: 12 avatar, tiap SVG ≤ 6 KB tanpa `<text>`/`<script>`, alt/aria. `npm run check` hijau (vitest 42/42, JS awal 16,98 KB gzip). **Menunggu Bimo:** lihat 8 avatar baru di galeri brand (persetujuan visual).
 - [ ] T2.4 `[sonnet]` Komponen UI dasar: Button, Card, Chip, ProgressBar, Stars, Modal, SubjectCard (§9.1, §9.2, §8.5)
 - [ ] T2.5 `[sonnet]` Routing `svelte-spa-router` + app shell + header ID/EN (§10.1, §9.1)
 - [ ] T2.6 `[opus]` Dexie + `api.ts` adapter lokal + antrian event idempoten (§12.2, §10.2, §8.2)
