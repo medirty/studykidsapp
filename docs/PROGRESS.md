@@ -5,22 +5,52 @@
 
 ## Status
 
-- **Fase aktif:** 2 — Fondasi FE **disetujui** Bimo 26 Nov 2026 (tag `phase-2-approved`; gate: `docs/plans/gate-phase-2.md`, 9 temuan Minor L-1..L-9 dibawa ke Fase 3). Fase berikut: 3 — Engine + Demo (butuh `/plan-phase`). Rencana Fase 2: `docs/plans/phase-2.md`. Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
+- **Fase aktif:** 3 — Engine Soal + Demo (rencana dibuat 26 Nov 2026: `docs/plans/phase-3.md`, T3.0–T3.25 + B12, B13). Fase 2 — Fondasi FE **disetujui** Bimo 26 Nov 2026 (tag `phase-2-approved`; gate: `docs/plans/gate-phase-2.md`, temuan Minor L-1..L-9 dilebur ke T3.0, T3.1, T3.10; L-4 = T3.0). Rencana Fase 2: `docs/plans/phase-2.md`. Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
 - **Posisi terakhir (tutup hari 25 Nov 2026):** Fase 1 disetujui (PR #55 ter-merge, tag `phase-1-approved`); rencana Fase 2 (T2.0–T2.12) dibuat di PR #56 (belum di-merge). Tidak ada task setengah jalan; belum ada kode Fase 2. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** `/plan-phase` untuk Fase 3. T2.0–T2.12 selesai 26 Nov 2026. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** T3.0 (`/next`). T2.0–T2.12 selesai 26 Nov 2026. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
-## Backlog awal Fase 3 — CR-008 Visual "ceria penuh warna" (diterima 26 Nov 2026, PRD v1.14)
+## Fase 3 — Engine Soal + Demo (rencana: `docs/plans/phase-3.md`)
 
-> Masukkan ke rencana Fase 3 saat `/plan-phase`. Mockup baru wajib disetujui Bimo sebelum kode (CLAUDE.md). Dasar: `docs/CHANGE_REQUESTS.md` CR-008, tinjauan architect, critique `.impeccable/critique/2026-11-26T07-12-20Z__frontend.md`.
+> Exit Criteria: E1 generator test (≥ 50 unik, 100% valid; bank ≥ 20 item) · E2 E2E sesi offline · E3 demo di Pages diuji Bimo + 3–5 anak · E4 CR-008 terpasang. Backlog CR-008 (T-CR8.1–5) dan temuan gate Fase 2 sudah dilebur ke task di bawah. T3.4–T3.7 boleh dikerjakan sambil menunggu B12.
 
-- [ ] T-CR8.1 `[sonnet]` Mockup baru Beranda + ubin mapel (kelas 1–2 dan 5–6) → persetujuan Bimo (gabung dengan B11). Masuk `tests/e2e/mockups.spec.ts` (360/1280 px + axe), perbarui `docs/mockups/README.md`.
-- [ ] T-CR8.2 `[sonnet]` Token tint + teks per mapel di `tokens.css` + `docs/brand/tokens.md`; perluas `contrast.test.ts` (teks per mapel, ink-soft, ilustrasi ≥ 3:1).
-- [ ] T-CR8.3 `[sonnet]` Pasang `data-grade-band` dari `profile.active.grade` (atribut belum dipakai di mana pun) + test.
-- [ ] T-CR8.4 `[sonnet]` `SubjectCard` ubin penuh + ilustrasi SVG per mapel (via `?url`/sprite), suara nama mapel di kelas 1–2, gabung temuan gate L-5 (badge "Gratis") dan L-3 (E2E 360 px); catat `docs/ASSET_LICENSES.md`. Ikon mengikuti larangan §9.4 (tanpa buku/pensil/ABC/bola lampu/apel); usulan: English = balon bicara, Science = tabung reaksi/planet; motif final ikut mockup T-CR8.1.
-- [ ] T-CR8.5 `[sonnet]` Kiko di Beranda (bereaksi saat disentuh, `prefers-reduced-motion`); hero + ubin mapel Landing ikut gaya baru.
-- Masuk sebagai AC task Fase 3 yang membangun layarnya (bukan task sendiri): peta belajar berupa jalur dengan simpul; mini game dengan "dunia" (langit, awan, balon berkilau); mockup barunya disetujui lebih dulu.
-- Bonus (task lepas, bukan CR-008): hapus teks debug "API error, DB error" di `Landing.svelte:23` (ganti syarat ke `import.meta.env.DEV`).
+### Task
+- [ ] T3.0 `[sonnet]` Sisa gate Fase 2: L-1 token overlay + test `rgb()`, L-2 favicon, L-7 judul per route, L-9 LHCI (median, a11y, Beranda), teks debug Landing → `import.meta.env.DEV`
+- [ ] T3.1 `[sonnet]` Penyimpanan gagal: L-8 (`setLocale` UI dulu) + L-6 (pesan `profile.failed`)
+- [ ] T3.2 `[sonnet]` Mockup v2 Beranda (kelas 1–2 & 5–6) + ubin mapel + 8 ilustrasi + hero Landing (T-CR8.1, L-5)
+- [ ] T3.3 `[sonnet]` Mockup v2 peta jalur + dunia Balon Angka + Pola Batik
+- [ ] B12 Bimo menyetujui mockup v2 (T3.2–T3.3)
+- [ ] T3.4 `[opus]` ADR engine & konten (skema JSON, kontrak generator, tipe Question 9 format, seed, adaptif, anti-repeat/Dexie v2, mastery/bintang/XP/streak, kontrak mini game, pemuatan konten, kriteria bank soal, coverage)
+- [ ] T3.5 `[opus]` `rng.ts` + registry generator + harness uji (≥ 50 unik/1.000, validator, bank ≥ 20) + `arith.add` + `bank` + loader & validasi konten + aturan 15 KB/unit
+- [ ] T3.6 `[opus]` `mastery.ts` + bintang, XP, streak (rumus terdokumentasi, TDD)
+- [ ] T3.7 `[opus]` `session.ts` (8–10 soal, rotasi format, adaptif + petunjuk, anti-repeat 5 sesi, spaced 20%) + Dexie v2 & migrasi
+- [ ] T3.8 `[sonnet]` Token tint + teks per mapel + perluas `contrast.test.ts` (T-CR8.2)
+- [ ] T3.9 `[sonnet]` `data-grade-band` dari profil aktif (T-CR8.3)
+- [ ] T3.10 `[sonnet]` `SubjectCard` ubin penuh + ilustrasi `?url`/sprite + suara kelas 1–2 + E2E 360 px (T-CR8.4, L-5, L-3)
+- [ ] T3.11 `[sonnet]` Kiko interaktif di Beranda + hero/ubin Landing (T-CR8.5)
+- [ ] T3.12 `[sonnet]` Komponen soal: Mcq, Input (keypad), Tf, Tap, Listen
+- [ ] T3.13 `[sonnet]` Komponen soal: DragDrop, Match, Order (alternatif ketuk), Draw
+- [ ] T3.14 `[sonnet]` Peta belajar jalur `#/map/:subject` (FR-4)
+- [ ] T3.15 `[sonnet]` Layar sesi + feedback + ringkasan; E2E sesi offline (E2)
+- [ ] T3.16 `[sonnet]` Konten Math kelas 1–2
+- [ ] T3.17 `[sonnet]` Konten Math kelas 3–4
+- [ ] T3.18 `[sonnet]` Konten Math kelas 5–6
+- [ ] T3.19 `[sonnet]` Konten Global Perspectives kelas 1–6 (bank soal; pecah 1–3/4–6 bila perlu)
+- [ ] T3.20 `[sonnet]` Konten Art & Design kelas 1–3
+- [ ] T3.21 `[sonnet]` Konten Art & Design kelas 4–6
+- [ ] T3.22 `[sonnet]` Mini game Balon Angka + dunia (≤ 60 KB gzip)
+- [ ] T3.23 `[sonnet]` Mini game Pola Batik
+- [ ] T3.24 `[sonnet]` Laporan anak ringkas + "Data belum cukup" (FR-9)
+- [ ] T3.25 `[sonnet]` Verifikasi akhir + rilis demo Pages + tabel bukti E1–E4
+- [ ] B13 Bimo + 3–5 anak mencoba demo (tanpa data anak) → masukan jadi task perbaikan
+- [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 3 disetujui" → tag `phase-3-approved`
+
+### Default yang dipakai (bisa diubah Bimo)
+1. Konten Fase 3 = unit 1–2 lengkap; unit 3–4 hanya judul (terkunci). Isi unit 3+ di Fase 5.
+2. Laporan ringkas = laporan anak; laporan ortu (juga versi demo) di Fase 4 bersama Parent Gate.
+3. CTA "Buka semua materi" = modal info sampai paywall ada (Fase 4).
+4. Mini game demo: Balon Angka + Pola Batik.
+5. Gamifikasi Fase 3 = XP, bintang skill, streak dasar; lencana/level/item avatar di Fase 5.
 
 ## Fase 2 — Fondasi FE (rencana: `docs/plans/phase-2.md`)
 
