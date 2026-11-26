@@ -17,5 +17,7 @@
   "home.title": "Home",
   "notfound.title": "Oops, page not found",
   "notfound.body": "Kiko looked everywhere. Let us go back to the start.",
-  "notfound.back": "Back to start"
+  "notfound.back": "Back to start",
+  "speech.speak": "Listen",
+  "speech.fallback": "This language voice is not on your device, so Kiko is using another voice."
 }
