@@ -69,3 +69,11 @@
   .rows { grid-template-columns: repeat(2, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) { .kiko-btn.is-happy img { animation: none; } }
+
+/* Latar bertitik krem (referensi Bimo: medirty.github.io/StudyKids). Usulan T3.8: token --color-bg-dot. */
+body {
+  background-color: var(--color-bg);
+  background-image: radial-gradient(var(--color-line) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+.app-header, .bottom-bar { background-color: var(--color-surface); }
