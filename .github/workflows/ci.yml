@@ -40,6 +40,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          VITE_API_MODE: local
       - run: npx --yes @lhci/cli@0.16.x autorun --config=lighthouserc.json
 
   backend:

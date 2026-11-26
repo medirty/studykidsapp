@@ -39,7 +39,7 @@
   - Bukti (26 Nov 2026): `routes/Start.svelte` (daftar profil + form: kelas 1–6, nama panggilan 1–20, 12 avatar; tanpa email/HP/foto) dan `routes/Home.svelte` (sapaan, streak positif, placeholder "lanjut belajar", 8 mapel dengan gembok/Gratis dari public settings, target 88 px untuk kelas 1–2); `settings.load()` dipanggil di `App.svelte`; 17 key i18n baru ID=EN. `npm run check` hijau (vitest 84, JS awal 34,37 KB gzip). `npm run test:e2e` → 168 lolos + 9 baru (Coba Gratis → kelas → Mulai = 3 tap, profil bertahan setelah reload, validasi, axe & tanpa scroll horizontal di 3 project). Lighthouse CI lokal lolos (hanya URL landing). **Belum:** Lighthouse khusus Beranda (butuh profil; dipasang di T2.12), cek visual 360 px di browser, PIN profil (Fase 4), varian daftar ringkas kelas 5–6 (kini grid sama untuk semua kelas, hanya kelas 1–2 diperbesar). Catatan: `npx lhci` salah paket → pakai `npx @lhci/cli@0.16`.
 - [ ] T2.12 `[sonnet]` Verifikasi akhir di Pages + bukti Exit Criteria E1–E4
 - [x] Fix B-1 (gate Fase 2): `AppHeader` memakai `settings.setLocale`; E2E ganti bahasa → reload; `npm run check` hijau (84 test), e2e profile 12/12 (26 Nov 2026)
-- [ ] Fix B-2 (Lighthouse CI merah) — `numberOfRuns: 3`, `VITE_API_MODE=local`, kurangi Dexie di Landing
+- [~] Fix B-2 (Lighthouse CI merah): `numberOfRuns: 3` + `VITE_API_MODE=local` di job lighthouse (PR menunggu persetujuan Bimo karena ubah workflow); pengurangan Dexie di Landing ditunda sampai terbukti perlu
 - [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 2 disetujui" → tag `phase-2-approved`
 
 ### Default yang dipakai (bisa diubah Bimo)
