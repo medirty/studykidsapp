@@ -20,9 +20,9 @@
 - [x] T3.1 `[sonnet]` Penyimpanan gagal: L-8 (`setLocale` UI dulu) + L-6 (pesan `profile.failed`)
   - Bukti (26 Nov 2026): `settings.setLocale` mengubah UI dulu, gagal simpan → `profiles.failed = true` tanpa unhandled rejection; pesan `profile.failed` dipindah ke `App.svelte` (tampil di semua layar, dihapus dari Start). 2 test baru (store api menolak; App menampilkan alert). `npm run check` hijau (vitest 87, JS awal 33,88 KB gzip), `npm run test:e2e` 174 lolos.
 - [x] T3.2 `[sonnet]` Mockup v2 Beranda (kelas 1–2 & 5–6) + ubin mapel + 8 ilustrasi + hero Landing (T-CR8.1, L-5)
-  - Bukti (26 Nov 2026): `beranda-v2`, `beranda-besar-v2`, `landing-v2` + `assets/mockup-v2.css` + 8 SVG di `docs/brand/subject/` (lisensi dicatat); kontras dihitung di `docs/mockups/README.md` (ilustrasi utama ≥ 3:1). `mockups.spec.ts` 156 lolos (360/1280 + axe, termasuk 3 halaman baru); screenshot 360 px dicek. Menunggu persetujuan visual Bimo (B12 bersama T3.3). Token teks per mapel di mockup = usulan T3.8.
+  - Bukti (26 Nov 2026): `beranda-v2`, `beranda-besar-v2`, `landing-v2` + `assets/mockup-v2.css` + 8 SVG di `docs/brand/subject/` (lisensi dicatat); kontras dihitung di `docs/mockups/README.md` (ilustrasi utama ≥ 3:1). `mockups.spec.ts` 156 lolos (360/1280 + axe, termasuk 3 halaman baru); screenshot 360 px dicek. Bimo: "mockup v2 oke" (26 Nov 2026) untuk bagian T3.2 (PR #79 di-merge). Token teks per mapel di mockup = usulan T3.8.
 - [ ] T3.3 `[sonnet]` Mockup v2 peta jalur + dunia Balon Angka + Pola Batik
-- [ ] B12 Bimo menyetujui mockup v2 (T3.2–T3.3)
+- [ ] B12 Bimo menyetujui mockup v2 (T3.2–T3.3) — T3.2 disetujui 26 Nov 2026; sisa T3.3 (peta jalur + game)
 - [ ] T3.4 `[opus]` ADR engine & konten (skema JSON, kontrak generator, tipe Question 9 format, seed, adaptif, anti-repeat/Dexie v2, mastery/bintang/XP/streak, kontrak mini game, pemuatan konten, kriteria bank soal, coverage)
 - [ ] T3.5 `[opus]` `rng.ts` + registry generator + harness uji (≥ 50 unik/1.000, validator, bank ≥ 20) + `arith.add` + `bank` + loader & validasi konten + aturan 15 KB/unit
 - [ ] T3.6 `[opus]` `mastery.ts` + bintang, XP, streak (rumus terdokumentasi, TDD)
