@@ -32,12 +32,16 @@ export class SettingsStore {
   }
 
   async setLocale(locale: Locale): Promise<void> {
-    if (this.profiles.active) await this.profiles.updateActive({ locale });
-    else {
-      await this.api.setSetting('locale', locale);
-      this.deviceLocale = locale;
+    setLocale(locale); // UI first: a failed save must not block the toggle (L-8)
+    try {
+      if (this.profiles.active) await this.profiles.updateActive({ locale });
+      else {
+        this.deviceLocale = locale;
+        await this.api.setSetting('locale', locale);
+      }
+    } catch {
+      this.profiles.failed = true; // App shows the friendly message (L-6)
     }
-    setLocale(locale);
   }
 
   async setPref<K extends keyof ProfilePrefs>(key: K, value: ProfilePrefs[K]): Promise<void> {
