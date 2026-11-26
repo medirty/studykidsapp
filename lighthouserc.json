@@ -7,7 +7,9 @@
       "numberOfRuns": 3
     },
     "assert": {
+      "aggregationMethod": "median-run",
       "assertions": {
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
         "categories:performance": ["error", { "minScore": 0.9 }],
         "categories:seo": ["error", { "minScore": 0.95 }],
         "largest-contentful-paint": ["error", { "maxNumericValue": 2500 }],
