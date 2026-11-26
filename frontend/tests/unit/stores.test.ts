@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { getLocale } from '../../src/i18n';
+import { getLocale, setLocale } from '../../src/i18n';
 import { localApi } from '../../src/services/api';
 import { openDb } from '../../src/services/db';
 import { createEntitlementStore } from '../../src/stores/entitlement.svelte';
@@ -62,6 +62,14 @@ describe('profile + settings stores', () => {
     await again.settings.load();
     expect(again.profiles.active).toBeNull();
     expect(again.settings.locale).toBe('en');
+  });
+
+  it('keeps the toggled language when the reload beats the Dexie save', async () => {
+    setLocale('en'); // toggle done (localStorage written), Dexie write never finished
+    const { settings } = fresh();
+    await settings.load();
+    expect(settings.locale).toBe('en');
+    expect(getLocale()).toBe('en');
   });
 
   it('removing the active profile clears the selection', async () => {

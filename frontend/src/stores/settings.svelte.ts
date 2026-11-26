@@ -1,13 +1,13 @@
 // Settings store (ADR D-011 b): locale of the active profile (or device while none), prefs.
 import { api as defaultApi } from '../services/api';
 import type { Api, ProfilePrefs } from '../services/types';
-import { setLocale, type Locale } from '../i18n';
+import { getLocale, hasStoredLocale, setLocale, type Locale } from '../i18n';
 import { profile as defaultProfile, type ProfileStore } from './profile.svelte';
 
 const DEFAULT_PREFS: ProfilePrefs = { autoRead: false, reduceMotion: false };
 
 export class SettingsStore {
-  private deviceLocale = $state<Locale>('id');
+  private deviceLocale = $state<Locale>(getLocale());
 
   constructor(
     private api: Api,
@@ -27,7 +27,8 @@ export class SettingsStore {
   async load(): Promise<void> {
     await this.profiles.load();
     const stored = await this.api.getSetting('locale').catch(() => undefined);
-    if (stored) this.deviceLocale = stored;
+    // localStorage is written synchronously on toggle; Dexie may lag behind a quick reload.
+    if (stored && !hasStoredLocale()) this.deviceLocale = stored;
     setLocale(this.locale);
   }
 
