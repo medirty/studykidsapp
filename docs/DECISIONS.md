@@ -309,3 +309,12 @@ D-001 s.d. D-007 dibuat di T0.3 (22 Nov 2026) sebagai acuan T0.4–T0.11. Rencan
   - `@testing-library/svelte` ^5.4.2 — MIT, ±38 KB, dukung Svelte 5; plugin `svelteTesting()` (auto-cleanup, resolve kondisi browser) ditambah ke `vitest.config.ts` bersama `svelte()`.
 - **Pemakaian:** test komponen memakai komentar `// @vitest-environment jsdom` di baris pertama; tanpa komentar = `node`. Tanpa `@testing-library/jest-dom` (assertion cukup dengan `expect` bawaan; tambah bila perlu dengan ADR).
 - **Alternatif:** `happy-dom` (lihat D-011 f).
+
+## D-013 — Dependency lapisan data lokal: dexie + fake-indexeddb (T2.6, 26 Nov 2026)
+
+- **Status:** diterapkan (melaksanakan D-011 c/d).
+- **Keputusan:**
+  - `dexie` ^4.4.7 (runtime) — Apache-2.0, ±3,2 MB unpacked (bundle: `api`+`db`+`sync`+Dexie = 36,6 KB gzip tanpa minify). Di-**import dinamis** dari `services/api.ts` → tidak masuk JS awal (tetap 21,14 KB gzip).
+  - `fake-indexeddb` ^6.2.8 (dev) — Apache-2.0, ±0,35 MB unpacked, 0 KB bundle. Dipakai test unit lewat `import 'fake-indexeddb/auto'` (env `node`).
+- **Alasan:** Dexie sudah dipilih di stack (CLAUDE.md, D-011). fake-indexeddb = IndexedDB lengkap di Node, tanpa browser untuk test unit; E2E memakai IndexedDB Chromium asli.
+- **Alternatif:** `idb` (lebih kecil, tanpa transaksi/kueri indeks majemuk yang nyaman); test hanya lewat Playwright (lambat, TDD sulit).

@@ -1,0 +1,7 @@
+{
+  "priceEarlyMonthly": 50000,
+  "priceNormalMonthly": 100000,
+  "yearlyMultiplier": 10,
+  "earlyBirdSlotsLeft": null,
+  "demo": { "subjects": ["math", "gp", "art"], "unitLimit": 2 }
+}
