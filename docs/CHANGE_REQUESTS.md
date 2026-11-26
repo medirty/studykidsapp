@@ -26,6 +26,8 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 | CR-003 | Skill tambahan: ponytail, security-review, graphify (ditunda) | Diterapkan dokumen (23 Nov 2026); instalasi menunggu verifikasi | v1.9 |
 | CR-005 | Ganti skill frontend-design dengan impeccable | Diterapkan (24 Nov 2026) | v1.11 |
 | CR-006 | Model bisnis: sekali bayar → langganan | Diterapkan dokumen (25 Nov 2026); kode di Fase 4–6 | v1.12 |
+| CR-007 | Warna English #8B5CF6 → #7C3AED | Diterapkan (25 Nov 2026) | v1.13 |
+| CR-008 | Arah visual "ceria penuh warna" untuk anak SD | Diterima (26 Nov 2026); pertanyaan 5 (ikon mapel vs §9.4) masih terbuka; kode di awal Fase 3 | v1.14 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -118,3 +120,46 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 - **Dampak:** PRD §9.2, `tokens.css`, `docs/brand/tokens.md`, test kontras (pengecualian English dihapus). Tidak ada skema/kode lain.
 - **Keputusan Bimo:** disetujui 25 Nov 2026 ("ya #7C3AED").
 - **Status:** diterapkan di PRD v1.13.
+
+## CR-008 — Arah visual "ceria penuh warna" untuk anak SD
+- **Tanggal / Pengaju:** 26 Nov 2026 / Bimo ("front end masih kurang menarik buat anak kecil")
+- **Deskripsi:** Ubah bahasa visual app dari "kartu putih di latar krem + garis warna tipis" menjadi **ceria penuh warna**: (1) ubin mapel berwarna penuh dengan ilustrasi/ikon besar per mapel, bukan garis 12 px di kiri; (2) warna `sunny`/`teal`/`bubblegum` dipakai sebagai latar bagian, bukan hanya aksen; (3) Kiko hadir di Beranda dan bereaksi saat disentuh, bukan hanya di hero Landing; (4) mini game punya "dunia" (langit, awan, balon berkilau); (5) peta belajar jadi jalur nyata dengan simpul, bukan daftar kartu. Hasil `/impeccable critique` (26 Nov 2026): skor 26/40, arsip `.impeccable/critique/2026-11-26T07-12-20Z__frontend.md`.
+- **Alasan:** Mapel hanya dibedakan teks, padahal anak kelas 1–2 (6–7 tahun) belum lancar membaca (PRD §9.1 poin 2: "minim teks, ikon + suara"). Token warna sudah ada tetapi nyaris tidak dipakai. Layar feedback benar sudah sesuai standar yang diinginkan; layar lain belum.
+- **Prioritas:** bagus-jika-ada, tetapi sebaiknya sebelum layar Fase 3 dibangun (supaya tidak dibangun dua kali).
+- **Analisis dampak:** *(draf oleh sesi Sonnet; belum ditinjau Opus — PRD §18 langkah 2. Minta `architect` meninjau sebelum keputusan jika perlu.)*
+  - **PRD:** §9.1 poin 2 (tegaskan perbedaan per band kelas), §9.2 (tambah token turunan, mis. tint per mapel; token yang ada **tidak diubah**), §9.3 (daftar layar tetap), riwayat → v1.14. Palet dan font tidak berganti.
+  - **Kode (sudah ada, Fase 2):** `frontend/src/styles/tokens.css` (token tint + token teks per mapel), `components/ui/SubjectCard.svelte` (ubin + ilustrasi; teks "Terkunci" di sana masih memakai `--color-ink-soft`), `Card`, `Button`, `Kiko`, `routes/Landing.svelte`, `routes/Home.svelte`, `contrast.test.ts`, test komponen terkait (`ui.component.test.ts`, `Landing.component.test.ts`).
+  - **Test, dokumen, dan temuan gate yang ikut terpengaruh:** `tests/e2e/mockups.spec.ts` (mockup baru masuk uji 360/1280 px + axe), `routing.spec.ts`, `local-data.spec.ts`, `docs/mockups/README.md`, `docs/brand/tokens.md`, PRD §8.5 dan §14 (lingkup Fase 3 bertambah). Temuan gate Fase 2 **L-5** (badge "Gratis" di luar kartu) dan **L-3** (belum ada E2E 360 px) digabung ke task ubin.
+  - **Kode (belum ada, Fase 3):** peta belajar, layar soal, feedback, game balon dibangun langsung dengan arah baru, bukan diubah belakangan.
+  - **Aset baru:** ± 8 ilustrasi/ikon mapel (SVG buatan sendiri, gaya selaras Kiko) + latar game. Catat di `docs/ASSET_LICENSES.md`. Tanpa dependency baru.
+  - **Mockup (Fase 1, sudah disetujui):** `beranda`, `beranda-besar`, `peta-belajar`, `landing`, `game-balon*` perlu versi baru dan **persetujuan visual ulang** Bimo sebelum dikodekan (mockup/perubahan besar tampilan = wajib tanya Bimo, CLAUDE.md).
+  - **Budget performa (§8.1):** JS awal sekarang **34,38 KB** gzip dari 120 KB (PROGRESS T2.12), CSS awal 2,32 KB dari 25 KB. Ilustrasi **tidak boleh ditulis inline di komponen** (menambah JS awal): pakai pola Kiko (`?url` + `<img>`, `Kiko.svelte`) atau sprite, supaya masuk batas gambar ≤ 50 KB dan bisa lazy. Game dan ilustrasi besar tetap chunk lazy.
+  - **Aksesibilitas:** teks di atas warna mapel penuh harus dicek ulang kontrasnya (AA 4,5:1); `prefers-reduced-motion` tetap dihormati; tidak ada info hanya lewat warna.
+  - **Jumlah task:** ± 6–8. `/impeccable init` (PRODUCT.md) 1 · mockup baru 2–3 untuk disetujui · token tint + `SubjectCard` 1 · Landing + Home 1 · ilustrasi mapel 1 · Kiko interaktif + animasi 1 · layar Fase 3 mengikuti. Mayoritas `[sonnet]`. Tidak ada skema DB, API, auth, atau pembayaran.
+  - **Risiko:**
+    1. Kelas 5–6 harus tetap "tidak kekanak-kanakan" (§9.1). Mitigasi: aturan `[data-grade-band]` ada di `tokens.css:70-81`, tetapi **atribut itu belum dipasang di komponen mana pun** (`Home.svelte` memakai `class:big` untuk kelas ≤ 2). Perlu task: pasang `data-grade-band` dari `profile.active.grade` + test, lalu turunkan keceriaan (ilustrasi lebih kecil, warna lebih kalem) di kelas 5–6.
+    1a. **Kontras warna mapel penuh (hasil tinjauan architect, rumus WCAG sama dengan `contrast.test.ts`):** tidak ada satu warna teks yang lolos 4,5:1 untuk semua mapel. Putih lolos hanya di Math (6,04) dan English (5,70); Ink gagal di keduanya (2,86 / 3,04) tetapi lolos di 6 mapel lain (Science 5,44, GP 6,24, Wellbeing 4,90, Art 7,34, Music 4,71, Computing 6,95). Perlu **token teks per mapel** (putih untuk Math/English, Ink untuk sisanya). `--color-ink-soft` gagal di atas Math (1,19), Teal (3,33), dan Bubblegum (3,76). Ilustrasi sebagai penanda utama anak yang belum membaca wajib ≥ 3:1 terhadap warna ubin (WCAG 1.4.11): Kiko oranye gagal di Art 1,20, Wellbeing 1,25, Music 1,30. Latar Sunny/Teal/Bubblegum aman dengan Ink (11,26 / 7,98 / 9,01), putih gagal. `contrast.test.ts` harus diperluas ke token teks per mapel, ink-soft, dan ilustrasi.
+    1b. **Larangan §9.4** (buku, pensil, ABC, bola lampu, apel) tertulis hanya untuk logo, tetapi ikon mapel (English, Science) sangat mungkin memakai motif itu. Perlu keputusan Bimo (pertanyaan 5).
+    2. Terlalu ramai membebani anak sensitif gerakan/visual. Mitigasi: animasi kecil dan mengikuti `prefers-reduced-motion`.
+    3. Kontras gagal di warna terang (sunny, teal). Mitigasi: test kontras otomatis yang sudah ada diperluas ke token baru.
+    4. Menyentuh Fase 2 yang sudah disetujui. Mitigasi: dikerjakan sebagai task awal Fase 3 (Fase 3 belum dimulai), bukan membuka kembali Fase 2.
+  - **Fase aktif:** Fase 3 belum berjalan (`/plan-phase` belum dijalankan), sehingga tidak ada yang disela.
+- **Pertanyaan untuk Bimo:**
+  1. **Waktu:** kerjakan sebagai task awal Fase 3 (rekomendasi), atau tunda sampai demo selesai?
+  2. **Kelas 5–6:** setuju keceriaan diturunkan per band kelas (rekomendasi), atau satu tampilan untuk semua kelas?
+  3. **Ilustrasi:** dibuat Claude sebagai SVG selaras Kiko (rekomendasi, tanpa biaya lisensi), atau Bimo menyediakan ilustrator?
+  4. **Landing:** halaman ini dibaca orang tua (pembeli). Ikut diubah penuh jadi ceria, atau hanya hero dan ubin mapel yang ceria sementara teks harga/FAQ tetap tenang (rekomendasi)?
+  5. **Ikon mapel:** apakah larangan visual §9.4 (buku, pensil, ABC, bola lampu, apel) juga berlaku untuk ikon mapel? Jika ya, English dan Science perlu motif lain.
+  6. **Suara:** di kelas 1–2, apakah mengetuk ubin mapel membacakan namanya (Web Speech, sesuai §9.1 "ikon + suara"; rekomendasi: ya)?
+  - *Persetujuan mockup baru (Beranda + peta) oleh Bimo sebelum kode diubah tidak ditanyakan: sudah wajib menurut CLAUDE.md.*
+- **Tinjauan architect (Opus), 26 Nov 2026:** **terima dengan perubahan isi**. Arah sesuai §9.1 poin 2 dan menaruhnya di awal Fase 3 tidak membuka kembali Fase 2 (§14 diperbarui lewat CR ini). Koreksi dari draf awal: angka budget JS (34,38 KB, bukan 21,14 KB), `data-grade-band` belum terpasang, kontras warna mapel penuh butuh token teks per mapel, ikon tidak boleh inline, file/test yang terlewat, dan 3 pertanyaan baru (4–6). Semuanya sudah dimasukkan di atas.
+- **Rekomendasi (setelah tinjauan):** diterima, dijadwalkan sebagai task awal Fase 3, ± 5 task terpisah: (1) mockup Beranda + ubin mapel → persetujuan Bimo (gabung dengan B11); (2) token teks/tint per mapel + perluasan `contrast.test.ts`; (3) pasang `data-grade-band` dari grade profil + test; (4) `SubjectCard` + ikon via `?url`/sprite (sekaligus L-5, L-3); (5) Kiko di Beranda. **Dunia game dan peta jalur tidak jadi task sendiri**: masuk sebagai AC di task Fase 3 yang membangun layar itu, dengan mockup barunya disetujui lebih dulu. `/impeccable init` (PRODUCT.md) bersifat opsional, bukan task, karena tidak ada di struktur PRD §11. Alasan penjadwalan: sekarang hanya 3 layar live yang perlu diubah; menunda berarti peta, soal, dan game dibangun dengan gaya lama lalu diulang.
+- **Keputusan Bimo:** diterima (26 Nov 2026, "setuju semua rekomendasi"). Jawaban:
+  1. Waktu: task awal Fase 3.
+  2. Kelas 5–6: keceriaan diturunkan per band kelas (`data-grade-band`).
+  3. Ilustrasi: dibuat Claude sebagai SVG selaras Kiko.
+  4. Landing: hanya hero dan ubin mapel yang ceria; harga/FAQ tetap tenang.
+  5. **Ikon mapel vs larangan §9.4: BELUM DIJAWAB** (CR tidak punya rekomendasi untuk poin ini). Task ikon (T-CR8.4) tidak dimulai sebelum ada jawaban.
+  6. Suara: di kelas 1–2, mengetuk ubin mapel membacakan namanya (Web Speech, progressive enhancement).
+  Persetujuan mockup baru oleh Bimo tetap wajib sebelum kode (CLAUDE.md).
+- **Status:** diterapkan di dokumen: PRD v1.14 (§9.1, §9.2, §14, riwayat) dan `PROGRESS.md` (backlog Fase 3). Kode menyusul sebagai task awal Fase 3 setelah `/plan-phase`.

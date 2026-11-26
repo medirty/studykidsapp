@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.13 · **Tanggal:** 25 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.14 · **Tanggal:** 26 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -426,6 +426,7 @@ Font: maksimal 2 keluarga font, self-hosted, `font-display: swap`, subset Latin.
 3. Feedback < 100 ms untuk setiap tap.
 4. Bahasa positif & menyemangati; tidak ada kata "salah besar/gagal".
 5. Maks. 3 level navigasi: Beranda → Mapel/Peta → Sesi.
+6. **Ceria penuh warna (CR-008).** Mapel dikenali dari ilustrasi/ikon besar dan warna penuh, bukan hanya teks atau garis tipis. Kiko hadir di Beranda dan bereaksi saat disentuh. Keceriaan diturunkan per band kelas lewat `data-grade-band` (kelas 5–6: ilustrasi lebih kecil, warna lebih kalem). Di kelas 1–2, mengetuk ubin mapel membacakan namanya (Web Speech, progressive enhancement). Animasi mengikuti `prefers-reduced-motion`. Landing: hanya hero dan ubin mapel yang ceria; harga/FAQ tetap tenang.
 
 ### 9.2 Design system (token)
 
@@ -445,6 +446,8 @@ Font: maksimal 2 keluarga font, self-hosted, `font-display: swap`, subset Latin.
 | Spacing | skala 4 px (4, 8, 12, 16, 24, 32, 48) |
 
 Token disimpan di `src/styles/tokens.css` sebagai CSS variables. **TIDAK BOLEH** ada warna/hex hardcode di komponen.
+
+**Token turunan (CR-008):** tint per mapel dan **warna teks per mapel** di atas ubin penuh (putih untuk Math/English; Ink untuk mapel lain, sesuai hasil hitung kontras AA 4,5:1). Teks sekunder di atas ubin/latar berwarna tidak memakai `--color-ink-soft` bila kontrasnya < 4,5:1. Ilustrasi sebagai penanda utama wajib ≥ 3:1 terhadap warna ubin (WCAG 1.4.11). `contrast.test.ts` diperluas ke token ini. Token yang sudah ada tidak diubah. Ilustrasi dimuat via `?url`/sprite (bukan inline) agar JS awal tetap ≤ 120 KB.
 
 ### 9.3 Layar utama (wajib di-mockup di Fase 1)
 
@@ -676,7 +679,7 @@ Detail request/response tiap endpoint HARUS ditulis di `backend/API.md` sebelum 
 | **0** | Setup | Beli domain `studykids.id`; clone repo `medirty/studykidsapp` & pindahkan PRD/CLAUDE.md/`claude-setup` ke dalamnya; setup Git & GitHub (§17.5); struktur folder; setup dev lokal XAMPP (§17.1); tooling (lint, format, test); CI dasar; `CLAUDE.md`, `PROGRESS.md`; **konfigurasi routing model `.claude/` (§16.2)**; install skills/plugin/MCP (§16.4) | `npm run check` & `composer test` hijau di CI; `npm run dev` menjalankan frontend + API + koneksi DB lokal; hello-world tampil di GitHub Pages; `/next` berjalan dan mendelegasikan task bertanda `[opus]` ke subagent architect |
 | **1** | Mockup & Brand | Logo final, design tokens, mockup HTML statis semua layar §9.3 (mobile & desktop) di `docs/mockups/` | Bimo menyetujui mockup & logo secara tertulis |
 | **2** | Fondasi Frontend | Komponen UI, i18n, routing, Dexie, PWA, speech wrapper, mode lokal | Unit test komponen; Lighthouse ≥ 90; i18n test lolos; install PWA berfungsi |
-| **3** | Engine Soal + Demo | Seeded RNG, session engine, adaptif, anti-repeat, mastery, semua format soal, konten **3 mapel demo** kelas 1–6, 2 mini game, laporan ringkas | Generator test (≥ 50 unik, 100% jawaban valid); E2E: anak menyelesaikan sesi offline; **demo dirilis ke GitHub Pages** untuk diuji Bimo & 3–5 anak |
+| **3** | Engine Soal + Demo | **Awal fase: penyegaran visual CR-008** (mockup baru disetujui Bimo, token teks/tint per mapel, `data-grade-band`, ubin mapel + ilustrasi, Kiko di Beranda). Seeded RNG, session engine, adaptif, anti-repeat, mastery, semua format soal, konten **3 mapel demo** kelas 1–6, 2 mini game (dengan "dunia"), peta belajar berupa jalur, laporan ringkas | Generator test (≥ 50 unik, 100% jawaban valid); E2E: anak menyelesaikan sesi offline; **demo dirilis ke GitHub Pages** untuk diuji Bimo & 3–5 anak |
 | **4** | Backend & Akun | **Beli hosting (keputusan K8 final)**; DB + migrasi, auth ortu, profil anak, Parent Gate, sinkron, laporan ortu, kode aktivasi (+ durasi), **skema `subscriptions`/`entitlements.expires_at` & `EntitlementService` yang mengecek masa aktif**, kritik & saran | PHPUnit & E2E lolos; uji keamanan dasar (§15.3) lolos; deploy staging di hosting berhasil |
 | **5** | Konten Full + Admin + Marketing | 5 mapel sisanya, semua mini game, gamifikasi lengkap, admin panel, marketing tools | Konten minimum §6.5 terpenuhi (laporan otomatis); admin dashboard angka cocok dengan data uji |
 | **6** | Pembayaran | `PAYMENT_SETUP.md`, integrasi gateway (sandbox → production), **logika early bird 100 slot**, **langganan bulanan/tahunan (perpanjangan manual, harga terkunci, masa tenggang, batal)**, cron pengingat email, voucher, referral, email kuitansi | Semua skenario FR-11 lolos di sandbox; **test konkurensi: 20 order bersamaan saat sisa 3 slot → tepat 3 dapat harga early bird**; perpanjangan memakai harga terkunci & tidak memakai slot; langganan terputus > masa tenggang → harga normal; 1 transaksi nyata nominal kecil berhasil end-to-end |
@@ -1125,3 +1128,4 @@ Masih terbuka:
 | 1.11 | 24 Nov 2026 | CR-005: plugin **frontend-design** diganti skill **impeccable** (desain UI + detektor "AI slop"); tanpa subagent bawaannya (§16.2). Lihat D-010. |
 | 1.12 | 25 Nov 2026 | CR-006: model bisnis **sekali bayar → langganan** (bulanan & tahunan = 10× bulanan). Early bird 100 pelanggan pertama (Rp50.000/bln) terkunci selama langganan tidak terputus; normal Rp100.000/bln; perpanjangan manual + pengingat email; masa tenggang 3 hari; progres tetap tersimpan saat kedaluwarsa. §1, §4.1 (K11), §4.2, §5.1–5.2, FR-10/11/13/14, §12 (`subscriptions`, `entitlements.expires_at`, `orders.type/period`, `activation_codes.duration_days`), §13, Fase 4 & 6. |
 | 1.13 | 25 Nov 2026 | CR-007: warna English `#8B5CF6` → `#7C3AED` (kontras putih 5,70:1, lolos AA). §9.2 diperbarui. |
+| 1.14 | 26 Nov 2026 | CR-008: arah visual "ceria penuh warna" untuk anak SD. §9.1 poin 6, §9.2 (token turunan: tint & teks per mapel; token lama tidak berubah), §14 baris Fase 3 (task awal penyegaran visual). Pertanyaan ikon mapel vs larangan §9.4 masih terbuka. |
