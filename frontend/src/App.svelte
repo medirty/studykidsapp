@@ -1,13 +1,19 @@
 <script lang="ts">
   import Router from 'svelte-spa-router';
   import AppHeader from './components/AppHeader.svelte';
+  import UpdatePrompt from './components/UpdatePrompt.svelte';
   import { routes } from './routes';
+  import { registerSw } from './services/pwa';
+
+  let needRefresh = $state(false);
+  const reload = registerSw(() => (needRefresh = true));
 </script>
 
 <AppHeader />
 <main>
   <Router {routes} />
 </main>
+<UpdatePrompt bind:needRefresh onreload={reload} />
 
 <style>
   main {

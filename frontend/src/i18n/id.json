@@ -19,5 +19,8 @@
   "notfound.body": "Kiko sudah mencari ke mana-mana. Yuk kembali ke awal.",
   "notfound.back": "Kembali ke awal",
   "speech.speak": "Dengarkan",
-  "speech.fallback": "Suara bahasa ini belum ada di perangkatmu, jadi Kiko memakai suara lain."
+  "speech.fallback": "Suara bahasa ini belum ada di perangkatmu, jadi Kiko memakai suara lain.",
+  "pwa.update": "Versi baru tersedia.",
+  "pwa.reload": "Muat ulang",
+  "pwa.later": "Nanti"
 }
