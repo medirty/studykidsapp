@@ -5,6 +5,9 @@
   import { routes } from './routes';
   import { registerSw } from './services/pwa';
 
+  import { settings } from './stores/settings.svelte';
+
+  settings.load();
   let needRefresh = $state(false);
   const reload = registerSw(() => (needRefresh = true));
 </script>
