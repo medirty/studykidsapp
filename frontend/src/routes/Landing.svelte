@@ -20,7 +20,7 @@
   const faqs = [1, 2, 3] as const;
   const choices = [8, 9, 10];
 
-  const showHealth = import.meta.env.VITE_API_MODE !== 'local';
+  const showHealth = import.meta.env.DEV && import.meta.env.VITE_API_MODE !== 'local';
   const health = showHealth ? fetchHealth() : null;
 
   let pub = $state<PublicSettings | null>(null);
@@ -35,7 +35,6 @@
 
   // Meta SEO ikut bahasa (FR-1, FR-3).
   $effect(() => {
-    document.title = t('landing.metaTitle');
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute('content', t('landing.metaDesc'));

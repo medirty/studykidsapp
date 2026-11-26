@@ -58,7 +58,7 @@
     display: grid;
     place-items: center;
     padding: var(--space-4);
-    background: rgb(27 19 64 / 60%);
+    background: var(--color-overlay);
   }
   .modal {
     display: grid;

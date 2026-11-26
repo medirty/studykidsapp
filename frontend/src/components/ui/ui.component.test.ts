@@ -116,7 +116,7 @@ describe('tanpa hex di komponen', () => {
   const sources = import.meta.glob('./*.svelte', { query: '?raw', import: 'default', eager: true });
   it('warna hanya lewat token', () => {
     for (const [f, src] of Object.entries(sources)) {
-      expect(src as string, f).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
+      expect(src as string, f).not.toMatch(/#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?)\(/);
     }
   });
 });

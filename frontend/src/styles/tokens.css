@@ -51,6 +51,8 @@
   --weight-strong: 700;
   --weight-heading: 800;
 
+  --color-overlay: rgb(27 19 64 / 60%); /* latar modal */
+
   --shadow-sm: 0 1px 2px rgb(27 19 64 / 12%);
   --shadow-md: 0 4px 12px rgb(27 19 64 / 16%);
   --shadow-lg: 0 12px 28px rgb(27 19 64 / 20%);
