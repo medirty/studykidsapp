@@ -10,6 +10,18 @@
 - **Task berikutnya:** `/plan-phase` untuk Fase 3. T2.0–T2.12 selesai 26 Nov 2026. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
+## Backlog awal Fase 3 — CR-008 Visual "ceria penuh warna" (diterima 26 Nov 2026, PRD v1.14)
+
+> Masukkan ke rencana Fase 3 saat `/plan-phase`. Mockup baru wajib disetujui Bimo sebelum kode (CLAUDE.md). Dasar: `docs/CHANGE_REQUESTS.md` CR-008, tinjauan architect, critique `.impeccable/critique/2026-11-26T07-12-20Z__frontend.md`.
+
+- [ ] T-CR8.1 `[sonnet]` Mockup baru Beranda + ubin mapel (kelas 1–2 dan 5–6) → persetujuan Bimo (gabung dengan B11). Masuk `tests/e2e/mockups.spec.ts` (360/1280 px + axe), perbarui `docs/mockups/README.md`.
+- [ ] T-CR8.2 `[sonnet]` Token tint + teks per mapel di `tokens.css` + `docs/brand/tokens.md`; perluas `contrast.test.ts` (teks per mapel, ink-soft, ilustrasi ≥ 3:1).
+- [ ] T-CR8.3 `[sonnet]` Pasang `data-grade-band` dari `profile.active.grade` (atribut belum dipakai di mana pun) + test.
+- [ ] T-CR8.4 `[sonnet]` `SubjectCard` ubin penuh + ilustrasi SVG per mapel (via `?url`/sprite), suara nama mapel di kelas 1–2, gabung temuan gate L-5 (badge "Gratis") dan L-3 (E2E 360 px); catat `docs/ASSET_LICENSES.md`. Ikon mengikuti larangan §9.4 (tanpa buku/pensil/ABC/bola lampu/apel); usulan: English = balon bicara, Science = tabung reaksi/planet; motif final ikut mockup T-CR8.1.
+- [ ] T-CR8.5 `[sonnet]` Kiko di Beranda (bereaksi saat disentuh, `prefers-reduced-motion`); hero + ubin mapel Landing ikut gaya baru.
+- Masuk sebagai AC task Fase 3 yang membangun layarnya (bukan task sendiri): peta belajar berupa jalur dengan simpul; mini game dengan "dunia" (langit, awan, balon berkilau); mockup barunya disetujui lebih dulu.
+- Bonus (task lepas, bukan CR-008): hapus teks debug "API error, DB error" di `Landing.svelte:23` (ganti syarat ke `import.meta.env.DEV`).
+
 ## Fase 2 — Fondasi FE (rencana: `docs/plans/phase-2.md`)
 
 ### Task
