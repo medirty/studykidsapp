@@ -42,6 +42,20 @@ test('Pilih kelas & Beranda: tanpa scroll horizontal + axe bersih', async ({ pag
 });
 
 test('bahasa pilihan bertahan setelah reload (tanpa dan dengan profil)', async ({ page }) => {
+  const logs: string[] = [];
+  page.on('console', (m) => logs.push(`${m.type()}: ${m.text()}`));
+  page.on('pageerror', (e) => logs.push(`pageerror: ${e.message}`));
+  page.on('framenavigated', (f) => logs.push(`nav: ${f.url()}`));
+  test.info().annotations.push({ type: 'DIAG', description: 'temp' });
+  try {
+    await body(page);
+  } catch (e) {
+    const st = await page.evaluate(() => ({ url: location.href, ls: JSON.stringify(localStorage), body: document.body.innerText.slice(0, 300) })).catch((x) => String(x));
+    throw new Error(`DIAG ${JSON.stringify(st)} LOGS ${logs.join(' | ')} ORIG ${String(e).slice(0, 200)}`);
+  }
+});
+
+async function body(page: import('@playwright/test').Page) {
   await page.goto('/');
   await page.getByRole('button', { name: /Ganti bahasa/ }).click();
   await expect(page.getByRole('button', { name: /Switch language/i })).toBeVisible(); // tersimpan
@@ -57,4 +71,4 @@ test('bahasa pilihan bertahan setelah reload (tanpa dan dengan profil)', async (
   await expect(page.getByRole('button', { name: /Ganti bahasa/ })).toBeVisible(); // tersimpan
   await page.reload();
   await expect(page.getByRole('heading', { level: 2, name: 'Halo, Dina!' })).toBeVisible();
-});
+}
