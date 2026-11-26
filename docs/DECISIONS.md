@@ -318,3 +318,103 @@ D-001 s.d. D-007 dibuat di T0.3 (22 Nov 2026) sebagai acuan T0.4–T0.11. Rencan
   - `fake-indexeddb` ^6.2.8 (dev) — Apache-2.0, ±0,35 MB unpacked, 0 KB bundle. Dipakai test unit lewat `import 'fake-indexeddb/auto'` (env `node`).
 - **Alasan:** Dexie sudah dipilih di stack (CLAUDE.md, D-011). fake-indexeddb = IndexedDB lengkap di Node, tanpa browser untuk test unit; E2E memakai IndexedDB Chromium asli.
 - **Alternatif:** `idb` (lebih kecil, tanpa transaksi/kueri indeks majemuk yang nyaman); test hanya lewat Playwright (lambat, TDD sulit).
+
+## D-014 — Engine soal & konten Fase 3 (T3.4, 26 Nov 2026)
+
+- **Status:** diusulkan (T3.4; berlaku setelah PR di-review Bimo — menyentuh engine & skema lokal)
+- **Konteks:** Fase 3 membangun engine soal yang jalan 100% di browser (PRD §10.2) dan konten demo 3 mapel × 6 kelas ([plans/phase-3.md](plans/phase-3.md), rencana task [plans/phase-3-T3.4.md](plans/phase-3-T3.4.md)). Acuan: FR-4, FR-5, FR-6, FR-7, FR-9, FR-10 (AC konten Full), §6.2–6.5, §8.1, §8.4, §11, §12.1–12.2; D-007, D-011, D-013. Kontrak tipe: [`frontend/src/engine/types.ts`](../frontend/src/engine/types.ts), diuji `engine/types.test.ts` lewat `satisfies` (contoh unit, indeks, 9 format) → `npm run typecheck` gagal bila tipe menyimpang dari ADR ini.
+- **Keputusan:**
+
+  **(a) Skema JSON konten.** Teks selalu `{ "id", "en" }` (§6.4). Dua jenis file per mapel × kelas:
+
+  | File | Isi | Tipe |
+  |---|---|---|
+  | `content/{subject}/g{grade}/index.json` | semua unit kelas itu, **judul saja** (termasuk unit terkunci) | `GradeIndex` |
+  | `content/{subject}/g{grade}/u{n}.json` | unit lengkap: skill + generator + `explain` (bentuk PRD §6.4) | `Unit` |
+
+  ```json
+  { "id": "math.g1", "units": [
+      { "id": "math.g1.u1", "title": { "id": "Bilangan sampai 20", "en": "Numbers to 20" } },
+      { "id": "math.g1.u3", "title": { "id": "Bentuk di sekitarku", "en": "Shapes around me" } } ] }
+  ```
+  - Unit **terkunci** = ada di `index.json` tetapi tidak punya `u{n}.json` di `src/content/`. Tidak ada flag `locked` di data; status kunci dihitung UI dari entitlement.
+  - ID: unit `{subject}.g{grade}.u{n}`, skill `{unitId}.s{n}` (§6.2). Test T3.5 memastikan ID cocok dengan path file, ID skill unik global, ≥ 3 skill/unit, ≥ 1 generator/skill, `formats` ⊆ format yang didukung generator.
+  - **Bank soal** = generator `"type": "bank"` dengan `params.items: BankItem[]`. Bentuk item per format: `mcq`/`listen`/`tap` → `correct[]` + `wrong[]` (+ `speak` untuk listen); `input` → `accept[]`; `tf` → `answer`; `order` → `sequence`; `match` → `pairs`; `dragdrop` → `groups`; `draw` → `template?`. `level` item opsional (default 1). Gambar = `AssetKey` (kunci sprite/`?url`), bukan URL → aman di `/studykidsapp/`. Contoh lengkap ada di `engine/types.test.ts`.
+  - Validasi skema **hanya di test** (fungsi TS di T3.5, tanpa zod/JSON Schema): konten adalah file bawaan build, bukan input pengguna → 0 KB runtime.
+
+  **(b) Kontrak generator** (`Generator<P>` di `types.ts`; 1 file per tipe di `engine/generators/{area}/`, didaftarkan di `engine/generators/registry.ts`):
+  - `generate(rng, params, level, format) → GeneratedQuestion`. Engine melengkapi `skillId`, `generator`, `fingerprint`.
+  - `validate(q, given, params) → boolean` menghitung kebenaran **dari `q.core` + `params`, bukan dari `q.answer`** → validator independen (AC FR-5). UI juga memakai `validate` untuk menilai jawaban anak (satu sumber kebenaran).
+  - `core` = parameter inti (mis. `{ a: 3, b: 4 }`; bank: `{ item: "i07" }`). **Fingerprint** = `cyrb53(type + "|" + key=value terurut)` dalam hex, **tanpa format** → `3 + 4` sebagai mcq dan input dihitung soal yang sama (FR-5 aturan 2).
+  - ID pilihan = nilai kanonik untuk generator (mis. `"7"`) atau `c<n>`/`w<n>` untuk bank → unik per soal, `validate` tidak perlu mengurai teks.
+  - Distraktor MCQ dari **kesalahan umum** (FR-5 aturan 4), mis. `arith.add`: lupa menyimpan, ±1, salah kolom; pilihan diacak `rng.shuffle`.
+
+  **(c) Tipe `Question`/`Answer` 9 format** — union terdiskriminasi `format` (`QuestionOf<F>`):
+
+  | Format | Field soal | `Answer` |
+  |---|---|---|
+  | `mcq` | `choices` (2–4) | id pilihan |
+  | `input` | `inputMode: numeric \| text` | string (numeric: `,`→`.` lalu banding angka; text: trim + huruf kecil, dicocokkan ke `accept`) |
+  | `tf` | — | boolean |
+  | `dragdrop` | `items`, `targets` | `{ itemId: targetId }` |
+  | `match` | `left`, `right` | `{ leftId: rightId }` |
+  | `order` | `items` (tampil teracak) | id berurutan |
+  | `tap` | `choices` | himpunan id benar (bisa > 1) |
+  | `listen` | `speak` (dibacakan TTS) + `choices` | id pilihan |
+  | `draw` | `template?` | `"done"` (tidak dinilai) |
+
+  Semua soal punya `prompt`, `level`, `hint?` (fallback `Skill.explain`), `core`, `fingerprint`, `answer`. Semua teks `LocalizedText` → ganti bahasa di tengah sesi tidak membuat ulang soal.
+
+  **(d) Seed & counter.** RNG = **mulberry32**, seed 32-bit dari **cyrb53** atas `profileId|skillId|sessionCounter|index` (FR-5 aturan 1 + `index` soal) → tiap soal bisa direproduksi sendiri tanpa memutar ulang sesi. Kedua fungsi ±10 baris, ditulis sendiri (algoritma domain publik), tanpa dependency. `sessionCounter` per `[profileId+skillId]` di tabel Dexie v2 `skillHistory`, **naik saat sesi/run game dimulai** (sesi yang ditinggal tetap memakai counter → sesi berikut tidak identik). Debug: `(profileId, skillId, counter, index)` + riwayat fingerprint → soal yang sama.
+
+  **(e) Adaptif & petunjuk** (FR-5 aturan 5). Level 1–3 (= `ProgressEvent.difficulty`). Level awal dari mastery efektif skill: < 40 → 1, 40–74 → 2, ≥ 75 → 3. Dalam sesi: 2 benar berturut-turut → level +1 (maks 3); 2 salah berturut-turut → level −1 (min 1) **dan** soal berikutnya menampilkan petunjuk (`hint ?? explain`), juga bila sudah level 1; penghitung direset setelah naik/turun. Soal review (f) memakai level dari mastery skill-nya sendiri dan tidak mengubah level skill utama.
+
+  **(f) Sesi, anti-repeat, rotasi, spaced repetition** (`engine/session.ts`, T3.7):
+  - Ukuran sesi: kelas 1–2 = 8 soal, kelas 3–6 = 10 soal.
+  - **Rotasi format:** tiap soal memilih ref generator (acak) lalu format dari `ref.formats` secara acak, kecuali format yang sudah muncul 3× berturut-turut (FR-5 aturan 3). Skill dengan satu format saja (mis. `draw`) dikecualikan; test mencatatnya.
+  - **Anti-repeat:** terlarang = fingerprint di `recent` (5 sesi terakhir skill itu) ∪ sesi ini. Generate ≤ 20× dengan RNG soal yang sama; bila semua terlarang → kandidat yang tidak ada di sesi ini dengan kemunculan **paling lama**; bila tetap tidak ada → kandidat terakhir (pool terlalu kecil, dicatat test). Dalam satu sesi tidak ada fingerprint ganda selama pool ≥ ukuran sesi.
+  - **Spaced repetition 20%:** `round(0,2 × ukuran)` = 2 soal dari skill lain **mapel & kelas yang sama** yang pernah dilatih dan mastery efektifnya turun ≥ 5 poin karena decay (g), urut mastery efektif terendah; posisi acak selain soal pertama. Tanpa kandidat → semua soal dari skill utama. Fingerprint soal review masuk `recent` skill review (counter-nya tidak naik).
+  - Tiap jawaban → `validate` → `ProgressEvent` → `recordAndEnqueue` (D-011/D-013, satu transaksi). Event **tidak** berisi fingerprint, seed, atau teks jawaban (§8.4); bentuknya tetap cermin `progress_events` §12.1.
+  - **Dexie v2:** `this.version(2).stores({ skillHistory: '[profileId+skillId], profileId' })` — hanya tabel baru, versi 1 tidak diedit (D-011 c). Tidak ada data v1 yang diubah (tanpa `upgrade`; counter mulai 0). `recent` maks 5 × 10 fingerprint per skill. Wajib: test migrasi (isi data v1 → buka v2 → data utuh, `skillHistory` bisa ditulis) dan `deleteProfile` ikut menghapus `skillHistory` lewat indeks `profileId` (§8.4). Lokal saja, tidak disinkronkan.
+
+  **(g) Mastery, bintang, XP, streak** (`engine/mastery.ts`, fungsi murni, T3.6; rumus yang sama di PHP Fase 4 karena server menghitung ulang dari event, §12.2):
+  - **Event dinilai** = event skill itu kecuali `format = 'draw'`, urut `createdAt` lalu `clientEventId`.
+  - **Mastery tersimpan** (`SkillMastery.mastery`, tanpa decay, deterministik dari event): ≤ 20 event dinilai terbaru, bobot `w_k = 0,8^k` (k = 0 untuk terbaru), `mastery = round(100 × Σ w_k·benar_k / Σ w_k)`; tanpa event → 0. `attempts` = jumlah semua event dinilai. Contoh: 5 benar lalu 1 salah terbaru → `round(100 × (0,8+0,64+0,512+0,41+0,328) / (1+0,8+0,64+0,512+0,41+0,328))` = 73.
+  - **Mastery efektif** (dihitung saat dibaca, tidak disimpan): `round(mastery × 0,5^(max(0, d − 3) / 30))`, `d` = hari penuh sejak `lastPracticedAt` (UTC). 3 hari tanpa decay, lalu waktu-paruh 30 hari.
+  - **Data belum cukup** (FR-9): laporan tanpa kesimpulan bila total event dinilai profil < 10; skill masuk "Kamu jago di…" hanya bila `attempts` ≥ 10.
+  - **Bintang** 0–3: `attempts = 0` → 0; `mastery ≥ 85 && attempts ≥ 10` → 3; `mastery ≥ 60` → 2; selain itu 1. Bintang **tidak pernah turun**: `SkillMastery.stars = max(lama, baru)` (field baru tanpa indeks → tanpa versi Dexie) — FR-7 tanpa rasa gagal.
+  - **XP** per event: benar 10, salah 2 (usaha dihargai), `draw` selesai 10. Total di `Profile.xp` (field baru tanpa indeks), diperbarui di transaksi `recordAndEnqueue` (tabel `profiles` ikut transaksi). XP ringkasan sesi = jumlah XP event sesi itu. Level profil/lencana = Fase 5.
+  - **Streak** (`Profile.streak: StreakState`): hari = tanggal lokal perangkat `YYYY-MM-DD` dengan ≥ 1 event. Aktivitas di hari `D`: `D = lastDay` → tetap; selisih 1 → `count + 1`; selisih 2 dan minggu ISO hari yang terlewat ≠ `restWeek` → `count + 1` dan `restWeek` = minggu itu (hari libur gratis); selain itu → `count = 1`. UI tidak pernah menampilkan "streak hilang": `count = 1` setelah jeda tampil sebagai ajakan positif (teks i18n).
+  - Perubahan `services/types.ts` (`Profile.xp`, `Profile.streak`, `SkillMastery.stars`) dikerjakan T3.6; baris lama dibaca dengan default `0` / `{ count: 0, lastDay: null, restWeek: null }` / bintang dihitung dari mastery.
+
+  **(h) Kontrak mini game** (`GameInfo`, `GameHost`, `GameProps`):
+  - `games/registry.ts` berisi `{ id, subject, format, load: () => import('./balloon/Game.svelte') }`; satu-satunya import ke game → 1 chunk lazy per game ≤ 60 KB gzip (sudah dicek `check-bundle-size`, D-007).
+  - Game = komponen Svelte dengan props `{ host, paused }`. **Host** (route `#/game/:gameId`) memegang tombol & overlay jeda (Lanjut/Selesai/Keluar), menyediakan `host.nextQuestion()` dari session engine mode game (format tetap = `GameInfo.format`, tanpa review & rotasi; adaptif, anti-repeat, dan counter sama dengan sesi), dan `host.answer()` → validate → event → mastery/XP lewat jalur yang sama dengan sesi. Game **tidak boleh** import Dexie/`api.ts` → chunk kecil, data satu jalur.
+  - Skill untuk game: skill terbuka (unit ≤ `demo.unitLimit`) mapel game & kelas profil yang ref-nya mendukung `format`; pilih mastery efektif terendah di antara yang pernah dilatih, kalau belum ada → skill pertama unit 1.
+  - Durasi 60–120 dtk dan skor ditangani game; jawaban yang sudah terkirim tetap tersimpan saat Keluar. Logika game murni di `games/{id}/logic.ts` agar bisa di-unit-test.
+
+  **(i) Pemuatan konten** (`engine/content.ts`):
+  ```ts
+  const units = import.meta.glob<Unit>('../content/*/g*/u*.json', { import: 'default' });
+  const indexes = import.meta.glob<GradeIndex>('../content/*/g*/index.json', { import: 'default' });
+  ```
+  - Tiap file = chunk lazy sendiri; `loadUnit(id)` mengembalikan `null` bila file tidak ada (unit terkunci). Engine hanya diimpor route lazy (peta, sesi, game, laporan) → **JS awal tidak naik** (AC T3.5).
+  - **Aturan 15 KB gzip/unit** (§8.1): `check-bundle-size` menambah pemeriksaan chunk manifest dengan `src` diawali `src/content/` (pola sama dengan `gameChunkErrors`), aktif di T3.5. Yang diukur chunk JS hasil Vite (sedikit lebih besar dari JSON mentah → lebih ketat).
+  - **Konten Full terpisah (FR-10):** `src/content/` hanya boleh berisi `u{n}.json` untuk `demo.subjects` dengan `n ≤ demo.unitLimit` (dari `public-settings.local.json`); test T3.5 menegakkannya. Konten Full (Fase 5) tidak pernah masuk bundle publik; cara kirimnya (API + token bertanda tangan) diputuskan ADR Fase 4.
+  - **Offline:** chunk konten diberi nama `assets/content/[name]-[hash].js` (`chunkFileNames`), dikecualikan dari precache (`globIgnores`) dan di-cache **CacheFirst** saat dibuka (§8.2 "konten yang sudah dibuka") → instal PWA tidak mengunduh semua konten. E2E offline (T3.15) membuka skill sekali saat online.
+
+  **(j) Kriteria uji bank vs generator** (harness T3.5 menjalankan **semua** skill di `content/` otomatis):
+  - **Generator** (`type ≠ bank`): per skill × ref × format, 1.000 percobaan (seed `harness|skillId|i`, level `i % 3 + 1`) → **≥ 50 fingerprint unik**; 100% `validate(q, q.answer)` benar; `mcq`/`listen`: 2–4 pilihan, id unik, tepat 1 pilihan lolos `validate`; `tap`: setiap pilihan salah gagal; `tf`: kebalikan jawaban gagal; seed sama → soal sama (`toEqual`).
+  - **Bank** (§6.5): **≥ 20 item dasar per skill** (id unik), 100% item lolos `validate`, setiap item muncul dalam 1.000 percobaan, dan **≥ 50 varian tampil unik** (fingerprint + urutan id pilihan) per 1.000 seed. Skill yang hanya berisi item `draw`/`tf` cukup ≥ 20 item (tidak bisa diacak).
+  - Bank 20 item dengan sesi 8–10 soal hanya cukup ±2 sesi tanpa ulangan; sesudahnya berlaku fallback "paling lama" di (f). Lihat pertanyaan no. 1.
+
+  **(k) Coverage `engine/` ≥ 80%** (§15.1): devDependency **`@vitest/coverage-v8`** (MIT, versi = versi `vitest` terpasang, dev-only, 0 KB bundle) dipasang di T3.5 dengan entri versi/ukuran di sini. `vitest.config.ts`: `coverage: { provider: 'v8', include: ['src/engine/**/*.ts'], exclude: ['**/*.test.ts', 'src/engine/types.ts'], thresholds: { lines: 80, branches: 80, functions: 80, statements: 80 } }`; script `test` = `vitest run --coverage` → `npm run check` gagal bila < 80%.
+
+- **Dampak budget (§8.1):** JS awal **+0 KB** (engine, konten, generator, game lazy). Perkiraan chunk engine (rng + registry + session + mastery + loader + generator demo) ≤ 15 KB gzip; per unit ≤ 15 KB dan per game ≤ 60 KB (dicek CI); Dexie v2 +0 KB. Tanpa dependency runtime baru; satu devDependency (k).
+- **Privasi (§8.4):** bentuk event tidak berubah (tanpa fingerprint/seed/teks bebas); `skillHistory` hanya hash parameter soal, lokal, ikut terhapus bersama profil.
+- **Alternatif:** (a) satu file konten per kelas (> 15 KB dan memuat unit terkunci ke perangkat); flag `locked` di JSON (duplikasi entitlement). (b) `checkAnswer` generik di UI + `validate` hanya di test (dua sumber kebenaran). (d) satu RNG per sesi (soal ke-n bergantung soal sebelumnya → debug sulit); `seedrandom` (dependency untuk 20 baris). (f) fingerprint di `progressEvents` (mengubah cermin tabel server, ikut tersinkron). (g) mastery berdecay yang disimpan (server tidak bisa menghitung ulang identik); EWMA tanpa jendela (event lama tidak pernah hilang pengaruhnya); bintang dari mastery saat ini (bisa turun). (h) game dengan `mount()` framework-agnostik (lebih banyak kode lem). (i) precache semua konten (unduhan ±150–500 KB saat instal). (k) `@vitest/coverage-istanbul` (instrumentasi, lebih lambat).
+- **Konsekuensi:** T3.5 = rng/fingerprint/registry/harness/loader/aturan 15 KB/coverage; T3.6 = mastery/bintang/XP/streak + field baru `services/types.ts`; T3.7 = session + Dexie v2 + `deleteProfile`; T3.12–T3.13 memakai `QuestionOf<F>`; T3.22–T3.23 memakai `GameProps`. Server Fase 4 memakai rumus (g) yang sama (tabel kasus dibagi lewat fixture JSON). Route peta: D-011 menulis `/subject/:subjectId`, rencana Fase 3 `#/map/:subject` — T3.14 memakai `#/map/:subject` dan memperbarui tabel D-011 a.
+- **Pertanyaan terbuka untuk Bimo** (default di atas dipakai bila tidak dijawab):
+  1. Bank soal minimal 20 item/skill (§6.5) membuat anti-repeat 5 sesi tidak bisa penuh (8–10 soal/sesi butuh ±50 item). Default: tetap 20, ulangan memilih soal yang paling lama tidak muncul. Naikkan minimal bank ke 40–50 item untuk GP/Art? (menambah kerja konten T3.19–T3.21)
+  2. XP: benar 10, salah 2, gambar selesai 10 — oke, atau salah = 0?
+  3. Streak dihitung per tanggal perangkat anak (bukan UTC) — oke?
