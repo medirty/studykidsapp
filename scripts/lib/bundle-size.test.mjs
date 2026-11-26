@@ -65,3 +65,14 @@ test('evaluateBudget fails when a game chunk exceeds budget', () => {
   assert.equal(r.ok, false);
   assert.match(r.errors.join('\n'), /memory/);
 });
+
+test('evaluateBudget fails when a content chunk exceeds 15 KB gzip (D-014 i)', () => {
+  const m = {
+    ...manifest,
+    'src/content/math/g1/u1.json': { file: 'assets/u1-f.js', isDynamicEntry: true, src: 'src/content/math/g1/u1.json' },
+  };
+  assert.equal(evaluateBudget(m, { ...sizes, 'assets/u1-f.js': BUDGET.contentJson }).ok, true);
+  const r = evaluateBudget(m, { ...sizes, 'assets/u1-f.js': BUDGET.contentJson + 1 });
+  assert.equal(r.ok, false);
+  assert.match(r.errors.join('\n'), /konten src\/content\/math\/g1\/u1\.json/);
+});

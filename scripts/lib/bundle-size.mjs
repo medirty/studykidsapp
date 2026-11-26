@@ -32,11 +32,11 @@ function initialTotals(manifest, sizes, entryKey) {
   return { js: sumSizes(jsFiles, sizes), css: sumSizes(cssFiles, sizes) };
 }
 
-function gameChunkErrors(manifest, sizes, budget) {
+function chunkErrors(manifest, sizes, prefix, limit, label) {
   return Object.values(manifest)
-    .filter((c) => c.src?.startsWith('src/games/'))
-    .filter((c) => (sizes[c.file] ?? 0) > budget.gameChunk)
-    .map((c) => `Chunk game ${c.src} ${sizes[c.file]} B > batas ${budget.gameChunk} B`);
+    .filter((c) => c.src?.startsWith(prefix))
+    .filter((c) => (sizes[c.file] ?? 0) > limit)
+    .map((c) => `Chunk ${label} ${c.src} ${sizes[c.file]} B > batas ${limit} B`);
 }
 
 export function evaluateBudget(manifest, sizes, entryKey = 'index.html', budget = BUDGET) {
@@ -44,6 +44,8 @@ export function evaluateBudget(manifest, sizes, entryKey = 'index.html', budget 
   const errors = [];
   if (js > budget.initialJs) errors.push(`JS awal ${js} B > batas ${budget.initialJs} B`);
   if (css > budget.initialCss) errors.push(`CSS awal ${css} B > batas ${budget.initialCss} B`);
-  errors.push(...gameChunkErrors(manifest, sizes, budget));
+  errors.push(...chunkErrors(manifest, sizes, 'src/games/', budget.gameChunk, 'game'));
+  // Satu chunk per file konten (ADR D-014 i).
+  errors.push(...chunkErrors(manifest, sizes, 'src/content/', budget.contentJson, 'konten'));
   return { ok: errors.length === 0, initialJs: js, initialCss: css, errors };
 }

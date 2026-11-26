@@ -18,5 +18,12 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['tests/unit/**/*.test.ts', 'src/**/*.test.ts'],
+    // PRD §15.1: engine ≥ 80% (ADR D-014 k).
+    coverage: {
+      provider: 'v8',
+      include: ['src/engine/**/*.ts'],
+      exclude: ['**/*.test.ts', 'src/engine/types.ts'],
+      thresholds: { lines: 80, branches: 80, functions: 80, statements: 80 },
+    },
   },
 });
