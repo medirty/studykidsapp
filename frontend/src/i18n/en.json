@@ -9,5 +9,13 @@
   "kiko.tidur": "Sleeping Kiko",
   "ui.close": "Close",
   "ui.stars": "{n} of {max} stars",
-  "ui.locked": "Locked"
+  "ui.locked": "Locked",
+  "header.switchLang": "Switch language to ID",
+  "header.langCode": "ID",
+  "header.home": "{brand} home",
+  "start.title": "Choose your grade",
+  "home.title": "Home",
+  "notfound.title": "Oops, page not found",
+  "notfound.body": "Kiko looked everywhere. Let us go back to the start.",
+  "notfound.back": "Back to start"
 }

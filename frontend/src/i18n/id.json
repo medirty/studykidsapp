@@ -9,5 +9,13 @@
   "kiko.tidur": "Kiko tidur",
   "ui.close": "Tutup",
   "ui.stars": "{n} dari {max} bintang",
-  "ui.locked": "Terkunci"
+  "ui.locked": "Terkunci",
+  "header.switchLang": "Ganti bahasa ke EN",
+  "header.langCode": "EN",
+  "header.home": "Ke beranda {brand}",
+  "start.title": "Pilih kelas",
+  "home.title": "Beranda",
+  "notfound.title": "Ups, halaman tidak ketemu",
+  "notfound.body": "Kiko sudah mencari ke mana-mana. Yuk kembali ke awal.",
+  "notfound.back": "Kembali ke awal"
 }
