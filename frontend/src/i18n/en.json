@@ -2,5 +2,9 @@
   "hello.title": "Hi, I'm Kiko!",
   "hello.subtitle": "Learning is fun with {brand}.",
   "hello.status": "The app is getting ready.",
-  "dev.health": "API {api}, DB {db}"
+  "dev.health": "API {api}, DB {db}",
+  "kiko.senang": "Happy Kiko",
+  "kiko.semangat": "Cheering Kiko",
+  "kiko.kaget": "Surprised Kiko",
+  "kiko.tidur": "Sleeping Kiko"
 }
