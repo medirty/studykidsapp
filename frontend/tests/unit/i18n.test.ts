@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
 import en from '../../src/i18n/en.json';
 import id from '../../src/i18n/id.json';
