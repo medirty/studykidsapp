@@ -1,92 +1,94 @@
-# Gate Fase 2 — Fondasi Frontend (laporan reviewer)
+# Gate Fase 2 — Fondasi Frontend (laporan reviewer, run ke-2)
 
-- **Tanggal:** 26 Nov 2026 · **Branch:** `feat/f2-verifikasi-akhir` @ `3c20570` (tree bersih) · **Reviewer:** subagent `reviewer`
-- **Acuan:** PRD §14 baris Fase 2 ("Unit test komponen; Lighthouse ≥ 90; i18n test lolos; install PWA berfungsi"), §8.1, §8.4, §15.1–15.2, FR-1, FR-2, FR-3, FR-7; `docs/plans/phase-2.md` E1–E4.
+- **Tanggal:** 26 Nov 2026 · **Branch:** `main` @ `2260e6a` (tree bersih) · **Reviewer:** subagent `reviewer`
+- **Acuan:** PRD §14 baris Fase 2 ("Unit test komponen; Lighthouse ≥ 90; i18n test lolos; install PWA berfungsi"), §8.1, §15.1–15.2, FR-3; `docs/plans/phase-2.md` E1–E4.
 - Laporan ini **tidak** menyetujui fase. Hanya Bimo yang boleh menulis "Fase 2 disetujui".
-- **Status branch:** commit T2.12 (`3c20570`) **belum ada di `main`** — PR #69 masih OPEN dan CI-nya **gagal** (job `lighthouse`). Tidak di-merge oleh reviewer.
+
+## Riwayat
+
+Run pertama (26 Nov 2026, branch `feat/f2-verifikasi-akhir` @ `3c20570`) → **Belum siap**:
+- **B-1** pilihan bahasa header tidak tersimpan ke profil/perangkat → diperbaiki di PR #70 (`97c3444`): `AppHeader` memanggil `settings.setLocale`; E2E "bahasa pilihan bertahan setelah reload (tanpa dan dengan profil)".
+- **B-2** job `lighthouse` CI merah (Perf 0,72 / 0,88) → PR #71 (`6b2f5e3`): `numberOfRuns: 3` + `VITE_API_MODE=local` di job lighthouse.
+- **B-3** T2.12 belum di `main` → PR #69 (`2260e6a`) di-merge.
+
+Ketiganya diverifikasi ulang dari nol di bawah.
 
 ## 1. Hasil per Exit Criterion
 
 | # | Kriteria | Status | Bukti |
 |---|---|---|---|
-| E1 | Unit test komponen UI lolos | ✓ | `npm run check`: vitest **15 file, 84/84 lolos**. Test komponen: `ui.component.test.ts` (12: Button, Card, Chip, ProgressBar, Stars, Modal keyboard, SubjectCard), `media.component.test.ts` (7: Icon/Kiko/Avatar/SpeakButton), `UpdatePrompt`, `shell`, `Landing` (2), `Start` (1). Catatan: `Home.svelte` hanya diuji E2E. |
-| E2 | Lighthouse ≥ 90 (mobile; Landing SEO ≥ 95) | ✗ (CI merah) | **Lokal** (lighthouse 12, mobile 412 px, build preview), 3× Landing: Perf **0,98/0,98/0,98**, A11y 1, BP 0,96, SEO 1, LCP ≈ 2,0 s. Beranda (`#/home` dengan profil tersimpan, 2×): Perf **0,98**, A11y 1, SEO 1. **Pages** `https://medirty.github.io/studykidsapp/`: Perf 0,99, A11y 1, BP 0,96, SEO 1. **Tetapi CI (Lighthouse CI, gate otomatis §15.1) gagal**: `main` run `45758038107` (merge #68) → `categories.performance found 0.72`; PR #69 run `45764386130` → `found 0.88`. 2 dari 3 run terakhir merah. CI `main` merah sejak T2.11. |
-| E3 | i18n test lolos (key ID = EN, tanpa teks hardcode) | ✓ dengan bug | `i18n.test.ts` lolos: key ID=EN, tanpa nilai kosong, locale reaktif + `<html lang>`, penjaga teks literal di semua `.svelte` (0 temuan). Grep atribut `aria-label/alt/title/placeholder` literal → 0. **Namun** pilihan bahasa dari tombol ID/EN **tidak bertahan** setelah reload (bug B-1, direproduksi). |
-| E4 | Install PWA berfungsi | ✓ (otomatis), perangkat nyata belum | E2E `pwa.spec.ts` lolos di 3 project (manifest, SW mengontrol halaman, shell terbuka offline). Reviewer via CDP `Page.getInstallabilityErrors` → **`[]`** di Pages dan lokal; `Page.getAppManifest` errors `[]`; SW controller aktif. Pages: `manifest.webmanifest`, `sw.js`, `icons/icon-192.png`, `robots.txt` → 200; manifest `start_url/scope "."`, 3 ikon termasuk maskable. **Install di HP/desktop nyata belum dicatat** (tindakan Bimo, lihat §4). |
+| E1 | Unit test komponen lolos | ✓ | `npm run check` → vitest **15 file, 84/84 lolos** (komponen UI, media, shell, UpdatePrompt, Landing, Start). |
+| E2 | Lighthouse ≥ 90 (mobile) | ✓ | **CI main hijau 2 run berturut-turut** setelah #71 (`45770254503`, `45770699113`: lighthouse ✓ "3 total run(s)", assertion lolos). **Lokal reviewer** (`@lhci/cli@0.16 collect`, mobile, build `VITE_API_MODE=local`, 3 run): Landing Perf **1/1/1**, A11y 1, BP 0,96, SEO 1, LCP 1,09–1,13 s, CLS ≤ 0,003. **Beranda `#/home` dengan profil** (puppeteerScript membuat profil, `disableStorageReset`; laporan memuat "Ganti profil", ikon gembok mapel): Perf **1/1/0,99**, A11y 1, BP 1, SEO 1. |
+| E3 | i18n test lolos | ✓ | `i18n.test.ts` lolos (key ID=EN, tanpa nilai kosong, locale reaktif + `<html lang>`, penjaga teks literal `.svelte`). B-1 **terverifikasi tertutup**: E2E `profile.spec.ts:44` lolos di 3 project; manual reviewer @360 px: profil "Ayu" → tombol header → EN → reload → "Hi, Ayu!", `html[lang=en]`. |
+| E4 | Install PWA berfungsi | ✓ (otomatis) | E2E `pwa.spec.ts` lolos 3 project (manifest valid, SW mengontrol halaman, shell terbuka offline). Pages: `/studykidsapp/`, `manifest.webmanifest`, `sw.js`, `icons/icon-192.png`, `robots.txt`, `mockups/` → **200**; manifest `start_url "."`, `scope "."`, 3 ikon termasuk maskable, `display standalone`. Install di HP/desktop nyata: tindakan Bimo (lihat §4). |
 
 ### Perintah yang dijalankan (hasil nyata)
 
 | Perintah | Hasil |
 |---|---|
-| `npm run check` | eslint + prettier bersih; `svelte-check` **325 file, 0 error, 0 warning**; vitest **84/84**; build OK; **JS awal 34,38 KB gzip** (batas 120), **CSS 2,32 KB** (batas 25) → "Budget OK". Chunk `db` (Dexie) 31,60 KB gzip terpisah. Peringatan Vite `configLoader: 'native'` (import tanpa ekstensi di `vite.config.ts`), tidak memblokir. |
-| `npm run test:e2e` | **171 passed, 288 skipped** (49,4 s). Skip = mockup hanya di project desktop (by design). Log `ECONNREFUSED /api/health` karena API PHP tidak jalan; tidak memengaruhi hasil. |
-| `npm run test:api` (PHP 8.4, MariaDB service RUNNING) | **OK (5 tests, 17 assertions)** |
-| `npm run lint:api` | phpstan OK; php-cs-fixer **0 dari 12 file** perlu diperbaiki |
-| `npm run test:scripts` | 24/24 lolos |
-| `npm audit --omit=dev` | 0 vulnerabilities |
-| `gh run list` (CI `main`) | T2.2–T2.10 success; **#68 (T2.11) failure — job `lighthouse` saja** (frontend, backend 8.2/8.4 success). Deploy Pages: 8 run terakhir success. |
-| `gh pr list` | #69 (T2.12) **OPEN**, CI failure (lighthouse 0,88). Tidak ada PR Dependabot terbuka. |
-| Playwright reviewer @ **360×740** (Landing, Pilih kelas, Beranda) | `scrollWidth = 360` di ketiganya (tanpa scroll horizontal); screenshot dicek visual — layout rapi, target sentuh besar kelas 1. |
-| CDP installability (Pages + lokal) | `installabilityErrors: []`, `manifest errors: []`, `controller: true` |
+| `npm run check` | eslint + prettier "All matched files use Prettier code style!"; `svelte-check` **325 FILES 0 ERRORS 0 WARNINGS**; vitest **84 passed (84)**; build OK; `JS awal : 34.36 KB gzip (batas 120.00 KB)`, `CSS awal: 2.32 KB gzip (batas 25.00 KB)` → **Budget OK**. Chunk `db` (Dexie) 31,60 KB gzip terpisah. Peringatan Vite `configLoader: 'native'` (tidak memblokir). |
+| `npm run build` | Termasuk dalam `check`; PWA `generateSW`, precache 17 entri. |
+| `npm run test:e2e` | **174 passed, 288 skipped** (36,5 s). Skip = mockup hanya di project desktop (by design). Log `ECONNREFUSED /api/health` karena API PHP tidak jalan; tidak memengaruhi hasil. |
+| `gh run list --branch main --limit 8` | CI `2260e6a` (#69) **success** (frontend, lighthouse, backend 8.2, backend 8.4); CI `6b2f5e3` (#71) **success**; CI `97c3444` (#70) failure — lighthouse `found 0.88` dengan "1 total run(s)" (sebelum #71); CI #68 failure (sebelum fix). Deploy Pages: 4 run terakhir success. |
+| `gh pr list` | Tidak ada PR terbuka. |
+| `npm audit --omit=dev` | `found 0 vulnerabilities` |
+| Backend | `git diff phase-1-approved..HEAD -- backend` kosong → backend tidak disentuh di Fase 2; job CI backend (php 8.2/8.4, MariaDB 11.8) hijau. `composer test` lokal tidak dijalankan (tidak relevan; `mysql` di PATH tidak dibutuhkan). |
+| Chrome DevTools @ **360×740** mobile | Landing, Start, Beranda: `scrollWidth = 360` (tanpa scroll horizontal). Screenshot Beranda kelas 1 dicek: kartu mapel 88–98 px, gembok = ikon + teks. |
 
 ## 2. Keamanan (security-review, scope Fase 2)
 
-Auth, pembayaran, webhook, IDOR, CSRF, kuota early bird **belum ada kodenya** (Fase 4/6). Yang dicek:
+Auth, pembayaran, webhook, IDOR, CSRF, brute force, 2FA admin, race kuota early bird: **belum ada kodenya** (Fase 4/6) — N/A. Dicek:
 
-- **Data anak (§8.4):** `Profile` = id, serverId, nickname (1–20, divalidasi), grade (1–6), avatarId (bawaan), locale, prefs, waktu. `cleanProfile` di `services/api.ts` hanya menyalin field yang dideklarasikan. Tidak ada email/HP/foto/lokasi. ✓
-- **XSS:** tidak ada `{@html}`, `innerHTML`, `eval`, `new Function` di `frontend/src`. Nickname dirender sebagai teks. ✓
-- **Pelacak pihak ketiga:** tidak ada URL eksternal di `frontend/src`/`index.html`; font & ikon lokal; request jaringan Landing hanya aset sendiri. ✓
-- **Secret:** `git ls-files` hanya `.env.example` & `backend/.env.example`; `.env*` di `.gitignore`; tidak ada pola secret di kode (temuan grep hanya `TOKEN` lokal di skill `.claude/skills/impeccable`, bukan secret). ✓
-- **Service worker:** `registerType: 'prompt'` (tidak memaksa), precache aset sendiri, `navigateFallback: index.html`, hanya di produksi. ✓
-- **CSP:** belum ada (Pages tidak bisa set header; meta CSP juga belum). Catat untuk Fase 4/7 di `.htaccess` Hostinger (L-4).
-- `localStorage` hanya `sk.locale` (bukan data anak). ✓
+- **Data anak:** `Profile` = id, serverId, nickname (1–20), grade, avatarId (bawaan), locale, prefs, waktu. Tanpa email/HP/foto/lokasi. ✓
+- **XSS:** grep `{@html|innerHTML|eval(|new Function` di `frontend/src` → 0. ✓
+- **Pelacak pihak ketiga:** satu-satunya URL di `frontend/src` adalah `http://www.w3.org/2000/svg` (namespace SVG). Tidak ada script/font eksternal. ✓
+- **Storage lokal:** `localStorage` hanya `sk.locale` (diverifikasi: `{"sk.locale":"en"}`); data profil di IndexedDB. ✓
+- **console.log:** 0 di `frontend/src`. ✓
+- **Secret:** tidak ada pola secret baru; dependency prod 0 vulnerability. ✓
+- **CSP:** belum ada (Pages tidak bisa set header) — tetap catatan Fase 4/7.
 
-Tidak ada temuan keamanan tingkat tinggi/sedang.
+Tidak ada temuan keamanan tinggi/sedang.
 
 ## 3. Temuan
 
-### Memblokir
+### Blocker
+Tidak ada.
 
-| ID | Keparahan | Temuan | Saran perbaikan |
-|---|---|---|---|
-| B-1 | **Sedang** | **Pilihan bahasa tidak tersimpan.** `components/AppHeader.svelte:6` memanggil `setLocale` dari `i18n` langsung, bukan `settings.setLocale`. Akibatnya bahasa tidak ditulis ke profil aktif (FR-3 "bahasa per profil") maupun ke `settings.locale` Dexie; saat reload `settings.load()` menimpa dengan nilai lama. Reproduksi reviewer (Playwright): tanpa profil `en → reload → id`; dengan profil di Beranda `Home → reload → Beranda`. Test unit store lolos karena tidak ada test yang menekan tombol header. | Di `AppHeader` panggil `settings.setLocale(...)` (store sudah menangani profil vs perangkat). Tambah 1 E2E: toggle EN → reload → `html[lang=en]` (dengan dan tanpa profil). |
-| B-2 | **Sedang** | **CI `main` merah & PR #69 merah** di job `lighthouse` (Perf 0,72 lalu 0,88). Penyebab: (a) `lighthouserc.json` `numberOfRuns: 1` → satu run runner GitHub yang lambat langsung gagal; (b) sejak T2.11 `App.svelte` memanggil `settings.load()` saat start sehingga chunk Dexie (31,6 KB gzip) ikut dimuat di Landing pada jalur render pertama; (c) build CI tanpa `VITE_API_MODE` → Landing memanggil `/api/health` (502) → `errors-in-console`. Lokal & Pages tetap 0,98–0,99, jadi angka produk lolos, tetapi gate otomatis §15.1 ("CI gagal jika terlampaui") merah dan AC T2.12 "Lighthouse hijau di CI" tidak terpenuhi. | `numberOfRuns: 3` (median) dan set `VITE_API_MODE=local` di job lighthouse (atau `--mode`). Pertimbangkan menunda `settings.load()` di Landing (mis. hanya `getSetting('locale')`, atau muat setelah render). Tambah URL Beranda bila memungkinkan. Jangan menurunkan ambang. |
-| B-3 | Prosedural | Commit T2.12 belum di `main` (PR #69 OPEN, CI merah). | Merge setelah B-2 hijau. |
+### Major
+Tidak ada.
 
-### Tidak memblokir
+### Minor (tidak memblokir)
 
-| ID | Keparahan | Temuan | Saran |
-|---|---|---|---|
-| L-1 | Rendah | Warna di luar `tokens.css`: `Modal.svelte:61` `rgb(27 19 64 / 60%)` (test "tanpa hex" tidak menangkap `rgb()`), `index.html:6` `theme-color #FF6B3D`, `vite.config.ts:32` `background_color '#fff8f2'`, `brand.config.ts` `colors`. Dua yang terakhir tidak bisa pakai CSS var, tapi sebaiknya satu sumber. | Token `--color-overlay`; ambil `background_color` dari `brand.config.ts`; perluas test ke `rgb(`/`hsl(`. |
-| L-2 | Rendah | `/favicon.ico` 404 (lokal & Pages) — `public/favicon.svg` ada tapi tidak ada `<link rel="icon">` di `index.html`. Muncul di `errors-in-console` (BP 0,96). | Tambah `<link rel="icon" href="favicon.svg" type="image/svg+xml">` (relatif, bukan `/`). |
-| L-3 | Rendah | Viewport 360 px tidak diuji otomatis untuk layar app: project E2E = Pixel 5 (393) & iPhone 12 (390); hanya mockup yang dicek di 360. Reviewer mengecek manual: Landing/Start/Beranda 360 tanpa overflow. | Tambah project `mobile-360` (atau `setViewportSize` 360) di spec landing/profile. |
-| L-4 | Rendah | Baris status API dev (`dev.health`) tampil bila `VITE_API_MODE !== 'local'` — termasuk build produksi mode `api` nanti. CSP belum ada. | Batasi ke `import.meta.env.DEV`; CSP di Fase 4/7. |
-| L-5 | Rendah | Beranda: catatan "Gratis · Unit 1–2" berada di luar kartu mapel (tampak "menggantung" di 360 px), sementara status terkunci ada di dalam kartu. | Pindahkan badge ke dalam `SubjectCard` agar konsisten (cek mockup `beranda.html`). |
-| L-6 | Rendah | Belum ada pesan bila `profile.failed` di Beranda/Landing (hanya di Start). Beranda sempat menampilkan "belum ada profil" sebelum `load()` selesai (kedip). | Status `loading` di store; pesan gagal di Beranda. |
+| ID | Temuan | Saran perbaikan |
+|---|---|---|
+| L-1 (lama, terbuka) | Warna di luar token: `components/ui/Modal.svelte:61` `rgb(27 19 64 / 60%)`; test "tanpa hex" tidak menangkap `rgb()`. | Token `--color-overlay` di `tokens.css`; perluas test ke `rgb(`/`hsl(`. |
+| L-2 (lama, terbuka) | `/studykidsapp/favicon.ico` → **404** di Pages (dicek ulang); console error di Landing → BP 0,96. | `<link rel="icon" href="favicon.svg" type="image/svg+xml">` (relatif) di `index.html`. |
+| L-3 (lama, terbuka) | Tidak ada project E2E 360 px untuk layar app (Pixel 5 = 393, iPhone 12 = 390). Reviewer cek manual: 360 OK. | Tambah project `mobile-360` atau `setViewportSize` di spec landing/profile. |
+| L-5 (lama, terbuka) | Beranda: "Free · Units 1–2" menggantung di luar kartu mapel, sedangkan "Locked" di dalam kartu (terlihat di screenshot 360 px). | Pindahkan badge ke dalam `SubjectCard`. |
+| L-6 (lama, terbuka) | Belum ada pesan bila `profile.failed` di Beranda/Landing. | Status loading/gagal di store + pesan i18n. |
+| L-7 (baru) | `document.title` hanya di-set di `Landing.svelte:38`. Setelah ganti ke EN dan reload di Beranda, `<html lang=en>` tetapi judul tab tetap "StudyKids — Belajar SD seru bareng Kiko". | Set title per route (atau di `App.svelte` dari `t()` reaktif). |
+| L-8 (baru) | `settings.setLocale` memanggil `setLocale` i18n **setelah** `await` ke Dexie. Bila IndexedDB gagal (mode privat/terblokir), tombol ID/EN tidak berubah sama sekali dan muncul unhandled rejection dari `AppHeader`. | Ubah UI dulu (`setLocale(locale)` sebelum write) atau `try/catch` di toggle. Tambah 1 unit test api yang menolak. |
+| L-9 (baru) | Lighthouse CI: (a) `numberOfRuns: 3` tanpa `aggregationMethod` → LHCI memakai default **optimistic** (run terbaik), bukan median seperti saran run pertama; (b) hanya URL Landing; (c) tidak ada assertion `categories:accessibility`. Angka sekarang tetap jauh di atas ambang, jadi tidak memblokir. | `"aggregationMethod": "median-run"` di assertion; tambah `categories:accessibility` ≥ 0,9; Beranda via `puppeteerScript` (contoh berhasil dipakai reviewer). |
+| L-4 (lama) | Baris status API dev tampil bila `VITE_API_MODE !== 'local'`. | Batasi ke `import.meta.env.DEV` (Fase 4). |
 
-### Ponytail-review (kualitas kode Fase 2)
+### Ponytail-review (perubahan sejak run pertama + kualitas Fase 2)
 
-- **Bagus:** solusi kecil dan konsisten — store runes + factory untuk test, `api.ts` satu gerbang data, Dexie lazy, `recordAndEnqueue` idempoten dalam satu transaksi (dites), SW ditunda idle. Tidak ada dependency di luar ADR D-012/D-013.
-- **Duplikasi (hapus/gabung):** daftar 8 mapel + fallback `['math','gp','art']` dan `unitLimit ?? 2` ditulis dua kali (`Landing.svelte`, `Home.svelte`) — angka bisnis demo juga di `public-settings.local.json`. Satu konstanta `SUBJECTS` + baca dari settings saja. Dua file test i18n (`src/i18n/i18n.test.ts` & `tests/unit/i18n.test.ts`) menguji hal yang sama (key ID=EN, parameter). Key `hello.*` & `smoke.spec` "hello-world" adalah sisa Fase 0.
-- **Berisiko tanpa test:** toggle bahasa di header (B-1 lolos karena tidak ada test end-to-end-nya); `Home.svelte` tanpa test komponen; `profiles.onActiveChange` di-set dari konstruktor `SettingsStore` (kopling tersembunyi; satu callback, ditimpa diam-diam bila ada store kedua).
-- **Shortcut tercatat (diterima):** prompt update dites di komponen, bukan SW nyata; daftar suara kosong = "belum dimuat"; `remoteApi` stub sampai Fase 4.
+- **#70 (B-1):** fix 1 baris di akar masalah (`AppHeader` → store), test komponen disesuaikan, E2E reload ditambah. Kecil & tepat. Celah: jalur gagal storage (L-8).
+- **#71 (B-2):** 2 baris konfigurasi, tanpa menurunkan ambang. Lihat L-9 tentang agregasi.
+- **#69 (T2.12):** hanya docs + `setup-node@v7`.
+- Temuan duplikasi lama masih berlaku (tidak memblokir): daftar 8 mapel + fallback demo di `Landing.svelte` & `Home.svelte`; dua file test i18n tumpang tindih; sisa `hello.*`/`smoke.spec` Fase 0; `profiles.onActiveChange` di-set dari konstruktor `SettingsStore` (satu callback, kopling tersembunyi).
 
-## 4. Temuan gate lama & butir terbuka untuk Bimo
+## 4. Butir terbuka untuk Bimo (bukan blocker kode)
 
-| ID | Status sekarang |
+| Butir | Status |
 |---|---|
-| M-1 (Fase 0, deploy Pages tidak stabil) | **Tertutup** — `deploy-pages.yml` sudah dipecah `build` → `deploy` (`needs: build`); 8 deploy terakhir success; `setup-node@v7` (T2.12). |
-| L-1 (Fase 0, Dependabot #19/#20) | **Tertutup** — tidak ada PR Dependabot terbuka. |
-| B1 (domain `studykids.id`) | **Masih terbuka** (`PROGRESS.md` baris 149). Tidak menghalangi gate. |
-| Avatar 8 baru (T2.3) | **Menunggu persetujuan visual Bimo** di galeri `docs/brand/index.html`. |
-| ADR D-011 | Status masih "diusulkan" — perlu diubah ke "disetujui" bila Bimo setuju. |
-| Install PWA di HP/desktop nyata | Belum dicatat; Chrome menyatakan installable (CDP), Bimo cukup coba "Tambahkan ke layar utama" di `https://medirty.github.io/studykidsapp/`. |
+| Install PWA di HP/desktop nyata | Belum dicatat. Buka `https://medirty.github.io/studykidsapp/` di Chrome HP → menu ⋮ → "Tambahkan ke layar utama" / "Instal aplikasi". |
+| 8 avatar baru (T2.3) | Masih menunggu persetujuan visual di `docs/brand/index.html`. |
+| ADR D-011 | Status "diusulkan" → ubah ke "disetujui" bila Bimo setuju. |
+| B1 domain `studykids.id` | Masih terbuka; tidak menghalangi gate. |
 
 ## 5. Verdict
 
-**Belum siap** — perbaiki:
-1. **B-1** toggle bahasa memakai `settings.setLocale` + E2E toggle→reload.
-2. **B-2** job Lighthouse CI hijau (`numberOfRuns: 3`, `VITE_API_MODE=local` di job, kurangi kerja Dexie di jalur render Landing) tanpa menurunkan ambang; CI `main` kembali hijau.
-3. **B-3** merge PR #69 setelah CI hijau.
+**Siap untuk persetujuan Bimo.**
 
-Disarankan sekaligus: L-2 (favicon), L-1 (token overlay), L-3 (project 360 px). Setelah itu jalankan ulang `npm run check`, `npm run test:e2e`, cek CI `main` hijau; Bimo menyetujui 8 avatar, mencoba install PWA di HP, lalu menulis "Fase 2 disetujui" → tag `phase-2-approved`.
+Keempat Exit Criteria terpenuhi dengan bukti; B-1, B-2, B-3 tertutup; CI `main` hijau di semua job. Minor L-1…L-9 boleh dikerjakan sebagai task kecil (disarankan sebelum/awal Fase 3: L-2, L-7, L-8, L-9). Sebelum menulis "Fase 2 disetujui", Bimo sebaiknya mencoba install PWA di HP dan menyetujui 8 avatar.
