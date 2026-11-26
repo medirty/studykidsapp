@@ -1,9 +1,10 @@
 <script lang="ts">
   import { brand } from '../brand.config';
-  import { getLocale, setLocale, t } from '../i18n';
+  import { getLocale, t } from '../i18n';
+  import { settings } from '../stores/settings.svelte';
   import Kiko from './ui/Kiko.svelte';
 
-  const toggle = () => setLocale(getLocale() === 'id' ? 'en' : 'id');
+  const toggle = () => settings.setLocale(getLocale() === 'id' ? 'en' : 'id');
 </script>
 
 <header>
