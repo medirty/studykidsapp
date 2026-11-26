@@ -227,3 +227,75 @@ D-001 s.d. D-007 dibuat di T0.3 (22 Nov 2026) sebagai acuan T0.4–T0.11. Rencan
 - **Efek samping yang diketahui:** (1) engine biner diunduh ke `~/.impeccable/bin/` (di luar project); (2) hook SessionStart/PostToolUse/Stop ditulis ke `.claude/settings.local.json` (git-ignored, hanya laptop ini) dan memindai file UI setelah Edit/Write; (3) skill menulis `PRODUCT.md`, `DESIGN.md`, `.impeccable/` saat `/impeccable init` / `document`; (4) mode `live` dan Apply menjalankan CLI `claude`/`codex` dengan izin dilewati: **jangan dipakai** (set `IMPECCABLE_LIVE_COPY_AGENT=off`). Hook tidak dipakai di CI.
 - **Aturan pakai:** impeccable tidak boleh menang atas PRD §8.5/§9, `tokens.css`, i18n, dan brand (PRD yang berlaku). Hasil desain tetap lewat persetujuan Bimo (§17.5).
 - **Belum dikerjakan:** `/impeccable init` (menulis `PRODUCT.md`) dijalankan di awal Fase 1, bersama Bimo.
+
+## D-011 — Arsitektur frontend Fase 2: route, store, Dexie, api.ts, ikon, DOM test env (T2.0, 26 Nov 2026)
+- **Status:** diusulkan (T2.0; berlaku setelah PR di-review)
+- **Konteks:** Fase 2 membangun fondasi FE ([plans/phase-2.md](plans/phase-2.md), rencana task [plans/phase-2-T2.0.md](plans/phase-2-T2.0.md)). Acuan: PRD §8.1 (JS awal ≤ 120 KB gzip; saat ini **16,81 KB**), §8.4 (privasi anak), §10.1–10.2 (mode `local`), §11, §12.2, FR-2, FR-3; D-003, D-004, D-005, D-007. Tipe data: [`frontend/src/services/types.ts`](../frontend/src/services/types.ts).
+- **Keputusan:**
+
+  **(a) Route — `svelte-spa-router` mode hash (`#/…`).**
+
+  | Route | Layar | Muat | Dibangun |
+  |---|---|---|---|
+  | `/` | Landing | awal | T2.10 |
+  | `/start` | Pilih kelas / profil | awal | T2.11 |
+  | `/home` | Beranda | awal | T2.11 |
+  | `*` | 404 ramah | awal | T2.5 |
+  | `/subject/:subjectId` | Peta belajar | lazy | Fase 3 |
+  | `/session/:skillId` | Sesi: soal → feedback → ringkasan (state di dalam route, bukan route terpisah) | lazy | Fase 3 |
+  | `/game/:gameId` | Mini game (1 chunk per game, D-007) | lazy | Fase 3 |
+  | `/report` | Laporan anak | lazy | Fase 3 |
+  | `/unlock` | Paywall / kode aktivasi | lazy | Fase 4 |
+  | `/parent`, `/parent/*` | Parent Gate + area ortu (laporan, langganan, saran, pengaturan) | lazy + `conditions` gate | Fase 4 |
+
+  - Lazy = `wrap({ asyncComponent: () => import('./routes/X.svelte') })`. Admin **bukan** route: entry Vite terpisah (D-001, FR-13).
+  - Alasan: hash tidak butuh rewrite server → jalan sama di GitHub Pages `/studykidsapp/` dan Hostinger tanpa `404.html`/`.htaccess`; route tidak bergantung `VITE_BASE`. Hanya Landing yang perlu SEO, dan Landing ada di `/` tanpa hash. Kedalaman tetap ≤ 3 level (§9.1 no. 5).
+  - Budget: router ±3 KB + 4 layar alur pertama di JS awal; sisanya chunk lazy (tidak dihitung, D-007).
+
+  **(b) Store — Svelte 5 runes, bukan `svelte/store`.**
+  - File `stores/profile.svelte.ts`, `stores/settings.svelte.ts`, `stores/entitlement.svelte.ts` (folder §11 tetap). Masing-masing class dengan field `$state` dan getter turunan, diekspor sebagai satu instance + factory `createXStore(api: Api)` agar test bisa menyuntik `Api` palsu.
+  - `profile`: `list`, `activeId`, getter `active`; `load()`, `create()`, `select()`, `remove()`.
+  - `settings`: `locale` = locale profil aktif, atau `DeviceSettings.locale` bila belum ada profil (Landing); `setLocale()` menulis ke profil aktif/perangkat lalu memanggil i18n (ganti teks + `<html lang>`). `prefs` (`autoRead`, `reduceMotion`) milik profil aktif.
+  - `entitlement`: di mode `local` selalu `{ plan: 'demo', expiresAt: null }`; batas demo dari `PublicSettings.demo` (satu sumber, tidak disalin). Hanya untuk tampilan; server yang menegakkan (FR-10).
+  - Simpan data lewat **pemanggilan method eksplisit** ke `Api` (write-through), bukan `$effect` → mudah diuji, tanpa loop effect. Svelte melarang mengekspor `$state` primitif yang di-assign ulang, maka state dibungkus class.
+  - i18n (T2.2): state locale reaktif di file `.svelte.ts` terpisah (mis. `i18n/locale.svelte.ts`); `i18n/index.ts` tetap mengekspor `Locale` & `t` agar impor `../i18n` tidak berubah.
+  - Alasan: runes adalah model reaktivitas utama Svelte 5, tanpa boilerplate `writable`/`subscribe`. Budget: 0 KB tambahan (bagian runtime Svelte).
+
+  **(c) Skema Dexie v1** (`services/db.ts`, nama DB tetap `studykids` — tidak ikut `brand.config.ts`, mengganti nama = kehilangan data).
+
+  | Tabel | Indeks Dexie v1 | Isi (tipe di `types.ts`) |
+  |---|---|---|
+  | `profiles` | `id` | `Profile`: UUID, `serverId`, `nickname`, `grade`, `avatarId`, `locale`, `prefs`, waktu |
+  | `settings` | `key` | `SettingRow`: `activeProfileId`, `locale` perangkat |
+  | `progressEvents` | `clientEventId, profileId, [profileId+skillId], createdAt` | `ProgressEvent` (cermin `progress_events` §12.1) |
+  | `skillMastery` | `[profileId+skillId], profileId` | `SkillMastery` |
+  | `syncQueue` | `clientEventId, profileId, enqueuedAt` | `SyncQueueItem` (referensi event, dihapus setelah ack server Fase 4) |
+
+  - **Privasi §8.4:** anak hanya punya nama panggilan, kelas, `avatarId` (salah satu 12 avatar bawaan, bukan unggahan), locale, preferensi, dan progress. Tidak ada field email/HP/foto/lokasi; PIN tidak disimpan lokal (Fase 4, `pin_hash` di server). Token/sesi auth **tidak pernah** ke IndexedDB/`localStorage` (cookie `HttpOnly`, §8.3). `nickname` divalidasi (trim, 1–20 karakter) dan hanya dirender sebagai teks (tanpa `{@html}`).
+  - **Idempoten (FR-2, §12.2):** `clientEventId` = UUID v4 dari `crypto.randomUUID()` menjadi PK `progressEvents` dan `syncQueue` → event ganda ditolak oleh PK; `recordProgress` menulis event + mastery + antrian dalam satu transaksi. `randomUUID` tidak ada di Safari iOS 15.0–15.3 (§8.6 iOS 15+) → T2.6 menyediakan fallback v4 dari `crypto.getRandomValues` di `lib/`.
+  - **Hapus profil** menghapus baris di semua tabel lewat indeks `profileId` dalam satu transaksi (§8.4 hak hapus).
+  - **ID profil lokal = UUID**, bukan angka: aman saat merge ke akun dari beberapa perangkat (FR-2); `serverId` diisi saat merge.
+  - Waktu disimpan sebagai string ISO UTC (`toISOString()`), sama dengan server dan bisa diurutkan.
+  - **Versi/migrasi:** `db.version(1).stores({...})` sekali. Perubahan **indeks/PK/tabel** = tambah `db.version(n+1).stores({...}).upgrade(tx => …)`; deklarasi versi lama tidak pernah diedit atau dihapus (sama dengan aturan Phinx). Menambah field **tanpa indeks** tidak perlu versi baru (Dexie hanya menyimpan skema indeks); kode baca memberi default untuk baris lama. Setiap versi baru wajib test upgrade: isi data versi lama di IndexedDB tiruan → buka versi baru → data utuh. Handler `versionchange`/`blocked` menutup DB dan meminta muat ulang (dipadukan dengan prompt update SW, T2.9). Kandidat v2 yang sudah terlihat: indeks fingerprint/sesi untuk anti-repeat FR-5 (Fase 3).
+  - **Risiko diketahui:** Safari menghapus storage situs (bukan PWA terpasang) setelah 7 hari tanpa interaksi. Mitigasi: `navigator.storage.persist()` saat profil pertama dibuat, dorong install PWA (T2.9), sinkron akun (Fase 4). IndexedDB gagal dibuka → pesan i18n ramah, belajar tetap jalan tanpa simpan (detail T2.6).
+  - Budget: Dexie ±30 KB gzip. `db.ts` di-**import dinamis** dari adapter (method `Api` sudah async) → Landing tidak memuat Dexie; JS awal tetap ±25–40 KB.
+
+  **(d) `services/api.ts` — satu interface `Api` (lihat `types.ts`), dua adapter.**
+  - Method: `getPublicSettings`, `getEntitlement`, `listProfiles`, `saveProfile`, `deleteProfile`, `getSetting`, `setSetting`, `recordProgress`, `listMastery`. Endpoint akun/auth/order (§13) ditambahkan ke interface saat Fase 4/6, bukan sekarang.
+  - Adapter `local`: hanya Dexie + `PublicSettings` dari config lokal (harga §4.2 no. 11, `demo.subjects`, `demo.unit_limit = 2`; `earlyBirdSlotsLeft: null` → penghitung slot disembunyikan, FR-1). **Tanpa request jaringan.**
+  - Adapter `api`: menulis ke Dexie dulu (offline-first, §12.2), lalu bicara ke `` `${import.meta.env.BASE_URL}api/` `` (D-003); di Fase 2 berupa stub yang melempar "belum tersedia". Pengiriman `syncQueue` ke `POST /api/sync` ada di `services/sync.ts` (Fase 4). Bentuk JSON di kabel diputuskan di `backend/API.md` Fase 4; adapter memetakan ke tipe ini.
+  - Pemilihan: `import.meta.env.VITE_API_MODE === 'api' ? apiAdapter : localAdapter` di `api.ts`. Env dibaca saat build sehingga cabang lain dibuang bundler → build Pages (`local`) tidak membawa kode `fetch`. Budget: hanya satu adapter (±1–2 KB) di bundle.
+
+  **(e) Ikon — SVG buatan sendiri, inline lewat komponen `Icon`.**
+  - Set awal (T2.3): `lock`, `speaker`, `star`, `flame` (streak), `check`, `cross`, `arrow-left`, `arrow-right`, `home`, `settings`. `viewBox="0 0 24 24"`, `stroke="currentColor"` (warna dari token lewat `color`), garis membulat agar serasi dengan Kiko. Path disimpan di satu map TS; tanpa `<text>`/`<script>`.
+  - Dekoratif → `aria-hidden="true"`; bermakna → label i18n. Status tetap ikon + teks (§8.5).
+  - Alasan: emoji tampil berbeda per HP (catatan gate Fase 1 no. 5, [plans/gate-phase-1.md](plans/gate-phase-1.md)); library ikon (mis. Lucide) = dependency + atribusi untuk ±10 ikon. Inline (bukan sprite `<use href>`) → tanpa request tambahan dan tidak terpengaruh base path.
+  - Lisensi: karya sendiri, dicatat di `docs/ASSET_LICENSES.md` (T2.3). Budget: ±10 × 200 B ≈ < 1 KB gzip.
+
+  **(f) DOM test env — `jsdom`** (MIT, dev-only), environment per-file lewat komentar `// @vitest-environment jsdom` di test komponen; default Vitest tetap `node` (engine, generator, services).
+  - Alasan: AC T2.4 (fokus terjebak di `Modal`, kueri role/label) butuh perilaku DOM yang paling dekat spesifikasi; jsdom adalah env acuan Testing Library. Selisih kecepatan happy-dom tidak berarti untuk puluhan test. Syarat jsdom terbaru Node ≥ 22.22 sudah dipenuhi (lokal v22.23.5, CI Node 24, D-004). happy-dom punya riwayat celah keamanan eksekusi skrip (2024–2025) — risiko kecil untuk test, tapi tidak ada alasan memilihnya.
+  - T2.1 memasang `jsdom` + `@testing-library/svelte` dengan ADR dependency (versi, lisensi, ukuran) dan menambah plugin `svelte()` + `svelteTesting()` ke `vitest.config.ts` (dibutuhkan juga untuk menguji store `.svelte.ts`).
+  - Budget: 0 KB (tidak masuk bundle).
+
+- **Alternatif:** (a) mode history: butuh rewrite di tiap hosting & `404.html` di Pages. (b) `svelte/store` `writable`: boilerplate subscribe, gaya Svelte 4. (c) satu tabel event dengan kolom `syncedAt` tanpa `syncQueue`: lebih sedikit tabel, tapi rencana fase meminta antrian terpisah yang nanti bisa memuat operasi selain progress. Prefs di tabel `settings` per profil: dua bentuk baris di satu tabel, tipe longgar. (d) fetch langsung dari store: test butuh mock jaringan, mode lokal sulit dijamin tanpa request. (e) emoji / Lucide. (f) happy-dom.
+- **Konsekuensi:** perkiraan JS awal setelah Fase 2 = 16,81 KB + router ±3 + workbox-window ±2 + layar alur pertama, komponen & store ±10–15 KB ≈ **35–40 KB** tanpa Dexie (±65–70 KB bila Dexie terpaksa statis), jauh di bawah 120 KB; angka nyata dicatat di T2.5/T2.6/T2.12. Tidak ada dependency baru di ADR ini; `jsdom`, `@testing-library/svelte`, dan (bila dipakai) `fake-indexeddb` diputuskan di ADR T2.1/T2.6.
