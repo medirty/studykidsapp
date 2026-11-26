@@ -1,0 +1,79 @@
+/* Mockup v2 (CR-008, "ceria penuh warna"). Dimuat SETELAH mockup.css.
+   Token di bawah = USULAN untuk T3.8 (tokens.css); hanya mengacu warna yang sudah ada.
+   Teks di ubin: putih untuk Math/English, Ink untuk sisanya (kontras ≥ 4,5:1, dihitung di README). */
+:root {
+  --subject-math-text: var(--color-surface);
+  --subject-english-text: var(--color-surface);
+  --subject-science-text: var(--color-ink);
+  --subject-gp-text: var(--color-ink);
+  --subject-wellbeing-text: var(--color-ink);
+  --subject-art-text: var(--color-ink);
+  --subject-music-text: var(--color-ink);
+  --subject-computing-text: var(--color-ink);
+}
+
+/* Band bagian berwarna (sunny/teal/bubblegum dipakai sebagai latar, teks Ink) */
+.band { padding: var(--space-4); border-radius: var(--radius-md); color: var(--color-ink); }
+.band-sunny { background: var(--color-sunny); }
+.band-teal { background: var(--color-teal); }
+.band-bubblegum { background: var(--color-bubblegum); }
+.band-hero { border-radius: 0 0 var(--radius-md) var(--radius-md); }
+
+/* Ubin mapel penuh warna */
+.tiles { display: grid; gap: var(--space-3); list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(2, 1fr); }
+.tile {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: var(--space-1);
+  min-height: 148px; padding: var(--space-3); border-radius: var(--radius-md); text-align: center; text-decoration: none;
+  background: var(--subject-color); color: var(--tile-text);
+  font: var(--weight-heading) var(--text-md) var(--font-heading); line-height: var(--leading-tight);
+  box-shadow: 0 4px 0 var(--color-ink); transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+}
+.tile:active { transform: translateY(4px); box-shadow: none; }
+.tile img { width: 72px; height: 72px; }
+.tile small { font: var(--weight-strong) var(--text-xs) var(--font-body); }
+/* Badge di DALAM ubin (L-5): ikon + teks, bukan warna saja */
+.tile .tag {
+  position: absolute; top: var(--space-2); right: var(--space-2); padding: 2px var(--space-2); border-radius: var(--radius-full);
+  background: var(--color-surface); color: var(--color-ink); font: var(--weight-strong) var(--text-xs) var(--font-body);
+}
+/* Terkunci: tetap berwarna (ajakan), ditandai ikon 🔒 + teks, tanpa memudarkan teks */
+.tile.is-locked img { opacity: 1; }
+.tile.is-locked .tag { background: var(--color-ink); color: var(--color-ink-on-dark); }
+
+/* Kelas 5–6: lebih kalem — baris ringkas, hanya chip ikon yang berwarna */
+.rows { display: grid; gap: var(--space-2); list-style: none; padding: 0; margin: 0; }
+.row-tile {
+  display: flex; align-items: center; gap: var(--space-3); min-height: 56px; padding: var(--space-2) var(--space-3);
+  background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-md);
+  color: var(--color-ink); text-decoration: none; font: var(--weight-heading) var(--text-md) var(--font-heading);
+}
+.row-tile .chip { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-sm); background: var(--subject-color); }
+.row-tile .chip img { width: 32px; height: 32px; }
+.row-tile small { margin-left: auto; font: var(--weight-body) var(--text-xs) var(--font-body); color: var(--color-ink-soft); }
+
+/* Kiko bereaksi saat disentuh (hanya animasi kecil; reduced-motion = tanpa gerak) */
+.kiko-btn { flex: none; border: 0; background: none; padding: 0; cursor: pointer; border-radius: var(--radius-full); min-width: var(--tap-min); min-height: var(--tap-min); }
+.kiko-btn img { display: block; width: 96px; height: auto; transition: transform var(--duration-base) var(--ease-bounce); }
+.kiko-btn.is-happy img { animation: kiko-hop var(--duration-slow) var(--ease-bounce); }
+@keyframes kiko-hop { 0% { transform: translateY(0) scale(1); } 40% { transform: translateY(-14px) scale(1.08); } 100% { transform: translateY(0) scale(1); } }
+.bubble { display: inline-block; padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-ink); font-weight: var(--weight-strong); }
+
+.stat-tiles { display: grid; gap: var(--space-2); grid-template-columns: repeat(3, 1fr); list-style: none; padding: 0; margin: 0; text-align: center; }
+.stat-tiles li { padding: var(--space-3) var(--space-2); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-ink); }
+.stat-tiles strong { display: block; font: var(--weight-heading) var(--text-lg) var(--font-heading); }
+.xp { height: 14px; border-radius: var(--radius-full); background: var(--color-surface); overflow: hidden; border: 2px solid var(--color-ink); }
+.xp > span { display: block; height: 100%; width: 60%; background: var(--color-primary); }
+
+@media (min-width: 768px) {
+  .tiles { grid-template-columns: repeat(4, 1fr); }
+  .rows { grid-template-columns: repeat(2, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { .kiko-btn.is-happy img { animation: none; } }
+
+/* Latar bertitik krem (referensi Bimo: medirty.github.io/StudyKids). Usulan T3.8: token --color-bg-dot. */
+body {
+  background-color: var(--color-bg);
+  background-image: radial-gradient(var(--color-line) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+.app-header, .bottom-bar { background-color: var(--color-surface); }
