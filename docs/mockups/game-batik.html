@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pola Batik — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/mockup-v2.css">
+<link rel="stylesheet" href="assets/soal.css">
+<link rel="stylesheet" href="assets/peta-game-v2.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body>
+<header class="g-top g-top-v2">
+  <div class="g-stats"><span class="badge"><span lang="id">Pola</span><span lang="en">Pattern</span> 3/8</span><span class="badge">⭐ 2</span></div>
+  <a class="btn btn-secondary pause" href="game-balon-pause.html" aria-label="Jeda / Pause">⏸ <span lang="id">Jeda</span><span lang="en">Pause</span></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container q-main stack">
+  <div class="q-prompt">
+    <h1><span lang="id">Lanjutkan pola batiknya!</span><span lang="en">Continue the batik pattern!</span></h1>
+    <button class="btn btn-secondary speak" type="button" aria-label="Dengarkan soal / Read aloud">🔊</button>
+  </div>
+  <!-- Pola: lingkaran, belah ketupat, segitiga, ulang. Dibedakan bentuk + warna. -->
+  <ul class="batik-row" aria-label="Pola: lingkaran, belah ketupat, segitiga, lingkaran, belah ketupat, ... / Pattern: circle, diamond, triangle, circle, diamond, ...">
+    <li class="motif m-circle mc-sunny" aria-hidden="true"><i></i></li>
+    <li class="motif m-diamond mc-teal" aria-hidden="true"><i></i></li>
+    <li class="motif m-tri mc-bubble" aria-hidden="true"><i></i></li>
+    <li class="motif m-circle mc-sunny" aria-hidden="true"><i></i></li>
+    <li class="motif m-diamond mc-teal" aria-hidden="true"><i></i></li>
+    <li class="motif gap" aria-label="Kotak kosong / Empty slot">?</li>
+  </ul>
+  <p class="muted" style="text-align: center"><span lang="id">Ketuk bentuk yang cocok, lalu tekan Periksa.</span><span lang="en">Tap the shape that fits, then press Check.</span></p>
+  <!-- Alternatif ketuk (tanpa seret): pilih bentuk = masuk ke kotak kosong -->
+  <ul class="batik-choices" aria-label="Pilihan bentuk / Shape choices">
+    <li><button type="button" aria-pressed="false" aria-label="Lingkaran / Circle"><span class="motif m-circle mc-sunny"><i></i></span><span lang="id">Lingkaran</span><span lang="en">Circle</span></button></li>
+    <li><button type="button" aria-pressed="false" aria-label="Belah ketupat / Diamond"><span class="motif m-diamond mc-teal"><i></i></span><span lang="id">Belah ketupat</span><span lang="en">Diamond</span></button></li>
+    <li><button type="button" aria-pressed="true" aria-label="Segitiga, dipilih / Triangle, selected"><span class="motif m-tri mc-bubble"><i></i></span><span lang="id">Segitiga</span><span lang="en">Triangle</span></button></li>
+  </ul>
+  <p class="design-note"><strong>Catatan desain:</strong> bentuk dibedakan oleh <em>bentuk</em> (bukan hanya warna) dan diberi nama teks; terpilih = ✓ + latar Sunny. Alternatif ketuk memenuhi FR-5 (seret tidak wajib). Pola 3–5 langkah, makin sulit per kelas (kelas 1–2: ABAB; 5–6: pola bertingkat). <code>prefers-reduced-motion</code>: tanpa animasi muncul. Tombol Jeda selalu terlihat.</p>
+</main>
+<nav class="bottom-bar" aria-label="Aksi"><a class="btn btn-block" href="game-batik-hasil.html"><span lang="id">Periksa</span><span lang="en">Check</span></a></nav>
+</body>
+</html>

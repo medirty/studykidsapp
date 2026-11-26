@@ -44,6 +44,10 @@ File: `landing-v2`, `beranda-v2` (kelas 1–2), `beranda-besar-v2` (kelas 5–6)
 - **Landing:** hanya hero (band Sunny) dan ubin mapel yang ceria; keunggulan, harga, FAQ tetap tenang.
 - **Animasi Kiko:** loncat kecil saat disentuh; dimatikan oleh `prefers-reduced-motion`.
 
+### Peta jalur & dunia mini game (T3.3, 26 Nov 2026) — menunggu B12
+
+File: `peta-belajar-v2` (unit = pulau, skill = simpul zig-zag, ≥ 72 px; selesai ✓ + bintang, tersedia ▶, terkunci 🔒 + garis putus-putus), `game-balon-v2` (dunia langit + awan, balon berkilau, Jeda selalu terlihat), `game-batik` + `game-batik-hasil` (lanjutkan pola; bentuk lingkaran/belah ketupat/segitiga + nama teks, alternatif ketuk). Gaya: `assets/peta-game-v2.css` (hanya token). Status tidak hanya warna; `prefers-reduced-motion` dicatat di tiap catatan desain.
+
 ### Kontras (rumus WCAG, sama dengan `contrast.test.ts`)
 
 | Mapel | Ubin | Teks ubin | Teks/ubin | Ilustrasi utama/ubin | Aksen/ubin |

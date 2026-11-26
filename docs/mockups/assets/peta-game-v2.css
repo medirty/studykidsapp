@@ -1,0 +1,55 @@
+/* Mockup v2 (CR-008): peta jalur + dunia mini game. Dimuat setelah mockup.css, mockup-v2.css, soal.css. Hanya token. */
+
+/* ---- Peta jalur: unit = pulau, skill = simpul. Status = ikon + teks (bukan warna saja) ---- */
+.island-v2 { position: relative; padding: var(--space-4); border-radius: var(--radius-md); background: var(--color-surface); border: 3px solid var(--color-ink); box-shadow: 0 4px 0 var(--color-ink); }
+.island-v2 > h2 { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-lg); margin: 0 0 var(--space-3); }
+.island-v2 > h2 img { width: 40px; height: 40px; padding: 4px; border-radius: var(--radius-sm); background: var(--subject-color, var(--subject-math)); }
+.island-v2.is-locked { border-style: dashed; box-shadow: none; background: var(--color-bg); }
+.trail { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-4); position: relative; }
+/* garis jalur putus-putus di belakang simpul */
+.trail::before { content: ''; position: absolute; top: 24px; bottom: 24px; left: 50%; border-left: 4px dotted var(--color-line); transform: translateX(-2px); }
+.stop { position: relative; display: flex; align-items: center; gap: var(--space-3); width: 78%; min-height: 72px; padding: var(--space-2) var(--space-3); border: 3px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-ink); text-decoration: none; }
+.trail > li:nth-child(odd) .stop { margin-right: auto; }
+.trail > li:nth-child(even) .stop { margin-left: auto; }
+.stop .dot { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: var(--radius-full); border: 3px solid var(--color-ink); background: var(--color-bg); font: var(--weight-heading) var(--text-lg) var(--font-heading); }
+.stop .name { display: block; font: var(--weight-heading) var(--text-md) var(--font-heading); line-height: var(--leading-tight); }
+.stop small { display: block; font-size: var(--text-xs); color: var(--color-ink); }
+.stop.done .dot { background: var(--color-success); }
+.stop.open { background: var(--color-sunny); box-shadow: 0 4px 0 var(--color-ink); }
+.stop.open .dot { background: var(--color-surface); }
+.stop.lock { border-style: dashed; background: var(--color-bg); }
+.stop.lock .dot { border-style: dashed; }
+.chest { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); font-weight: var(--weight-strong); }
+.island-gap { text-align: center; font-size: var(--text-xl); margin: 0; }
+
+/* ---- Dunia Balon Angka: langit, awan, balon berkilau ---- */
+.world-sky { position: relative; overflow: hidden; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin: 0; padding: var(--space-4) var(--space-3); list-style: none; min-height: 320px; align-content: space-around; justify-items: center; border: 3px solid var(--color-ink); border-radius: var(--radius-md); background: var(--subject-math); }
+.cloud { position: absolute; width: 96px; height: 30px; border-radius: var(--radius-full); background: var(--color-surface); opacity: 0.95; }
+.cloud::before { content: ''; position: absolute; left: 18px; top: -16px; width: 44px; height: 36px; border-radius: var(--radius-full); background: inherit; }
+.cloud.c1 { top: 12px; left: -16px; }
+.cloud.c2 { top: 150px; right: -24px; }
+.world-sky > li { position: relative; z-index: 1; }
+.world-sky .balloon { position: relative; box-shadow: 0 4px 0 var(--color-ink); }
+.world-sky .balloon::before { content: ''; position: absolute; top: 12px; left: 14px; width: 14px; height: 20px; border-radius: var(--radius-full); background: var(--color-surface); opacity: 0.7; transform: rotate(20deg); }
+.world-sky .balloon.popped { box-shadow: 0 0 0 4px var(--color-success); }
+.world-sky .balloon.popped::before { display: none; }
+.g-top-v2 { background: var(--color-sunny); border-bottom: 3px solid var(--color-ink); }
+
+/* ---- Pola Batik: lanjutkan pola. Bentuk dibedakan oleh BENTUK (lingkaran/belah ketupat/segitiga), bukan warna saja ---- */
+.batik-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-2); margin: 0; padding: var(--space-3); list-style: none; border: 3px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-surface); }
+.motif { display: grid; place-items: center; width: 52px; height: 52px; }
+.motif i { display: block; width: 44px; height: 44px; background: var(--motif-color); }
+.m-circle i { border-radius: var(--radius-full); }
+.m-diamond i { width: 34px; height: 34px; transform: rotate(45deg); border-radius: 4px; }
+.m-tri i { clip-path: polygon(50% 4%, 96% 94%, 4% 94%); }
+.mc-sunny { --motif-color: var(--color-sunny); }
+.mc-teal { --motif-color: var(--color-teal); }
+.mc-bubble { --motif-color: var(--color-bubblegum); }
+.motif.gap { border: 3px dashed var(--color-ink); border-radius: var(--radius-md); font: var(--weight-heading) var(--text-xl) var(--font-heading); color: var(--color-ink); }
+.motif.filled { border: 3px solid var(--color-success); border-radius: var(--radius-md); }
+.batik-choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); list-style: none; margin: 0; padding: 0; }
+.batik-choices button { display: grid; place-items: center; gap: var(--space-1); width: 100%; min-height: 96px; padding: var(--space-2); border: 3px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-ink); font: var(--weight-strong) var(--text-xs) var(--font-body); cursor: pointer; }
+.batik-choices button[aria-pressed='true'] { background: var(--color-sunny); box-shadow: 0 4px 0 var(--color-ink); }
+.batik-choices button[aria-pressed='true']::after { content: '✓'; font-size: var(--text-md); }
+
+@media (prefers-reduced-motion: reduce) { .world-sky *, .batik-row * { animation: none !important; transition: none !important; } }
