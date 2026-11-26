@@ -44,6 +44,7 @@ test('Pilih kelas & Beranda: tanpa scroll horizontal + axe bersih', async ({ pag
 test('bahasa pilihan bertahan setelah reload (tanpa dan dengan profil)', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: /Ganti bahasa/ }).click();
+  await expect(page.getByRole('button', { name: /Switch language/i })).toBeVisible(); // tersimpan
   await page.reload();
   await expect(page.getByRole('button', { name: /Switch language/i })).toBeVisible();
 
@@ -53,6 +54,7 @@ test('bahasa pilihan bertahan setelah reload (tanpa dan dengan profil)', async (
   await page.getByRole('button', { name: 'Start learning' }).click();
   await expect(page.getByRole('heading', { level: 2, name: 'Hi, Dina!' })).toBeVisible();
   await page.getByRole('button', { name: /Switch language/i }).click();
+  await expect(page.getByRole('button', { name: /Ganti bahasa/ })).toBeVisible(); // tersimpan
   await page.reload();
   await expect(page.getByRole('heading', { level: 2, name: 'Halo, Dina!' })).toBeVisible();
 });
