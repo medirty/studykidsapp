@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landing v2 — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/mockup-v2.css">
+<script src="assets/mockup.js" defer></script>
+<style>
+  .hero { display: grid; gap: var(--space-4); align-items: center; text-align: center; }
+  .hero h1 { font-size: var(--text-2xl); }
+  .hero .kiko-btn img { width: 180px; margin: 0 auto; }
+  .grid { display: grid; gap: var(--space-3); list-style: none; padding: 0; margin: 0; }
+  .price { text-align: center; }
+  .price strong { font: var(--weight-heading) var(--text-3xl) var(--font-heading); display: block; }
+  details { border-bottom: 1px solid var(--color-line); padding: var(--space-3) 0; }
+  summary { cursor: pointer; font-weight: var(--weight-strong); min-height: var(--tap-min); display: flex; align-items: center; }
+  .note { font-size: var(--text-xs); color: var(--color-ink-soft); }
+  .tiles .tile { cursor: default; }
+  @media (min-width: 768px) {
+    .hero { grid-template-columns: 1fr 1fr; text-align: left; padding: var(--space-6); }
+    .hero .kiko-btn img { width: 280px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <a href="index.html"><img src="../brand/logo-horizontal.svg" alt="StudyKids"></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <!-- Ceria: hero (band Sunny) + ubin mapel. Tenang: keunggulan, harga, FAQ (dibaca orang tua). -->
+  <section class="band band-sunny hero" aria-labelledby="h-hero">
+    <div class="stack">
+      <h1 id="h-hero"><span lang="id">Belajar SD jadi seru bareng Kiko!</span><span lang="en">Primary learning gets fun with Kiko!</span></h1>
+      <p><span lang="id">Latihan soal kelas 1–6, 8 mata pelajaran, dalam Bahasa Indonesia &amp; English. Cukup beberapa menit sehari.</span><span lang="en">Practice for grades 1–6, 8 subjects, in Indonesian &amp; English. Just a few minutes a day.</span></p>
+      <a class="btn btn-block" href="pilih-kelas.html"><span lang="id">Coba Gratis</span><span lang="en">Try for Free</span></a>
+    </div>
+    <button class="kiko-btn" id="kiko" type="button" aria-label="Sentuh Kiko"><img src="../brand/kiko/kiko-senang.svg" alt=""></button>
+  </section>
+
+  <section class="stack" aria-labelledby="h-subj">
+    <h2 id="h-subj"><span lang="id">8 mata pelajaran</span><span lang="en">8 subjects</span></h2>
+    <ul class="tiles">
+      <li><div class="tile" style="--subject-color: var(--subject-math); --tile-text: var(--subject-math-text)"><span class="tag"><span aria-hidden="true">✓</span> <span lang="id">Gratis</span><span lang="en">Free</span></span><img src="../brand/subject/subject-math.svg" alt=""><span>Math</span></div></li>
+      <li><div class="tile" style="--subject-color: var(--subject-english); --tile-text: var(--subject-english-text)"><img src="../brand/subject/subject-english.svg" alt=""><span>English</span></div></li>
+      <li><div class="tile" style="--subject-color: var(--subject-science); --tile-text: var(--subject-science-text)"><img src="../brand/subject/subject-science.svg" alt=""><span>Science</span></div></li>
+      <li><div class="tile" style="--subject-color: var(--subject-gp); --tile-text: var(--subject-gp-text)"><span class="tag"><span aria-hidden="true">✓</span> <span lang="id">Gratis</span><span lang="en">Free</span></span><img src="../brand/subject/subject-gp.svg" alt=""><span>Global Perspectives</span></div></li>
+      <li><div class="tile" style="--subject-color: var(--subject-wellbeing); --tile-text: var(--subject-wellbeing-text)"><img src="../brand/subject/subject-wellbeing.svg" alt=""><span>Wellbeing</span></div></li>
+      <li><div class="tile" style="--subject-color: var(--subject-art); --tile-text: var(--subject-art-text)"><span class="tag"><span aria-hidden="true">✓</span> <span lang="id">Gratis</span><span lang="en">Free</span></span><img src="../brand/subject/subject-art.svg" alt=""><span>Art &amp; Design</span></div></li>
+      <li><div class="tile" style="--subject-color: var(--subject-music); --tile-text: var(--subject-music-text)"><img src="../brand/subject/subject-music.svg" alt=""><span>Music</span></div></li>
+      <li><div class="tile" style="--subject-color: var(--subject-computing); --tile-text: var(--subject-computing-text)"><img src="../brand/subject/subject-computing.svg" alt=""><span>Computing &amp; Technology</span></div></li>
+    </ul>
+    <p class="note"><span lang="id">Versi gratis: Math, Global Perspectives, dan Art &amp; Design, unit 1–2.</span><span lang="en">Free version: Math, Global Perspectives, and Art &amp; Design, units 1–2.</span></p>
+  </section>
+
+  <section class="stack" aria-labelledby="h-why">
+    <h2 id="h-why"><span lang="id">Kenapa StudyKids?</span><span lang="en">Why StudyKids?</span></h2>
+    <ul class="grid grid-3">
+      <li class="card"><strong><span lang="id">Seru, bukan menakutkan</span><span lang="en">Fun, not scary</span></strong><p class="muted"><span lang="id">Salah itu wajar. Kiko selalu menyemangati.</span><span lang="en">Mistakes are okay. Kiko always cheers you on.</span></p></li>
+      <li class="card"><strong><span lang="id">Soal selalu baru</span><span lang="en">Always fresh questions</span></strong><p class="muted"><span lang="id">Latihan menyesuaikan kemampuan anak.</span><span lang="en">Practice adapts to your child's level.</span></p></li>
+      <li class="card"><strong><span lang="id">Aman untuk anak</span><span lang="en">Safe for kids</span></strong><p class="muted"><span lang="id">Tanpa iklan dan tanpa pelacak pihak ketiga.</span><span lang="en">No ads and no third-party trackers.</span></p></li>
+    </ul>
+  </section>
+
+  <section class="card price stack" aria-labelledby="h-price">
+    <h2 id="h-price"><span lang="id">Akses penuh, berlangganan</span><span lang="en">Full access, subscription</span></h2>
+    <strong>Rp50.000<small> / <span lang="id">bulan</span><span lang="en">month</span></small></strong>
+    <p class="note"><span lang="id">Angka contoh. Aslinya diambil dari server (/api/settings/public); di mode lokal dari config.</span><span lang="en">Sample numbers. Real values come from the server (/api/settings/public); in local mode from config.</span></p>
+  </section>
+
+  <section aria-labelledby="h-faq">
+    <h2 id="h-faq"><span lang="id">Pertanyaan umum</span><span lang="en">FAQ</span></h2>
+    <details><summary><span lang="id">Cocok untuk kelas berapa?</span><span lang="en">Which grades is it for?</span></summary><p><span lang="id">Kelas 1 sampai 6 SD, dengan materi terinspirasi kurikulum Cambridge Primary.</span><span lang="en">Primary grades 1 to 6, with content inspired by the Cambridge Primary curriculum.</span></p></details>
+    <details><summary><span lang="id">Apakah data anak aman?</span><span lang="en">Is my child's data safe?</span></summary><p><span lang="id">Kami hanya menyimpan nama panggilan, kelas, dan avatar. Tidak ada email, foto, atau lokasi anak.</span><span lang="en">We only store a nickname, grade and avatar. No child email, photo or location.</span></p></details>
+  </section>
+</main>
+<nav class="bottom-bar" aria-label="Aksi utama">
+  <a class="btn btn-block" href="pilih-kelas.html"><span lang="id">Coba Gratis</span><span lang="en">Try for Free</span></a>
+</nav>
+<script>
+  // Kiko bereaksi saat disentuh (contoh saja; di app = komponen Kiko + ekspresi senang/semangat).
+  (function () {
+    var b = document.getElementById('kiko'), img = b.querySelector('img'), n = 0;
+    var faces = ['kiko-semangat', 'kiko-kaget', 'kiko-senang'];
+    b.addEventListener('click', function () {
+      img.src = '../brand/kiko/' + faces[n++ % faces.length] + '.svg';
+      b.classList.remove('is-happy'); void b.offsetWidth; b.classList.add('is-happy');
+    });
+  })();
+</script>
+<footer class="container muted"><small><span lang="id">StudyKids tidak berafiliasi dengan Cambridge University Press &amp; Assessment.</span><span lang="en">StudyKids is not affiliated with Cambridge University Press &amp; Assessment.</span></small></footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beranda v2 kelas 1–2 — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/mockup-v2.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body data-grade-band="lower">
+<header class="app-header">
+  <a href="index.html"><img src="../brand/logo-horizontal.svg" alt="StudyKids"></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <!-- v2 kelas 1–2: band Sunny, Kiko bisa disentuh, ubin penuh warna besar (tap ≥ 72 px).
+       Suara: mengetuk ubin membacakan nama mapel (CR-008 no. 6, Web Speech, progressive enhancement). -->
+  <section class="band band-sunny row" aria-labelledby="h-hi" style="flex-wrap: nowrap">
+    <button class="kiko-btn" id="kiko" type="button" aria-label="Sentuh Kiko"><img src="../brand/kiko/kiko-senang.svg" alt=""></button>
+    <div>
+      <h1 id="h-hi" style="margin: 0"><span lang="id">Hai, Pipo!</span><span lang="en">Hi, Pipo!</span></h1>
+      <p class="bubble" style="margin: var(--space-2) 0 0"><span lang="id">Seru! Kiko senang kamu datang lagi.</span><span lang="en">Yay! Kiko is happy you are back.</span></p>
+    </div>
+    <button class="btn btn-secondary" style="margin-left: auto; min-width: 72px; min-height: 72px; padding: 0" type="button" aria-label="Bacakan halaman ini"><span aria-hidden="true">🔊</span></button>
+  </section>
+
+  <section class="band band-teal stack" aria-labelledby="h-stat">
+    <h2 id="h-stat" style="font-size: var(--text-md)"><span lang="id">Perjalananmu</span><span lang="en">Your journey</span></h2>
+    <ul class="stat-tiles">
+      <li><strong>🔥 3</strong><span lang="id">hari belajar</span><span lang="en">learning days</span></li>
+      <li><strong>⭐ 120</strong>XP</li>
+      <li><strong>Level 4</strong><span lang="id">Penjelajah</span><span lang="en">Explorer</span></li>
+    </ul>
+    <div class="xp" role="progressbar" aria-label="XP menuju level 5" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+    <a class="btn btn-block" style="min-height: 72px; font-size: var(--text-lg)" href="peta-belajar.html"><span lang="id">Lanjut belajar Math</span><span lang="en">Keep learning Math</span></a>
+  </section>
+
+  <section class="stack" aria-labelledby="h-sub">
+    <h2 id="h-sub"><span lang="id">Pilih pelajaran</span><span lang="en">Choose a subject</span></h2>
+    <ul class="tiles">
+      <li><a class="tile" style="--subject-color: var(--subject-math); --tile-text: var(--subject-math-text)" href="peta-belajar.html"><span class="tag"><span aria-hidden="true">✓</span> <span lang="id">Gratis</span><span lang="en">Free</span></span><img src="../brand/subject/subject-math.svg" alt=""><span>Math</span><small><span lang="id">Unit 1–2</span><span lang="en">Units 1–2</span></small></a></li>
+      <li><a class="tile is-locked" style="--subject-color: var(--subject-english); --tile-text: var(--subject-english-text)" href="pilih-kelas.html"><span class="tag"><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></span><img src="../brand/subject/subject-english.svg" alt=""><span>English</span></a></li>
+      <li><a class="tile is-locked" style="--subject-color: var(--subject-science); --tile-text: var(--subject-science-text)" href="pilih-kelas.html"><span class="tag"><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></span><img src="../brand/subject/subject-science.svg" alt=""><span>Science</span></a></li>
+      <li><a class="tile" style="--subject-color: var(--subject-gp); --tile-text: var(--subject-gp-text)" href="peta-belajar.html"><span class="tag"><span aria-hidden="true">✓</span> <span lang="id">Gratis</span><span lang="en">Free</span></span><img src="../brand/subject/subject-gp.svg" alt=""><span>Global Perspectives</span><small><span lang="id">Unit 1–2</span><span lang="en">Units 1–2</span></small></a></li>
+      <li><a class="tile is-locked" style="--subject-color: var(--subject-wellbeing); --tile-text: var(--subject-wellbeing-text)" href="pilih-kelas.html"><span class="tag"><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></span><img src="../brand/subject/subject-wellbeing.svg" alt=""><span>Wellbeing</span></a></li>
+      <li><a class="tile" style="--subject-color: var(--subject-art); --tile-text: var(--subject-art-text)" href="peta-belajar.html"><span class="tag"><span aria-hidden="true">✓</span> <span lang="id">Gratis</span><span lang="en">Free</span></span><img src="../brand/subject/subject-art.svg" alt=""><span>Art &amp; Design</span><small><span lang="id">Unit 1–2</span><span lang="en">Units 1–2</span></small></a></li>
+      <li><a class="tile is-locked" style="--subject-color: var(--subject-music); --tile-text: var(--subject-music-text)" href="pilih-kelas.html"><span class="tag"><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></span><img src="../brand/subject/subject-music.svg" alt=""><span>Music</span></a></li>
+      <li><a class="tile is-locked" style="--subject-color: var(--subject-computing); --tile-text: var(--subject-computing-text)" href="pilih-kelas.html"><span class="tag"><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></span><img src="../brand/subject/subject-computing.svg" alt=""><span>Computing &amp; Technology</span></a></li>
+    </ul>
+  </section>
+</main>
+<nav class="bottom-bar" aria-label="Menu">
+  <a class="btn btn-secondary" href="pilih-kelas.html"><span lang="id">Ganti profil</span><span lang="en">Switch profile</span></a>
+  <a class="btn btn-secondary" href="laporan.html"><span lang="id">Laporan</span><span lang="en">Report</span></a>
+</nav>
+<script>
+  // Kiko bereaksi saat disentuh (contoh saja; di app = komponen Kiko + ekspresi senang/semangat).
+  (function () {
+    var b = document.getElementById('kiko'), img = b.querySelector('img'), n = 0;
+    var faces = ['kiko-semangat', 'kiko-kaget', 'kiko-senang'];
+    b.addEventListener('click', function () {
+      img.src = '../brand/kiko/' + faces[n++ % faces.length] + '.svg';
+      b.classList.remove('is-happy'); void b.offsetWidth; b.classList.add('is-happy');
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beranda v2 kelas 5–6 — Mockup StudyKids</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/mockup.css">
+<link rel="stylesheet" href="assets/mockup-v2.css">
+<script src="assets/mockup.js" defer></script>
+</head>
+<body data-grade-band="upper">
+<header class="app-header">
+  <a href="index.html"><img src="../brand/logo-horizontal.svg" alt="StudyKids"></a>
+  <button class="btn btn-secondary" type="button" data-lang-toggle aria-label="ID / EN, ganti bahasa">ID / EN</button>
+</header>
+<main class="container stack">
+  <!-- v2 kelas 5–6: lebih kalem. Warna hanya di chip ikon, baris ringkas, Kiko kecil, tanpa 🔊 besar (PRD §9.1). -->
+  <section class="row" aria-labelledby="h-hi" style="flex-wrap: nowrap">
+    <button class="kiko-btn" id="kiko" type="button" aria-label="Sentuh Kiko"><img src="../brand/kiko/kiko-senang.svg" alt="" style="width: 56px"></button>
+    <div>
+      <h1 id="h-hi" style="margin: 0"><span lang="id">Hai, Bima!</span><span lang="en">Hi, Bima!</span></h1>
+      <p class="muted" style="margin: 0"><span lang="id">Kelas 5 · 🔥 3 hari belajar · ⭐ 640 XP · Level 9</span><span lang="en">Grade 5 · 🔥 3 learning days · ⭐ 640 XP · Level 9</span></p>
+    </div>
+  </section>
+
+  <section class="band band-sunny stack" aria-labelledby="h-go" style="padding: var(--space-3) var(--space-4)">
+    <h2 id="h-go" style="font-size: var(--text-md); margin: 0"><span lang="id">Lanjutkan: Math — Pecahan</span><span lang="en">Continue: Math — Fractions</span></h2>
+    <div class="xp" role="progressbar" aria-label="Progres unit" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+    <a class="btn btn-block" href="peta-belajar.html"><span lang="id">Lanjut belajar</span><span lang="en">Keep learning</span></a>
+  </section>
+
+  <section class="stack" aria-labelledby="h-sub">
+    <h2 id="h-sub"><span lang="id">Mata pelajaran</span><span lang="en">Subjects</span></h2>
+    <ul class="rows">
+      <li><a class="row-tile" style="--subject-color: var(--subject-math)" href="peta-belajar.html"><span class="chip"><img src="../brand/subject/subject-math.svg" alt=""></span>Math<small><span aria-hidden="true">✓</span> <span lang="id">Gratis · Unit 1–2</span><span lang="en">Free · Units 1–2</span></small></a></li>
+      <li><a class="row-tile" style="--subject-color: var(--subject-english)" href="pilih-kelas.html"><span class="chip"><img src="../brand/subject/subject-english.svg" alt=""></span>English<small><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></small></a></li>
+      <li><a class="row-tile" style="--subject-color: var(--subject-science)" href="pilih-kelas.html"><span class="chip"><img src="../brand/subject/subject-science.svg" alt=""></span>Science<small><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></small></a></li>
+      <li><a class="row-tile" style="--subject-color: var(--subject-gp)" href="peta-belajar.html"><span class="chip"><img src="../brand/subject/subject-gp.svg" alt=""></span>Global Perspectives<small><span aria-hidden="true">✓</span> <span lang="id">Gratis · Unit 1–2</span><span lang="en">Free · Units 1–2</span></small></a></li>
+      <li><a class="row-tile" style="--subject-color: var(--subject-wellbeing)" href="pilih-kelas.html"><span class="chip"><img src="../brand/subject/subject-wellbeing.svg" alt=""></span>Wellbeing<small><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></small></a></li>
+      <li><a class="row-tile" style="--subject-color: var(--subject-art)" href="peta-belajar.html"><span class="chip"><img src="../brand/subject/subject-art.svg" alt=""></span>Art &amp; Design<small><span aria-hidden="true">✓</span> <span lang="id">Gratis · Unit 1–2</span><span lang="en">Free · Units 1–2</span></small></a></li>
+      <li><a class="row-tile" style="--subject-color: var(--subject-music)" href="pilih-kelas.html"><span class="chip"><img src="../brand/subject/subject-music.svg" alt=""></span>Music<small><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></small></a></li>
+      <li><a class="row-tile" style="--subject-color: var(--subject-computing)" href="pilih-kelas.html"><span class="chip"><img src="../brand/subject/subject-computing.svg" alt=""></span>Computing &amp; Technology<small><span aria-hidden="true">🔒</span> <span lang="id">Terkunci</span><span lang="en">Locked</span></small></a></li>
+    </ul>
+  </section>
+</main>
+<nav class="bottom-bar" aria-label="Menu">
+  <a class="btn btn-secondary" href="pilih-kelas.html"><span lang="id">Ganti profil</span><span lang="en">Switch profile</span></a>
+  <a class="btn btn-secondary" href="laporan.html"><span lang="id">Laporan</span><span lang="en">Report</span></a>
+</nav>
+<script>
+  // Kiko bereaksi saat disentuh (contoh saja; di app = komponen Kiko + ekspresi senang/semangat).
+  (function () {
+    var b = document.getElementById('kiko'), img = b.querySelector('img'), n = 0;
+    var faces = ['kiko-semangat', 'kiko-kaget', 'kiko-senang'];
+    b.addEventListener('click', function () {
+      img.src = '../brand/kiko/' + faces[n++ % faces.length] + '.svg';
+      b.classList.remove('is-happy'); void b.offsetWidth; b.classList.add('is-happy');
+    });
+  })();
+</script>
+</body>
+</html>
