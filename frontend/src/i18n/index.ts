@@ -1,8 +1,9 @@
 import en from './en.json';
 import id from './id.json';
-import { i18nState, persistLocale, type Locale } from './state.svelte';
+import { hasStoredLocale, i18nState, persistLocale, type Locale } from './state.svelte';
 
 export type { Locale };
+export { hasStoredLocale };
 export type MessageKey = keyof typeof id;
 
 const messages: Record<Locale, Record<MessageKey, string>> = { id, en };

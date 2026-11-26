@@ -10,6 +10,14 @@ function readStored(): Locale {
   }
 }
 
+export function hasStoredLocale(): boolean {
+  try {
+    return localStorage.getItem(STORAGE_KEY) !== null;
+  } catch {
+    return false;
+  }
+}
+
 export const i18nState = $state<{ locale: Locale }>({ locale: readStored() });
 
 export function persistLocale(locale: Locale): void {

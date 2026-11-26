@@ -14,6 +14,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/). Versi memakai 
 
 ### Diperbaiki
 - Migrasi `settings`: kolom `key` NOT NULL agar jalan di MySQL 8 (sebelumnya hanya lolos di MariaDB) (T0.10).
+- Bahasa pilihan tidak lagi kembali ke Indonesia bila halaman di-reload sebelum penyimpanan Dexie selesai: `SettingsStore.load()` kini memakai pilihan di localStorage (ditulis sinkron) dan hanya jatuh ke Dexie bila localStorage kosong. Regresi T3.1 (L-8, UI dulu); membuat E2E `profile.spec.ts` bahasa gagal acak di CI (main merah sejak #81).
 
 ### Diubah
 - PRD v1.7: aturan subagent dan auto-merge PR (CR-001).
