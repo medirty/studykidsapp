@@ -7,7 +7,7 @@
 
 - **Fase aktif:** 2 — Fondasi FE (rencana dibuat 25 Nov 2026: `docs/plans/phase-2.md`). Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
 - **Posisi terakhir (tutup hari 25 Nov 2026):** Fase 1 disetujui (PR #55 ter-merge, tag `phase-1-approved`); rencana Fase 2 (T2.0–T2.12) dibuat di PR #56 (belum di-merge). Tidak ada task setengah jalan; belum ada kode Fase 2. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** T2.1 `[sonnet]` (`/next`). T2.0 selesai 26 Nov 2026 (PR ADR D-011). **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** T2.2 `[sonnet]` (`/next`). T2.0 & T2.1 selesai 26 Nov 2026. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 2 — Fondasi FE (rencana: `docs/plans/phase-2.md`)
@@ -15,7 +15,8 @@
 ### Task
 - [x] T2.0 `[opus]` ADR arsitektur FE: route, store, skema Dexie v1, `api.ts` adapter, set ikon, DOM test env (§10, §11, §12.2)
   - Bukti (26 Nov 2026, delegasi → architect; rencana `docs/plans/phase-2-T2.0.md`): ADR **D-011** di `DECISIONS.md` (status "diusulkan") mencakup a–f: hash routing `svelte-spa-router` (Landing/pilih-profil/beranda eager, sisanya lazy), store runes `.svelte.ts`, Dexie v1 (`profiles`, `settings`, `progressEvents` PK `clientEventId`, `skillMastery`, `syncQueue`; tanpa email/HP/foto/lokasi), interface `Api` + adapter `local`/`api`, ikon SVG sendiri, jsdom per-file. Tipe di `frontend/src/services/types.ts`. `npm run check` hijau (eslint+prettier, svelte-check 0 error, vitest 28/28, JS awal 16,81 KB gzip — tidak berubah). **Catatan lanjutan:** T2.1 verifikasi setup `svelteTesting()` untuk Vitest 5; T2.6 fallback UUID v4 (Safari iOS 15.0–15.3) + `navigator.storage.persist()`; Fase 3 kemungkinan Dexie v2 (anti-repeat); Fase 4 putuskan data lokal saat logout & format `/settings/public`.
-- [ ] T2.1 `[sonnet]` Infrastruktur test komponen (Testing Library + DOM env, ADR dependency) (§15.1)
+- [x] T2.1 `[sonnet]` Infrastruktur test komponen (Testing Library + DOM env, ADR dependency) (§15.1)
+  - Bukti (26 Nov 2026): ADR **D-012** (`jsdom` ^31.0.1 + `@testing-library/svelte` ^5.4.2, MIT, dev-only); `vitest.config.ts` + `svelte()` + `svelteTesting()`, default env `node`, jsdom per-file. Test contoh `app.component.test.ts`. `npm run check` hijau (vitest 29/29, JS awal 16,81 KB gzip — tidak berubah). Tanpa `jest-dom`.
 - [ ] T2.2 `[sonnet]` i18n reaktif + `<html lang>` + penjaga teks hardcode (FR-3)
 - [ ] T2.3 `[sonnet]` Ikon SVG + komponen Kiko/Avatar + 12 avatar (FR-2, §9.4)
 - [ ] T2.4 `[sonnet]` Komponen UI dasar: Button, Card, Chip, ProgressBar, Stars, Modal, SubjectCard (§9.1, §9.2, §8.5)

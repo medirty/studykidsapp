@@ -299,3 +299,13 @@ D-001 s.d. D-007 dibuat di T0.3 (22 Nov 2026) sebagai acuan T0.4–T0.11. Rencan
 
 - **Alternatif:** (a) mode history: butuh rewrite di tiap hosting & `404.html` di Pages. (b) `svelte/store` `writable`: boilerplate subscribe, gaya Svelte 4. (c) satu tabel event dengan kolom `syncedAt` tanpa `syncQueue`: lebih sedikit tabel, tapi rencana fase meminta antrian terpisah yang nanti bisa memuat operasi selain progress. Prefs di tabel `settings` per profil: dua bentuk baris di satu tabel, tipe longgar. (d) fetch langsung dari store: test butuh mock jaringan, mode lokal sulit dijamin tanpa request. (e) emoji / Lucide. (f) happy-dom.
 - **Konsekuensi:** perkiraan JS awal setelah Fase 2 = 16,81 KB + router ±3 + workbox-window ±2 + layar alur pertama, komponen & store ±10–15 KB ≈ **35–40 KB** tanpa Dexie (±65–70 KB bila Dexie terpaksa statis), jauh di bawah 120 KB; angka nyata dicatat di T2.5/T2.6/T2.12. Tidak ada dependency baru di ADR ini; `jsdom`, `@testing-library/svelte`, dan (bila dipakai) `fake-indexeddb` diputuskan di ADR T2.1/T2.6.
+
+## D-012 — Dependency test komponen: jsdom + @testing-library/svelte (T2.1, 26 Nov 2026)
+
+- **Status:** diterapkan (melaksanakan D-011 f).
+- **Konteks:** Test komponen UI (E1 Fase 2) butuh DOM; engine/services tetap di environment `node`.
+- **Keputusan:** dua devDependency di `frontend/` (tidak masuk bundle produksi, 0 KB):
+  - `jsdom` ^31.0.1 — MIT, ±6,9 MB unpacked, Node ≥ 22.22 (D-004).
+  - `@testing-library/svelte` ^5.4.2 — MIT, ±38 KB, dukung Svelte 5; plugin `svelteTesting()` (auto-cleanup, resolve kondisi browser) ditambah ke `vitest.config.ts` bersama `svelte()`.
+- **Pemakaian:** test komponen memakai komentar `// @vitest-environment jsdom` di baris pertama; tanpa komentar = `node`. Tanpa `@testing-library/jest-dom` (assertion cukup dengan `expect` bawaan; tambah bila perlu dengan ADR).
+- **Alternatif:** `happy-dom` (lihat D-011 f).
