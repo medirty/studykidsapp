@@ -6,5 +6,8 @@
   "kiko.senang": "Kiko senang",
   "kiko.semangat": "Kiko semangat",
   "kiko.kaget": "Kiko kaget",
-  "kiko.tidur": "Kiko tidur"
+  "kiko.tidur": "Kiko tidur",
+  "ui.close": "Tutup",
+  "ui.stars": "{n} dari {max} bintang",
+  "ui.locked": "Terkunci"
 }

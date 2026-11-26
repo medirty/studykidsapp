@@ -6,5 +6,8 @@
   "kiko.senang": "Happy Kiko",
   "kiko.semangat": "Cheering Kiko",
   "kiko.kaget": "Surprised Kiko",
-  "kiko.tidur": "Sleeping Kiko"
+  "kiko.tidur": "Sleeping Kiko",
+  "ui.close": "Close",
+  "ui.stars": "{n} of {max} stars",
+  "ui.locked": "Locked"
 }
