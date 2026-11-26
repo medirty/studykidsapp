@@ -27,7 +27,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 | CR-005 | Ganti skill frontend-design dengan impeccable | Diterapkan (24 Nov 2026) | v1.11 |
 | CR-006 | Model bisnis: sekali bayar → langganan | Diterapkan dokumen (25 Nov 2026); kode di Fase 4–6 | v1.12 |
 | CR-007 | Warna English #8B5CF6 → #7C3AED | Diterapkan (25 Nov 2026) | v1.13 |
-| CR-008 | Arah visual "ceria penuh warna" untuk anak SD | Diterima (26 Nov 2026); pertanyaan 5 (ikon mapel vs §9.4) masih terbuka; kode di awal Fase 3 | v1.14 |
+| CR-008 | Arah visual "ceria penuh warna" untuk anak SD | Diterima, semua pertanyaan terjawab (26 Nov 2026); kode di awal Fase 3 | v1.14 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -159,7 +159,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
   2. Kelas 5–6: keceriaan diturunkan per band kelas (`data-grade-band`).
   3. Ilustrasi: dibuat Claude sebagai SVG selaras Kiko.
   4. Landing: hanya hero dan ubin mapel yang ceria; harga/FAQ tetap tenang.
-  5. **Ikon mapel vs larangan §9.4: BELUM DIJAWAB** (CR tidak punya rekomendasi untuk poin ini). Task ikon (T-CR8.4) tidak dimulai sebelum ada jawaban.
+  5. Ikon mapel: larangan §9.4 (buku, toga, pensil, papan tulis, apel, huruf ABC, bola lampu) **berlaku juga untuk ikon mapel** (opsi B, 26 Nov 2026). English dan Science memakai motif lain, mis. balon bicara dan tabung reaksi/planet.
   6. Suara: di kelas 1–2, mengetuk ubin mapel membacakan namanya (Web Speech, progressive enhancement).
   Persetujuan mockup baru oleh Bimo tetap wajib sebelum kode (CLAUDE.md).
 - **Status:** diterapkan di dokumen: PRD v1.14 (§9.1, §9.2, §14, riwayat) dan `PROGRESS.md` (backlog Fase 3). Kode menyusul sebagai task awal Fase 3 setelah `/plan-phase`.

@@ -426,7 +426,7 @@ Font: maksimal 2 keluarga font, self-hosted, `font-display: swap`, subset Latin.
 3. Feedback < 100 ms untuk setiap tap.
 4. Bahasa positif & menyemangati; tidak ada kata "salah besar/gagal".
 5. Maks. 3 level navigasi: Beranda → Mapel/Peta → Sesi.
-6. **Ceria penuh warna (CR-008).** Mapel dikenali dari ilustrasi/ikon besar dan warna penuh, bukan hanya teks atau garis tipis. Kiko hadir di Beranda dan bereaksi saat disentuh. Keceriaan diturunkan per band kelas lewat `data-grade-band` (kelas 5–6: ilustrasi lebih kecil, warna lebih kalem). Di kelas 1–2, mengetuk ubin mapel membacakan namanya (Web Speech, progressive enhancement). Animasi mengikuti `prefers-reduced-motion`. Landing: hanya hero dan ubin mapel yang ceria; harga/FAQ tetap tenang.
+6. **Ceria penuh warna (CR-008).** Mapel dikenali dari ilustrasi/ikon besar dan warna penuh, bukan hanya teks atau garis tipis. Kiko hadir di Beranda dan bereaksi saat disentuh. Keceriaan diturunkan per band kelas lewat `data-grade-band` (kelas 5–6: ilustrasi lebih kecil, warna lebih kalem). Ikon mapel mengikuti larangan visual §9.4 (tanpa buku, pensil, huruf ABC, bola lampu, apel, dst.). Di kelas 1–2, mengetuk ubin mapel membacakan namanya (Web Speech, progressive enhancement). Animasi mengikuti `prefers-reduced-motion`. Landing: hanya hero dan ubin mapel yang ceria; harga/FAQ tetap tenang.
 
 ### 9.2 Design system (token)
 
@@ -1128,4 +1128,4 @@ Masih terbuka:
 | 1.11 | 24 Nov 2026 | CR-005: plugin **frontend-design** diganti skill **impeccable** (desain UI + detektor "AI slop"); tanpa subagent bawaannya (§16.2). Lihat D-010. |
 | 1.12 | 25 Nov 2026 | CR-006: model bisnis **sekali bayar → langganan** (bulanan & tahunan = 10× bulanan). Early bird 100 pelanggan pertama (Rp50.000/bln) terkunci selama langganan tidak terputus; normal Rp100.000/bln; perpanjangan manual + pengingat email; masa tenggang 3 hari; progres tetap tersimpan saat kedaluwarsa. §1, §4.1 (K11), §4.2, §5.1–5.2, FR-10/11/13/14, §12 (`subscriptions`, `entitlements.expires_at`, `orders.type/period`, `activation_codes.duration_days`), §13, Fase 4 & 6. |
 | 1.13 | 25 Nov 2026 | CR-007: warna English `#8B5CF6` → `#7C3AED` (kontras putih 5,70:1, lolos AA). §9.2 diperbarui. |
-| 1.14 | 26 Nov 2026 | CR-008: arah visual "ceria penuh warna" untuk anak SD. §9.1 poin 6, §9.2 (token turunan: tint & teks per mapel; token lama tidak berubah), §14 baris Fase 3 (task awal penyegaran visual). Pertanyaan ikon mapel vs larangan §9.4 masih terbuka. |
+| 1.14 | 26 Nov 2026 | CR-008: arah visual "ceria penuh warna" untuk anak SD. §9.1 poin 6, §9.2 (token turunan: tint & teks per mapel; token lama tidak berubah), §14 baris Fase 3 (task awal penyegaran visual). Larangan visual §9.4 berlaku juga untuk ikon mapel. |
