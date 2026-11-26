@@ -1,0 +1,317 @@
+{
+  "id": "math.g1.u1",
+  "title": { "id": "Penjumlahan sampai 20", "en": "Addition to 20" },
+  "skills": [
+    {
+      "id": "math.g1.u1.s1",
+      "title": { "id": "Menjumlah dua bilangan satu angka", "en": "Adding two one-digit numbers" },
+      "generators": [
+        { "type": "arith.add", "params": { "digits": 1 }, "formats": ["mcq", "input", "tf"] }
+      ],
+      "explain": {
+        "id": "Mulai dari bilangan pertama, lalu hitung maju sebanyak bilangan kedua.",
+        "en": "Start at the first number, then count on by the second number."
+      }
+    },
+    {
+      "id": "math.g1.u1.s2",
+      "title": { "id": "Menjumlah tanpa melewati 10", "en": "Adding without going past 10" },
+      "generators": [
+        {
+          "type": "arith.add",
+          "params": { "digits": 1, "regroup": false },
+          "formats": ["mcq", "input", "tf"]
+        }
+      ],
+      "explain": {
+        "id": "Hasilnya tidak lebih dari 9. Gunakan jari untuk menghitung maju.",
+        "en": "The answer is 9 or less. Use your fingers to count on."
+      }
+    },
+    {
+      "id": "math.g1.u1.s3",
+      "title": { "id": "Cerita penjumlahan", "en": "Addition stories" },
+      "generators": [
+        {
+          "type": "bank",
+          "params": {
+            "items": [
+              {
+                "id": "i01",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Ani punya 3 apel. Ibu memberi 2 apel lagi. Berapa apel Ani sekarang?",
+                  "en": "Ani has 3 apples. Mum gives her 2 more. How many apples does Ani have now?"
+                },
+                "correct": [{ "text": { "id": "5", "en": "5" } }],
+                "wrong": [
+                  { "text": { "id": "4", "en": "4" } },
+                  { "text": { "id": "6", "en": "6" } },
+                  { "text": { "id": "1", "en": "1" } }
+                ]
+              },
+              {
+                "id": "i02",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Di kolam ada 4 bebek. Datang 3 bebek lagi. Berapa bebek di kolam?",
+                  "en": "There are 4 ducks in the pond. 3 more come. How many ducks are in the pond?"
+                },
+                "correct": [{ "text": { "id": "7", "en": "7" } }],
+                "wrong": [
+                  { "text": { "id": "6", "en": "6" } },
+                  { "text": { "id": "8", "en": "8" } },
+                  { "text": { "id": "1", "en": "1" } }
+                ]
+              },
+              {
+                "id": "i03",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Budi punya 5 kelereng merah dan 4 kelereng biru. Berapa semua kelereng Budi?",
+                  "en": "Budi has 5 red marbles and 4 blue marbles. How many marbles does he have?"
+                },
+                "correct": [{ "text": { "id": "9", "en": "9" } }],
+                "wrong": [
+                  { "text": { "id": "8", "en": "8" } },
+                  { "text": { "id": "10", "en": "10" } },
+                  { "text": { "id": "1", "en": "1" } }
+                ]
+              },
+              {
+                "id": "i04",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Di piring ada 6 kue. Kakak menaruh 2 kue lagi. Berapa kue di piring?",
+                  "en": "There are 6 cakes on the plate. Big sister adds 2 more. How many cakes are there?"
+                },
+                "correct": [{ "text": { "id": "8", "en": "8" } }],
+                "wrong": [
+                  { "text": { "id": "7", "en": "7" } },
+                  { "text": { "id": "9", "en": "9" } },
+                  { "text": { "id": "4", "en": "4" } }
+                ]
+              },
+              {
+                "id": "i05",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Siti membaca 7 halaman pagi ini dan 3 halaman sore ini. Berapa halaman yang ia baca?",
+                  "en": "Siti reads 7 pages this morning and 3 pages this afternoon. How many pages does she read?"
+                },
+                "correct": [{ "text": { "id": "10", "en": "10" } }],
+                "wrong": [
+                  { "text": { "id": "9", "en": "9" } },
+                  { "text": { "id": "11", "en": "11" } },
+                  { "text": { "id": "4", "en": "4" } }
+                ]
+              },
+              {
+                "id": "i06",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Di angkot ada 8 penumpang. Naik 2 orang lagi. Berapa penumpang sekarang?",
+                  "en": "There are 8 passengers in the minibus. 2 more get on. How many passengers are there now?"
+                },
+                "correct": [{ "text": { "id": "10", "en": "10" } }],
+                "wrong": [
+                  { "text": { "id": "9", "en": "9" } },
+                  { "text": { "id": "12", "en": "12" } },
+                  { "text": { "id": "6", "en": "6" } }
+                ]
+              },
+              {
+                "id": "i07",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Rina menanam 5 bunga di pot dan 5 bunga di taman. Berapa bunga yang ia tanam?",
+                  "en": "Rina plants 5 flowers in pots and 5 in the garden. How many flowers does she plant?"
+                },
+                "correct": [{ "text": { "id": "10", "en": "10" } }],
+                "wrong": [
+                  { "text": { "id": "9", "en": "9" } },
+                  { "text": { "id": "11", "en": "11" } },
+                  { "text": { "id": "0", "en": "0" } }
+                ]
+              },
+              {
+                "id": "i08",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Di dahan ada 9 burung. Datang 1 burung lagi. Berapa burung di dahan?",
+                  "en": "There are 9 birds on a branch. 1 more comes. How many birds are on the branch?"
+                },
+                "correct": [{ "text": { "id": "10", "en": "10" } }],
+                "wrong": [
+                  { "text": { "id": "9", "en": "9" } },
+                  { "text": { "id": "11", "en": "11" } },
+                  { "text": { "id": "8", "en": "8" } }
+                ]
+              },
+              {
+                "id": "i09",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Ayah membeli 6 telur, lalu 4 telur lagi. Berapa telur yang dibeli Ayah?",
+                  "en": "Dad buys 6 eggs, then 4 more. How many eggs does Dad buy?"
+                },
+                "correct": [{ "text": { "id": "10", "en": "10" } }],
+                "wrong": [
+                  { "text": { "id": "2", "en": "2" } },
+                  { "text": { "id": "9", "en": "9" } },
+                  { "text": { "id": "11", "en": "11" } }
+                ]
+              },
+              {
+                "id": "i10",
+                "format": "mcq",
+                "prompt": {
+                  "id": "Dodi punya 2 layang-layang. Paman memberi 7 lagi. Berapa layang-layang Dodi?",
+                  "en": "Dodi has 2 kites. Uncle gives him 7 more. How many kites does Dodi have?"
+                },
+                "correct": [{ "text": { "id": "9", "en": "9" } }],
+                "wrong": [
+                  { "text": { "id": "5", "en": "5" } },
+                  { "text": { "id": "8", "en": "8" } },
+                  { "text": { "id": "10", "en": "10" } }
+                ]
+              },
+              {
+                "id": "i11",
+                "format": "mcq",
+                "level": 2,
+                "prompt": {
+                  "id": "Di kelas ada 8 anak laki-laki dan 5 anak perempuan. Berapa semua anak?",
+                  "en": "There are 8 boys and 5 girls in the class. How many children are there?"
+                },
+                "correct": [{ "text": { "id": "13", "en": "13" } }],
+                "wrong": [
+                  { "text": { "id": "3", "en": "3" } },
+                  { "text": { "id": "12", "en": "12" } },
+                  { "text": { "id": "14", "en": "14" } }
+                ]
+              },
+              {
+                "id": "i12",
+                "format": "mcq",
+                "level": 2,
+                "prompt": {
+                  "id": "Mira punya 9 pensil. Ia membeli 4 pensil lagi. Berapa pensil Mira?",
+                  "en": "Mira has 9 pencils. She buys 4 more. How many pencils does Mira have?"
+                },
+                "correct": [{ "text": { "id": "13", "en": "13" } }],
+                "wrong": [
+                  { "text": { "id": "5", "en": "5" } },
+                  { "text": { "id": "12", "en": "12" } },
+                  { "text": { "id": "14", "en": "14" } }
+                ]
+              },
+              {
+                "id": "i13",
+                "format": "mcq",
+                "level": 2,
+                "prompt": {
+                  "id": "Di kebun ada 7 ayam dan 6 bebek. Berapa semua unggas di kebun?",
+                  "en": "There are 7 chickens and 6 ducks in the yard. How many birds are there?"
+                },
+                "correct": [{ "text": { "id": "13", "en": "13" } }],
+                "wrong": [
+                  { "text": { "id": "1", "en": "1" } },
+                  { "text": { "id": "12", "en": "12" } },
+                  { "text": { "id": "14", "en": "14" } }
+                ]
+              },
+              {
+                "id": "i14",
+                "format": "mcq",
+                "level": 2,
+                "prompt": {
+                  "id": "Bus membawa 10 penumpang. Naik 5 orang lagi. Berapa penumpang sekarang?",
+                  "en": "A bus carries 10 passengers. 5 more get on. How many passengers are there now?"
+                },
+                "correct": [{ "text": { "id": "15", "en": "15" } }],
+                "wrong": [
+                  { "text": { "id": "5", "en": "5" } },
+                  { "text": { "id": "14", "en": "14" } },
+                  { "text": { "id": "16", "en": "16" } }
+                ]
+              },
+              {
+                "id": "i15",
+                "format": "mcq",
+                "level": 3,
+                "prompt": {
+                  "id": "Toni mengumpulkan 8 kerang hari Sabtu dan 8 kerang hari Minggu. Berapa semua kerangnya?",
+                  "en": "Toni collects 8 shells on Saturday and 8 on Sunday. How many shells does he have?"
+                },
+                "correct": [{ "text": { "id": "16", "en": "16" } }],
+                "wrong": [
+                  { "text": { "id": "0", "en": "0" } },
+                  { "text": { "id": "15", "en": "15" } },
+                  { "text": { "id": "17", "en": "17" } }
+                ]
+              },
+              {
+                "id": "i16",
+                "format": "mcq",
+                "level": 3,
+                "prompt": {
+                  "id": "Di rak ada 9 buku cerita dan 9 buku gambar. Berapa semua bukunya?",
+                  "en": "There are 9 storybooks and 9 picture books on the shelf. How many books are there?"
+                },
+                "correct": [{ "text": { "id": "18", "en": "18" } }],
+                "wrong": [
+                  { "text": { "id": "0", "en": "0" } },
+                  { "text": { "id": "17", "en": "17" } },
+                  { "text": { "id": "19", "en": "19" } }
+                ]
+              },
+              {
+                "id": "i17",
+                "format": "tf",
+                "prompt": {
+                  "id": "Ada 4 kucing, lalu datang 4 kucing lagi. Sekarang ada 8 kucing.",
+                  "en": "There are 4 cats, then 4 more come. Now there are 8 cats."
+                },
+                "answer": true
+              },
+              {
+                "id": "i18",
+                "format": "tf",
+                "prompt": {
+                  "id": "Ani punya 5 permen, lalu diberi 3. Sekarang Ani punya 9 permen.",
+                  "en": "Ani has 5 sweets and gets 3 more. Now Ani has 9 sweets."
+                },
+                "answer": false
+              },
+              {
+                "id": "i19",
+                "format": "tf",
+                "prompt": {
+                  "id": "6 jeruk ditambah 4 jeruk sama dengan 10 jeruk.",
+                  "en": "6 oranges plus 4 oranges makes 10 oranges."
+                },
+                "answer": true
+              },
+              {
+                "id": "i20",
+                "format": "tf",
+                "level": 2,
+                "prompt": {
+                  "id": "7 balon ditambah 5 balon sama dengan 11 balon.",
+                  "en": "7 balloons plus 5 balloons makes 11 balloons."
+                },
+                "answer": false
+              }
+            ]
+          },
+          "formats": ["mcq", "tf"]
+        }
+      ],
+      "explain": {
+        "id": "Cari dua bilangan di cerita, lalu jumlahkan.",
+        "en": "Find the two numbers in the story, then add them."
+      }
+    }
+  ]
+}
