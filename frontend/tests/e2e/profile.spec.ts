@@ -40,3 +40,19 @@ test('Pilih kelas & Beranda: tanpa scroll horizontal + axe bersih', async ({ pag
     expect(bad, JSON.stringify(bad, null, 2)).toEqual([]);
   }
 });
+
+test('bahasa pilihan bertahan setelah reload (tanpa dan dengan profil)', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /Ganti bahasa/ }).click();
+  await page.reload();
+  await expect(page.getByRole('button', { name: /Switch language/i })).toBeVisible();
+
+  await page.goto('/#/start');
+  await page.getByText('Grade 3', { exact: true }).click();
+  await page.getByLabel('Nickname').fill('Dina');
+  await page.getByRole('button', { name: 'Start learning' }).click();
+  await expect(page.getByRole('heading', { level: 2, name: 'Hi, Dina!' })).toBeVisible();
+  await page.getByRole('button', { name: /Switch language/i }).click();
+  await page.reload();
+  await expect(page.getByRole('heading', { level: 2, name: 'Halo, Dina!' })).toBeVisible();
+});

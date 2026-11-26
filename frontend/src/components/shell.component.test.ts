@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
-import { fireEvent, render, screen } from '@testing-library/svelte';
+import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
+import 'fake-indexeddb/auto';
 import { expect, test, vi } from 'vitest';
 import App from '../App.svelte';
 import { getLocale, setLocale } from '../i18n';
@@ -10,6 +11,6 @@ test('header: toggle ID/EN mengganti locale; Landing tampil', async () => {
   render(App);
   expect((await screen.findByRole('heading', { level: 1 })).textContent).toContain('Kiko');
   await fireEvent.click(screen.getByRole('button', { name: /Ganti bahasa/ }));
-  expect(getLocale()).toBe('en');
+  await waitFor(() => expect(getLocale()).toBe('en'));
   setLocale('id');
 });
