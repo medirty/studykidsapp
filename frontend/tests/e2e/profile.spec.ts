@@ -50,8 +50,16 @@ test('bahasa pilihan bertahan setelah reload (tanpa dan dengan profil)', async (
   try {
     await body(page);
   } catch (e) {
-    const st = await page.evaluate(() => ({ url: location.href, ls: JSON.stringify(localStorage), body: document.body.innerText.slice(0, 300) })).catch((x) => String(x));
-    throw new Error(`DIAG ${JSON.stringify(st)} LOGS ${logs.join(' | ')} ORIG ${String(e).slice(0, 200)}`);
+    const st = await page
+      .evaluate(() => ({
+        url: location.href,
+        ls: JSON.stringify(localStorage),
+        body: document.body.innerText.slice(0, 300),
+      }))
+      .catch((x) => String(x));
+    throw new Error(
+      `DIAG ${JSON.stringify(st)} LOGS ${logs.join(' | ')} ORIG ${String(e).slice(0, 200)}`,
+    );
   }
 });
 
