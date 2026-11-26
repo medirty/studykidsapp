@@ -5,9 +5,9 @@
 
 ## Status
 
-- **Fase aktif:** 2 — Fondasi FE (rencana dibuat 25 Nov 2026: `docs/plans/phase-2.md`). Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
+- **Fase aktif:** 2 — Fondasi FE **disetujui** Bimo 26 Nov 2026 (tag `phase-2-approved`; gate: `docs/plans/gate-phase-2.md`, 9 temuan Minor L-1..L-9 dibawa ke Fase 3). Fase berikut: 3 — Engine + Demo (butuh `/plan-phase`). Rencana Fase 2: `docs/plans/phase-2.md`. Fase 1 **disetujui** Bimo 25 Nov 2026 (tag `phase-1-approved`). Riwayat Fase 1 (rencana dibuat 24 Nov 2026, `docs/plans/phase-1.md`; pertanyaan Fase 1 terjawab, T1.0–T1.15 selesai, B10 disetujui, B11 disetujui, gate selesai: siap untuk persetujuan Bimo, lihat `docs/plans/gate-phase-1.md`)
 - **Posisi terakhir (tutup hari 25 Nov 2026):** Fase 1 disetujui (PR #55 ter-merge, tag `phase-1-approved`); rencana Fase 2 (T2.0–T2.12) dibuat di PR #56 (belum di-merge). Tidak ada task setengah jalan; belum ada kode Fase 2. Branch lokal basi bisa dihapus (`chore/f1-cleanup-gate0`, `docs/f1-plan*`, `feat/f1-logo-kiko`).
-- **Task berikutnya:** Gate Fase 2 (`/gate`). T2.0–T2.12 selesai 26 Nov 2026. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
+- **Task berikutnya:** `/plan-phase` untuk Fase 3. T2.0–T2.12 selesai 26 Nov 2026. **Catatan sesi berikut:** restart Claude Desktop agar `mysql` di PATH aktif (satu-satunya ✗ di doctor); mojibake `â€”` di `docs/setup/BOOTSTRAP.md` belum diperbaiki (di luar scope).
 - **Persetujuan fase:** Fase 0 **disetujui** Bimo (24 Nov 2026) setelah T0.12a, T0.12, `/gate`, dan B8 selesai. Tag `phase-0-approved`. Fase berikut: 1 — Mockup & Brand (butuh `/plan-phase`). Temuan gate yang belum dikerjakan: M-1 (pecah job deploy Pages), L-1 (Dependabot #19/#20), B1 domain.
 
 ## Fase 2 — Fondasi FE (rencana: `docs/plans/phase-2.md`)
@@ -41,7 +41,7 @@
   - Bukti (26 Nov 2026): Pages `/studykidsapp/` (deploy #68 sukses): `/`, `manifest.webmanifest`, `sw.js`, `/mockups/` → 200; aset `/studykidsapp/assets/*`, manifest `start_url "."`. Lighthouse mobile di Pages: Performance 1, A11y 1, Best Practices 0,96, SEO 1. `npm run check` hijau (vitest 84/84, JS awal 34,38 KB gzip, CSS 2,32 KB). `npm run test:e2e` → 171 lolos. `setup-node` di `deploy-pages.yml` → v7. **Tabel E1–E4:** E1 vitest 84 lolos (T2.1/2.4/2.5/2.8); E2 Landing 1,0/SEO 1 di Pages (Beranda: Lighthouse lokal di T2.11 hanya URL landing — Beranda butuh profil, belum diukur); E3 test i18n T2.2; E4 E2E PWA (manifest, SW, offline) T2.9. **Belum:** install PWA di HP/desktop nyata & cek visual 360 px oleh Bimo.
 - [x] Fix B-1 (gate Fase 2): `AppHeader` memakai `settings.setLocale`; E2E ganti bahasa → reload; `npm run check` hijau (84 test), e2e profile 12/12 (26 Nov 2026)
 - [x] Fix B-2 (Lighthouse CI merah): `numberOfRuns: 3` + `VITE_API_MODE=local` di job lighthouse (PR #71 di-merge atas persetujuan Bimo, 26 Nov 2026; kestabilan di main masih dipantau); pengurangan Dexie di Landing ditunda sampai terbukti perlu
-- [ ] Gate `[opus]` `/gate` → Bimo menulis "Fase 2 disetujui" → tag `phase-2-approved`
+- [x] Gate `[opus]` `/gate` → Bimo menulis "Fase 2 disetujui" (26 Nov 2026) → tag `phase-2-approved`
 
 ### Default yang dipakai (bisa diubah Bimo)
 1. Komponen soal (`components/question/*`) dikerjakan di Fase 3 bersama engine.
