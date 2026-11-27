@@ -45,9 +45,8 @@ test('profile and progress survive a reload, without network requests', async ({
       ...{ clientEventId: 'e-e2e', profileId: 'p-e2e', skillId: 'math.add', correct: true },
       ...{ format: 'mcq' as const, difficulty: 1, durationMs: 1000, createdAt: at },
     };
-    const mastery = { profileId: 'p-e2e', skillId: 'math.add', mastery: 10, attempts: 1 };
-    await api.recordProgress(event, { ...mastery, lastPracticedAt: at });
-    await api.recordProgress(event, { ...mastery, mastery: 99, lastPracticedAt: at });
+    await api.recordProgress(event);
+    await api.recordProgress({ ...event, correct: false }); // same clientEventId: ignored
   });
   expect(requests).toEqual([]);
 
@@ -58,5 +57,6 @@ test('profile and progress survive a reload, without network requests', async ({
     return { profiles: await api.listProfiles(), mastery: await api.listMastery('p-e2e') };
   });
   expect(after.profiles.map((p) => p.nickname)).toEqual(['Kiko']);
-  expect(after.mastery.map((m) => m.mastery)).toEqual([10]);
+  expect(after.mastery.map((m) => m.mastery)).toEqual([100]);
+  expect(after.profiles[0].xp).toBe(10);
 });

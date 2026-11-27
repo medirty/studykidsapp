@@ -26,7 +26,8 @@ export const localApi: Api = {
     const row = cleanProfile(profile);
     const d = await db();
     const isFirst = (await d.profiles.count()) === 0;
-    await d.profiles.put(row);
+    // Merge into an existing row: xp/streak belong to recordProgress, a stale store copy must not reset them.
+    await d.profiles.put({ ...(await d.profiles.get(row.id)), ...row });
     // Ask the browser not to evict data (Safari 7-day rule, ADR D-011 c); result is advisory.
     if (isFirst) await navigator.storage?.persist?.().catch(() => false);
   },
@@ -47,9 +48,9 @@ export const localApi: Api = {
   getSetting: async (key) => (await (await db()).settings.get(key))?.value as never,
   setSetting: async (key, value) => void (await (await db()).settings.put({ key, value })),
 
-  async recordProgress(event, mastery) {
+  async recordProgress(event) {
     const [d, { recordAndEnqueue }] = await Promise.all([db(), import('./sync')]);
-    await recordAndEnqueue(d, event, mastery);
+    await recordAndEnqueue(d, event);
   },
 
   listMastery: async (profileId) =>

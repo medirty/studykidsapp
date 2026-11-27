@@ -1,6 +1,7 @@
 // Data contracts for the local data layer and api.ts (ADR D-011). Types only, no runtime code.
 // PRD §8.4: child data = nickname, grade, avatar, progress. Never email, phone, photo or location.
 import type { Locale } from '../i18n';
+import type { StreakState } from '../engine/types';
 
 export type Grade = 1 | 2 | 3 | 4 | 5 | 6;
 export type SubjectId =
@@ -28,6 +29,9 @@ export interface Profile {
   prefs: ProfilePrefs;
   createdAt: IsoUtc;
   updatedAt: IsoUtc;
+  // Owned by recordProgress (engine/mastery.ts), never by saveProfile; missing on old rows = 0 / empty.
+  xp?: number;
+  streak?: StreakState;
 }
 
 /** Device-wide values, Dexie table `settings` (key-value), PK `key`. */
@@ -57,8 +61,9 @@ export interface ProgressEvent {
 export interface SkillMastery {
   profileId: string;
   skillId: string;
-  mastery: number; // 0–100, formula in engine/mastery.ts (Phase 3)
-  attempts: number;
+  mastery: number; // 0–100 without decay, formula in engine/mastery.ts (ADR D-014 g)
+  attempts: number; // graded events (draw excluded)
+  stars: number; // 0–3, never goes down
   lastPracticedAt: IsoUtc;
 }
 
@@ -97,7 +102,10 @@ export interface Api {
   deleteProfile(id: string): Promise<void>;
   getSetting<K extends SettingKey>(key: K): Promise<DeviceSettings[K] | undefined>;
   setSetting<K extends SettingKey>(key: K, value: DeviceSettings[K]): Promise<void>;
-  /** One transaction: event + mastery + queue item. A repeated clientEventId is a no-op. */
-  recordProgress(event: ProgressEvent, mastery: SkillMastery): Promise<void>;
+  /**
+   * One transaction: event + queue item, mastery recomputed from the skill's events, profile XP/streak.
+   * A repeated clientEventId is a no-op.
+   */
+  recordProgress(event: ProgressEvent): Promise<void>;
   listMastery(profileId: string): Promise<SkillMastery[]>;
 }

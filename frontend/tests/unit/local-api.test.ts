@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { localApi } from '../../src/services/api';
 import { openDb } from '../../src/services/db';
-import type { Profile, ProgressEvent, SkillMastery } from '../../src/services/types';
+import type { Profile, ProgressEvent } from '../../src/services/types';
 
 const now = '2026-11-26T00:00:00.000Z';
 
@@ -33,10 +33,6 @@ function event(over: Partial<ProgressEvent> = {}): ProgressEvent {
     createdAt: now,
     ...over,
   };
-}
-
-function mastery(value: number, profileId = 'p1'): SkillMastery {
-  return { profileId, skillId: 'math.add', mastery: value, attempts: 1, lastPracticedAt: now };
 }
 
 const persist = vi.fn(async () => true);
@@ -96,11 +92,8 @@ describe('localApi profiles', () => {
     await localApi.saveProfile(profile());
     await localApi.saveProfile(profile({ id: 'p2' }));
     await localApi.setSetting('activeProfileId', 'p1');
-    await localApi.recordProgress(event(), mastery(10));
-    await localApi.recordProgress(
-      event({ clientEventId: 'e2', profileId: 'p2' }),
-      mastery(5, 'p2'),
-    );
+    await localApi.recordProgress(event());
+    await localApi.recordProgress(event({ clientEventId: 'e2', profileId: 'p2' }));
 
     await localApi.deleteProfile('p1');
 
@@ -122,22 +115,39 @@ describe('localApi settings', () => {
 });
 
 describe('localApi recordProgress (idempotent queue)', () => {
-  it('writes event, mastery and queue item', async () => {
-    await localApi.recordProgress(event(), mastery(20));
+  it('writes event and queue item, mastery recomputed from the skill events', async () => {
+    await localApi.recordProgress(event());
+    await localApi.recordProgress(
+      event({ clientEventId: 'e2', correct: false, createdAt: '2026-11-26T00:01:00.000Z' }),
+    );
     const db = await openDb();
     expect(await db.progressEvents.get('e1')).toEqual(event());
     expect(await db.syncQueue.get('e1')).toMatchObject({ profileId: 'p1', attempts: 0 });
-    expect(await localApi.listMastery('p1')).toEqual([mastery(20)]);
+    const lastPracticedAt = '2026-11-26T00:01:00.000Z';
+    expect(await localApi.listMastery('p1')).toEqual([
+      { profileId: 'p1', skillId: 'math.add', mastery: 44, attempts: 2, stars: 2, lastPracticedAt }, // 2 stars earned after e1 are kept
+    ]);
   });
 
-  it('a repeated clientEventId is a no-op (no duplicate, mastery not reapplied)', async () => {
-    await localApi.recordProgress(event(), mastery(20));
-    await localApi.recordProgress(event({ correct: false }), mastery(99));
+  it('adds XP and streak to the profile; saveProfile does not overwrite them', async () => {
+    await localApi.saveProfile(profile());
+    await localApi.recordProgress(event());
+    await localApi.recordProgress(event({ clientEventId: 'e2', correct: false }));
+    await localApi.saveProfile(profile({ nickname: 'Dina K' })); // stale copy without xp/streak
+    const [p] = await localApi.listProfiles();
+    expect(p).toMatchObject({ nickname: 'Dina K', xp: 12, streak: { count: 1 } });
+  });
+
+  it('a repeated clientEventId is a no-op (no duplicate, mastery and XP not reapplied)', async () => {
+    await localApi.saveProfile(profile());
+    await localApi.recordProgress(event());
+    await localApi.recordProgress(event({ correct: false }));
     const db = await openDb();
     expect(await db.progressEvents.count()).toBe(1);
     expect(await db.syncQueue.count()).toBe(1);
     expect((await db.progressEvents.get('e1'))?.correct).toBe(true);
-    expect((await localApi.listMastery('p1'))[0].mastery).toBe(20);
+    expect((await localApi.listMastery('p1'))[0].mastery).toBe(100);
+    expect((await localApi.listProfiles())[0].xp).toBe(10);
   });
 });
 
