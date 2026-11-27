@@ -137,6 +137,23 @@
 - [ ] **Saat `/plan-phase` Fase 4:** tambah task `[opus]` skema (`subscriptions`, `entitlements.expires_at`, `orders.type/period`, `activation_codes.duration_days`, `settings` baru) + `EntitlementService` cek masa aktif + token konten berbatas waktu
 - [ ] **Saat `/plan-phase` Fase 6:** task `[opus]` `SubscriptionService` (harga terkunci, slot early bird tidak terpakai perpanjangan, masa tenggang), webhook `renewal`, cron pengingat email, batal langganan, test konkurensi & skenario FR-11; `security-review` wajib; konsultasi hukum perpanjangan/aplikasi anak
 - [ ] **Saat `/plan-phase` Fase 5:** admin pelanggan aktif, MRR, churn; template marketing "per bulan"
+### Auto-posting media sosial (CR-009, PRD v1.15, 27 Nov 2026) — backlog Fase 5
+Desain: `docs/superpowers/specs/2026-11-27-auto-posting-design.md` (bagian 11 = koreksi architect). Saat `/plan-phase` Fase 5 masukkan task berikut (urut dependensi):
+- [x] `[sonnet]` Dokumen: CR-009, PRD v1.15, desain
+- [ ] T-A1 `[opus]` ADR + skema Phinx `social_accounts`, `social_posts`; rinci PRD §8.3/§8.4/§11–§13/§15.3/§17.2/§19; `ext-curl/sodium/fileinfo` + `.env.example`. AC: migrasi naik-turun di MariaDB 11.8
+- [ ] T-A2 `[opus]` `TokenCipher` (XChaCha20-Poly1305, AAD, `key_id`). AC: round-trip OK, AAD salah ditolak
+- [ ] T-A3 `[opus]` `SocialPublisher` + antrean (klaim atomik, `GET_LOCK`, `needs_check`). AC: 2 proses tidak memposting baris yang sama
+- [ ] T-A4 `[opus]` Gerbang persetujuan (`auto`/`required`) + pembatalan kuota/harga berubah. AC: kuota 0 → `canceled`; harga berubah → `pending_approval`. **Aktif penuh setelah penghitung kuota Fase 6**
+- [ ] T-A5 `[opus]` Endpoint unggah media. AC: tipe/ukuran salah ditolak, nama acak
+- [ ] T-A6 `[opus]` OAuth Meta dengan `state`. AC: `state` palsu ditolak, token tak muncul di respons/log
+- [ ] T-A7 `[opus]` Adapter Instagram + Facebook (post, story, reel, `container_id`). AC: tes dengan HTTP palsu
+- [ ] T-A8 `[sonnet]` Cron `bin/publish-due.php` + pembersihan media. AC: retry berbatas, file lama terhapus
+- [ ] T-A9 `[sonnet]` UI admin "Posting sosial" (chunk lazy). AC: bundle anak tidak bertambah
+- [ ] T-A10 `[sonnet]` Spike lalu render gambar JPEG + video di browser. AC: format lolos validasi Meta (risiko: WebM vs MP4)
+- [ ] T-A11 `[opus]` Adapter TikTok (setelah IG/FB stabil)
+- [ ] T-A12 `[opus]` `security-review` auto-posting (wajib)
+- [ ] B-A Bimo: akun Meta Business, app Meta, app TikTok, verifikasi domain (dipandu langkah demi langkah, CLAUDE.md butir 5)
+- [ ] `[sonnet]` Sebelum T-A1: verifikasi daftar "perlu verifikasi" (desain bagian 11) ke dokumentasi resmi Meta/TikTok
 
 ### Tindakan manual Bimo
 - [x] B10 Logo final + 4 ekspresi Kiko disetujui Bimo ("Logo disetujui", 25 Nov 2026)

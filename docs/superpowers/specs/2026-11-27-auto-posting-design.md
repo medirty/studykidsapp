@@ -71,7 +71,7 @@ Tiga opsi dipertimbangkan: (1) API langsung per platform, (2) layanan penjadwal 
 - §5.2: hapus baris "Posting otomatis ke media sosial via API".
 - FR-14 poin 5 ("bukan auto-post") diubah; tambah FR baru untuk auto-posting.
 - Tabel baru `social_posts`, `social_accounts` di §11/skema; tambah task di Fase 5.
-- Keputusan ketergantungan baru (jika ada SDK) dicatat di `docs/DECISIONS.md`. Rencana: tanpa SDK, cukup HTTP client yang sudah ada.
+- Keputusan ketergantungan baru (jika ada SDK) dicatat di `docs/DECISIONS.md`. Rencana: tanpa SDK, pakai ekstensi `curl` (belum ada HTTP client di `composer.json`); tambah `ext-curl`, `ext-sodium`, `ext-fileinfo` ke `require` dengan ADR di `DECISIONS.md`.
 
 ## 8. Tindakan manual Bimo (B*)
 Membuat akun Meta Business, menghubungkan IG ke Page, mendaftar app developer Meta dan TikTok. Akan dipandu langkah demi langkah sesuai CLAUDE.md butir 5.
@@ -80,10 +80,22 @@ Membuat akun Meta Business, menghubungkan IG ke Page, mendaftar app developer Me
 - Tag persetujuan di template, bukan per post.
 - Pembatalan otomatis item promo saat kuota habis.
 - Retry terbatas, bukan tanpa batas.
-- Tanpa SDK pihak ketiga.
+- Tanpa SDK pihak ketiga (pakai `curl`, lihat §7).
 - Dibangun di Fase 5, dipecah jadi task `[opus]` (skema, token, adapter, keamanan) dan `[sonnet]` (UI admin).
 
 ## 10. Belum diputuskan (untuk builder/plan)
 - Jadwal cron tepatnya dan jumlah retry.
 - Batas durasi/ukuran video final per platform.
 - Detail enkripsi token (algoritma, rotasi kunci).
+
+## 11. Koreksi dari tinjauan architect (Opus, 27 Nov 2026) — berlaku, menimpa bagian di atas
+
+- **Kuota/harga hanya di caption**, berupa placeholder yang diisi server saat kirim. Gambar tidak memuat angka kuota atau harga (angka tercetak di gambar tidak bisa dihitung ulang). Hash variabel disimpan saat disetujui; jika harga berubah, item kembali ke `pending_approval`; jika sisa slot 0, item `canceled`. Pakai service yang sama dengan `/settings/public`, tanpa `FOR UPDATE` pada counter.
+- **Urutan fase:** penghitung kuota early bird baru ada di Fase 6, jadi item promo/kuota baru aktif setelah itu. Item `auto` (tips, fakta, soal) bisa jalan di Fase 5.
+- **Token:** `sodium_crypto_aead_xchacha20poly1305_ietf_*`, AAD = `platform|account_id`, kolom `key_id` untuk rotasi. Kunci 32 byte di `.env` di luar `public_html`, tidak di repo dan tidak di backup DB (ada export DB mingguan ke email).
+- **Anti dobel posting:** `GET_LOCK('social_publish',0)` untuk cron; klaim baris atomik `UPDATE ... WHERE id=? AND status='scheduled'` lalu cek `rowCount`; baris tertinggal di `publishing` tidak diulang otomatis, ditandai `needs_check`. Meta dua langkah: simpan `container_id`, proses video asinkron lintas run cron.
+- **Media publik:** nama `bin2hex(random_bytes(16))`, cek MIME `finfo`, batas ukuran, `.htaccess` tanpa listing dan tanpa eksekusi PHP, dihapus N hari setelah `published`/`canceled`, dikecualikan dari rsync `--delete`.
+- **Tanpa data anak:** bukan deteksi nama; andalkan whitelist (item otomatis hanya dari template/generator), testimoni wajib disetujui, share card anak tidak masuk antrean.
+- **Bagian PRD tambahan yang perlu diubah di task 1:** §8.3, §8.4, §11 (`backend/bin/`, `Services/Social/`, folder media), §12, §13, §15.3, §17.2, §19, `backend/API.md`, `.env.example`, `ASSET_LICENSES.md` (jika reel memakai musik). Template marketing harus memakai "/bulan" (CR-006).
+- **Risiko terbesar:** MediaRecorder Chrome biasanya menghasilkan WebM; Meta mungkin hanya menerima MP4 (H.264/AAC), dan server tidak punya ffmpeg. Harus dibuktikan lewat spike sebelum task video dibangun.
+- **Perlu verifikasi ke dokumentasi resmi sebelum dibangun:** app Meta mode development cukup tanpa App Review?; story via API (IG/FB); batas posting IG per 24 jam; IG hanya JPEG; format/durasi/audio reel; masa berlaku Page token; TikTok `PULL_FROM_URL` butuh verifikasi domain, app belum audit = `SELF_ONLY`; interval cron minimum Hostinger; proteksi bot Hostinger bisa memblokir pengambil media Meta.

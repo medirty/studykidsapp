@@ -28,7 +28,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 | CR-006 | Model bisnis: sekali bayar → langganan | Diterapkan dokumen (25 Nov 2026); kode di Fase 4–6 | v1.12 |
 | CR-007 | Warna English #8B5CF6 → #7C3AED | Diterapkan (25 Nov 2026) | v1.13 |
 | CR-008 | Arah visual "ceria penuh warna" untuk anak SD | Diterima, semua pertanyaan terjawab (26 Nov 2026); kode di awal Fase 3 | v1.14 |
-| CR-009 | Auto-posting media sosial (FB/IG/TikTok) | Diusulkan, desain disetujui (27 Nov 2026); menunggu keputusan CR | — |
+| CR-009 | Auto-posting media sosial (FB/IG/TikTok) | Diterima, dijadwalkan Fase 5 (27 Nov 2026) | v1.15 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -177,5 +177,6 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
   - **Jumlah task:** perkiraan kasar ±10–14, campuran `[opus]` (skema, token, adapter, keamanan) dan `[sonnet]` (UI admin, video).
   - **Risiko:** (1) token bocor, repo PUBLIC → `security-review` wajib; (2) promo/kuota basi terbit → hitung ulang di server sebelum kirim; (3) review app Meta dan audit TikTok lama dan di luar kendali kita; (4) video reel dari browser belum terbukti diterima platform; (5) generator FR-14 sekarang hanya gambar, video pekerjaan tambahan; (6) tindakan manual Bimo (B*): akun Meta Business, app developer Meta/TikTok.
   - **Fase aktif (3):** tidak mengganggu. Dibangun di Fase 5.
-- **Keputusan Bimo:** desain disetujui 27 Nov 2026 (opsi C, pendekatan adapter, IG/FB dulu, batalkan otomatis jika kuota habis). Keputusan CR menunggu konfirmasi.
-- **Status:** diusulkan. PRD belum diubah.
+- **Tinjauan architect (Opus), 27 Nov 2026:** terima dengan perubahan isi. Koreksi: tidak ada HTTP client di `composer.json` (pakai `ext-curl`, +`ext-sodium`, `ext-fileinfo`, ADR); angka kuota/harga hanya di caption (bukan gambar); item promo/kuota baru aktif setelah penghitung kuota Fase 6; token pakai XChaCha20-Poly1305 + AAD + `key_id`; anti dobel posting lewat `GET_LOCK` + klaim atomik + status `needs_check`; media publik aman + dibersihkan + dikecualikan dari rsync `--delete`. Bagian PRD tambahan: §8.3, §8.4, §11–§13, §15.3, §17.2, §19. Perkiraan task: 12–13 + 2–3 B*. Detail di bagian 11 dokumen desain.
+- **Keputusan Bimo:** diterima, dijadwalkan di Fase 5 (27 Nov 2026). Desain disetujui (opsi C, pendekatan adapter, IG/FB dulu, batalkan otomatis jika kuota habis).
+- **Status:** diterapkan di dokumen: PRD v1.15 (§5.2, FR-14, §14, riwayat) dan backlog Fase 5 di `PROGRESS.md`. Kode menyusul di Fase 5; rincian §8.3/§11–§13/§17.2 dikerjakan di task pertama.

@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.14 · **Tanggal:** 26 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.15 · **Tanggal:** 27 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -143,7 +143,7 @@ Hitungan kasar: biaya gateway QRIS ±0,7% (≈ Rp350–700) atau VA ≈ Rp4.000�
 - Live class, chat, forum, atau konten buatan pengguna.
 - AI generatif berbayar di runtime.
 - Multi-bahasa selain ID/EN.
-- Posting otomatis ke media sosial via API (marketing tools hanya menyiapkan konten; lihat FR-13).
+- Posting otomatis ke platform media sosial di luar Facebook, Instagram, dan TikTok (ketiganya masuk lingkup lewat FR-14 poin 6; platform lain = CR baru).
 
 ---
 
@@ -360,9 +360,15 @@ Target audiens: **orang tua 28–45 th** di Instagram, TikTok, Facebook, WhatsAp
 2. **Link tracking (UTM builder):** buat link dengan `utm_source/medium/campaign`; dashboard menampilkan kunjungan, daftar, dan langganan per kampanye.
 3. **Kode referral & voucher:** setiap ortu pelanggan dapat kode referral (mis. diskon Rp10.000 untuk teman); admin bisa buat voucher dengan kuota & tanggal kedaluwarsa.
 4. **Share card anak:** setelah dapat lencana, ortu bisa share kartu pencapaian (tanpa nama lengkap/foto anak) yang berisi link referral.
-5. **Pengingat jadwal posting:** daftar "hari ini posting apa" di dashboard admin (bukan auto-post).
+5. **Pengingat jadwal posting:** daftar "hari ini posting apa" di dashboard admin (untuk item yang tidak diposting otomatis, mis. WhatsApp atau item menunggu persetujuan).
+6. **Auto-posting (CR-009, desain: `docs/superpowers/specs/2026-11-27-auto-posting-design.md`):**
+   - Admin menghubungkan akun Instagram, Facebook, lalu TikTok; tiap item kalender dipilihkan jenis (story/post/reel) dan platform tujuan. Cron memposting saat jadwal tiba; hasil sukses/gagal tampil di dashboard.
+   - Satu adapter per platform dengan antarmuka sama (`SocialPublisher`); platform baru = adapter baru. Prioritas: Instagram + Facebook (Meta Graph API), TikTok menyusul (audit TikTok boleh lama; sebelum lolos, post TikTok private).
+   - **Persetujuan:** brand awareness, tips, fakta, soal seru terbit otomatis (tag template `auto`). Voucher, promo, angka kuota, harga, dan testimoni wajib disetujui admin dulu (tag `required`, status `pending_approval`).
+   - **Angka kuota/harga hanya di caption** (placeholder diisi server saat kirim), tidak dicetak di gambar. Jika slot early bird sudah 0 saat jadwal tiba, item promo/kuota dibatalkan otomatis; jika harga berubah sejak disetujui, item kembali ke `pending_approval`. Item promo/kuota baru aktif setelah penghitung kuota ada (Fase 6).
+   - Item otomatis hanya dari template dan generator (tanpa teks pengguna); share card anak (poin 4) tidak pernah masuk antrean. Token akun disimpan terenkripsi, kunci di `.env` luar folder publik.
 
-AC: konten yang dihasilkan tidak memuat data pribadi anak; setiap link UTM tercatat dan bisa diatribusikan ke order.
+AC: konten yang dihasilkan tidak memuat data pribadi anak; setiap link UTM tercatat dan bisa diatribusikan ke order; item `required` tidak pernah terkirim tanpa persetujuan; dua proses cron tidak pernah memposting baris yang sama; token tidak pernah muncul di respons API atau log.
 
 ---
 
@@ -681,7 +687,7 @@ Detail request/response tiap endpoint HARUS ditulis di `backend/API.md` sebelum 
 | **2** | Fondasi Frontend | Komponen UI, i18n, routing, Dexie, PWA, speech wrapper, mode lokal | Unit test komponen; Lighthouse ≥ 90; i18n test lolos; install PWA berfungsi |
 | **3** | Engine Soal + Demo | **Awal fase: penyegaran visual CR-008** (mockup baru disetujui Bimo, token teks/tint per mapel, `data-grade-band`, ubin mapel + ilustrasi, Kiko di Beranda). Seeded RNG, session engine, adaptif, anti-repeat, mastery, semua format soal, konten **3 mapel demo** kelas 1–6, 2 mini game (dengan "dunia"), peta belajar berupa jalur, laporan ringkas | Generator test (≥ 50 unik, 100% jawaban valid); E2E: anak menyelesaikan sesi offline; **demo dirilis ke GitHub Pages** untuk diuji Bimo & 3–5 anak |
 | **4** | Backend & Akun | **Beli hosting (keputusan K8 final)**; DB + migrasi, auth ortu, profil anak, Parent Gate, sinkron, laporan ortu, kode aktivasi (+ durasi), **skema `subscriptions`/`entitlements.expires_at` & `EntitlementService` yang mengecek masa aktif**, kritik & saran | PHPUnit & E2E lolos; uji keamanan dasar (§15.3) lolos; deploy staging di hosting berhasil |
-| **5** | Konten Full + Admin + Marketing | 5 mapel sisanya, semua mini game, gamifikasi lengkap, admin panel, marketing tools | Konten minimum §6.5 terpenuhi (laporan otomatis); admin dashboard angka cocok dengan data uji |
+| **5** | Konten Full + Admin + Marketing | 5 mapel sisanya, semua mini game, gamifikasi lengkap, admin panel, marketing tools, auto-posting IG/FB (+ TikTok; CR-009) | Konten minimum §6.5 terpenuhi (laporan otomatis); admin dashboard angka cocok dengan data uji; auto-posting: item `required` tidak terkirim tanpa persetujuan, tanpa dobel posting, token tidak bocor, `security-review` bersih |
 | **6** | Pembayaran | `PAYMENT_SETUP.md`, integrasi gateway (sandbox → production), **logika early bird 100 slot**, **langganan bulanan/tahunan (perpanjangan manual, harga terkunci, masa tenggang, batal)**, cron pengingat email, voucher, referral, email kuitansi | Semua skenario FR-11 lolos di sandbox; **test konkurensi: 20 order bersamaan saat sisa 3 slot → tepat 3 dapat harga early bird**; perpanjangan memakai harga terkunci & tidak memakai slot; langganan terputus > masa tenggang → harga normal; 1 transaksi nyata nominal kecil berhasil end-to-end |
 | **7** | Hardening & Launch | Audit performa/aksesibilitas/keamanan, kebijakan privasi & S&K, backup, monitoring, deploy produksi | Checklist launch (§17.4) 100%; 0 bug kritis/tinggi terbuka |
 | **8** | Pasca-launch | Update konten berkala, perbaikan dari feedback | Siklus rilis berjalan (§17.3) |
@@ -1129,3 +1135,4 @@ Masih terbuka:
 | 1.12 | 25 Nov 2026 | CR-006: model bisnis **sekali bayar → langganan** (bulanan & tahunan = 10× bulanan). Early bird 100 pelanggan pertama (Rp50.000/bln) terkunci selama langganan tidak terputus; normal Rp100.000/bln; perpanjangan manual + pengingat email; masa tenggang 3 hari; progres tetap tersimpan saat kedaluwarsa. §1, §4.1 (K11), §4.2, §5.1–5.2, FR-10/11/13/14, §12 (`subscriptions`, `entitlements.expires_at`, `orders.type/period`, `activation_codes.duration_days`), §13, Fase 4 & 6. |
 | 1.13 | 25 Nov 2026 | CR-007: warna English `#8B5CF6` → `#7C3AED` (kontras putih 5,70:1, lolos AA). §9.2 diperbarui. |
 | 1.14 | 26 Nov 2026 | CR-008: arah visual "ceria penuh warna" untuk anak SD. §9.1 poin 6, §9.2 (token turunan: tint & teks per mapel; token lama tidak berubah), §14 baris Fase 3 (task awal penyegaran visual). Larangan visual §9.4 berlaku juga untuk ikon mapel. |
+| 1.15 | 27 Nov 2026 | CR-009: auto-posting media sosial (Instagram, Facebook, lalu TikTok) lewat adapter per platform. §5.2 (Out of Scope disempitkan), FR-14 poin 5 diubah + poin 6 baru (aturan persetujuan `auto`/`required`, kuota hanya di caption, pembatalan otomatis). Skema (`social_posts`, `social_accounts`), §11–§13, §8.3, §17.2 dirinci di task pertama Fase 5. |
