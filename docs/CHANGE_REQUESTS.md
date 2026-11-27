@@ -28,6 +28,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 | CR-006 | Model bisnis: sekali bayar → langganan | Diterapkan dokumen (25 Nov 2026); kode di Fase 4–6 | v1.12 |
 | CR-007 | Warna English #8B5CF6 → #7C3AED | Diterapkan (25 Nov 2026) | v1.13 |
 | CR-008 | Arah visual "ceria penuh warna" untuk anak SD | Diterima, semua pertanyaan terjawab (26 Nov 2026); kode di awal Fase 3 | v1.14 |
+| CR-009 | Auto-posting media sosial (FB/IG/TikTok) | Diterima, dijadwalkan Fase 5 (27 Nov 2026) | v1.15 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -163,3 +164,19 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
   6. Suara: di kelas 1–2, mengetuk ubin mapel membacakan namanya (Web Speech, progressive enhancement).
   Persetujuan mockup baru oleh Bimo tetap wajib sebelum kode (CLAUDE.md).
 - **Status:** diterapkan di dokumen: PRD v1.14 (§9.1, §9.2, §14, riwayat) dan `PROGRESS.md` (backlog Fase 3). Kode menyusul sebagai task awal Fase 3 setelah `/plan-phase`.
+
+## CR-009 — Auto-posting media sosial (Facebook, Instagram, TikTok)
+- **Tanggal / Pengaju:** 27 Nov 2026 / Bimo
+- **Deskripsi:** Perluas FR-14: selain menyiapkan konten, sistem otomatis memposting story, post, dan reel ke platform yang dipilih. Prioritas Instagram + Facebook (Meta Graph API), lalu TikTok (boleh lebih lama karena audit). Satu antarmuka adapter per platform agar platform baru mudah ditambah. **Aturan persetujuan:** brand awareness, tips, fakta, soal seru terbit otomatis; voucher, promo, angka kuota, testimoni, dan apa pun yang memuat harga wajib disetujui Bimo dulu. Item promo/kuota yang sudah disetujui **dibatalkan otomatis** jika kuota habis saat jadwal tiba. Desain lengkap: [superpowers/specs/2026-11-27-auto-posting-design.md](superpowers/specs/2026-11-27-auto-posting-design.md).
+- **Alasan:** Konsistensi posting dan hemat waktu Bimo; unduh-upload manual dihilangkan.
+- **Prioritas:** bagus-jika-ada
+- **Analisis dampak:** *(draf sesi Sonnet; belum ditinjau Opus, PRD §18 langkah 2)*
+  - **PRD:** §5.2 (hapus "Posting otomatis ke media sosial via API" dari Out of Scope), FR-14 (poin 5 "bukan auto-post" diubah; tambah FR auto-posting), §11/§12 (tabel `social_posts`, `social_accounts`), §13 (API admin), Fase 5 (task + Exit Criteria), riwayat versi.
+  - **Skema DB (migrasi Phinx baru):** `social_posts`, `social_accounts` (token terenkripsi).
+  - **Kode (belum ada):** `SocialPublisher` + adapter FB/IG/TikTok, cron `publish-due`, enkripsi token, OAuth, UI admin (lazy chunk), render video slideshow di browser admin.
+  - **Jumlah task:** perkiraan kasar ±10–14, campuran `[opus]` (skema, token, adapter, keamanan) dan `[sonnet]` (UI admin, video).
+  - **Risiko:** (1) token bocor, repo PUBLIC → `security-review` wajib; (2) promo/kuota basi terbit → hitung ulang di server sebelum kirim; (3) review app Meta dan audit TikTok lama dan di luar kendali kita; (4) video reel dari browser belum terbukti diterima platform; (5) generator FR-14 sekarang hanya gambar, video pekerjaan tambahan; (6) tindakan manual Bimo (B*): akun Meta Business, app developer Meta/TikTok.
+  - **Fase aktif (3):** tidak mengganggu. Dibangun di Fase 5.
+- **Tinjauan architect (Opus), 27 Nov 2026:** terima dengan perubahan isi. Koreksi: tidak ada HTTP client di `composer.json` (pakai `ext-curl`, +`ext-sodium`, `ext-fileinfo`, ADR); angka kuota/harga hanya di caption (bukan gambar); item promo/kuota baru aktif setelah penghitung kuota Fase 6; token pakai XChaCha20-Poly1305 + AAD + `key_id`; anti dobel posting lewat `GET_LOCK` + klaim atomik + status `needs_check`; media publik aman + dibersihkan + dikecualikan dari rsync `--delete`. Bagian PRD tambahan: §8.3, §8.4, §11–§13, §15.3, §17.2, §19. Perkiraan task: 12–13 + 2–3 B*. Detail di bagian 11 dokumen desain.
+- **Keputusan Bimo:** diterima, dijadwalkan di Fase 5 (27 Nov 2026). Desain disetujui (opsi C, pendekatan adapter, IG/FB dulu, batalkan otomatis jika kuota habis).
+- **Status:** diterapkan di dokumen: PRD v1.15 (§5.2, FR-14, §14, riwayat) dan backlog Fase 5 di `PROGRESS.md`. Kode menyusul di Fase 5; rincian §8.3/§11–§13/§17.2 dikerjakan di task pertama.
