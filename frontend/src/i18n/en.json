@@ -80,5 +80,11 @@
   "home.free": "Units 1–{n}",
   "home.switch": "Switch profile",
   "home.noProfile": "Please pick or create a profile first.",
-  "profile.failed": "Device storage could not be opened. Close private mode and reload."
+  "profile.failed": "Device storage could not be opened. Close private mode and reload.",
+  "q.true": "True",
+  "q.false": "False",
+  "q.delete": "Delete",
+  "q.yourAnswer": "Your answer",
+  "q.typeAnswer": "Type your answer",
+  "q.listenHint": "No sound? The voice for this language may not be installed on your device. Ask a parent to check, or try again."
 }
