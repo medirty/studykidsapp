@@ -77,6 +77,13 @@ describe('SubjectCard', () => {
     expect(screen.getByText('Terkunci')).toBeTruthy();
     expect(container.querySelector('svg')).toBeTruthy();
   });
+
+  it('tidak terkunci: badge Gratis + catatan; tanpa handler tidak error', async () => {
+    render(SubjectCard, { subject: 'art', title: 'Art', note: 'Unit 1–2' });
+    expect(screen.getByText('Gratis')).toBeTruthy();
+    expect(screen.getByText('Unit 1–2')).toBeTruthy();
+    await fireEvent.click(screen.getByRole('button', { name: /Art/ }));
+  });
 });
 
 describe('Modal', () => {

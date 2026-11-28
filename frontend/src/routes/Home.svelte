@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { t, type MessageKey } from '../i18n';
+  import { getLocale, t, type MessageKey } from '../i18n';
   import { api } from '../services/api';
+  import { speak } from '../services/speech';
   import type { PublicSettings, SubjectId } from '../services/types';
   import type { AvatarId } from '../components/ui/avatars';
   import Avatar from '../components/ui/Avatar.svelte';
@@ -26,6 +27,10 @@
 
   const me = $derived(profile.active);
   const free = (s: SubjectId) => (pub?.demo.subjects ?? ['math', 'gp', 'art']).includes(s);
+  // Kelas 1–2 belum lancar membaca: ketuk ubin membacakan nama mapel (FR-8, tanpa suara = diam).
+  const readAloud = (s: SubjectId) => {
+    if (me && me.grade <= 2) speak(t(`subject.${s}` as MessageKey), getLocale());
+  };
 </script>
 
 <h1>{t('home.title')}</h1>
@@ -49,8 +54,13 @@
     <ul class="subjects">
       {#each subjects as s (s)}
         <li>
-          <SubjectCard subject={s} title={t(`subject.${s}` as MessageKey)} locked={!free(s)} />
-          {#if free(s)}<small>{t('home.free', { n: String(pub?.demo.unitLimit ?? 2) })}</small>{/if}
+          <SubjectCard
+            subject={s}
+            title={t(`subject.${s}` as MessageKey)}
+            locked={!free(s)}
+            note={free(s) ? t('home.free', { n: String(pub?.demo.unitLimit ?? 2) }) : undefined}
+            onclick={() => readAloud(s)}
+          />
         </li>
       {/each}
     </ul>
@@ -71,13 +81,11 @@
     list-style: none;
     padding: 0;
     display: grid;
-    gap: var(--space-2);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
   }
   :global([data-grade-band='lower']) .subjects :global(.subject) {
-    min-height: 88px;
-  }
-  small {
-    color: var(--color-ink-soft);
+    min-height: 168px;
   }
   .switch {
     display: inline-block;
