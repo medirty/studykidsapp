@@ -31,7 +31,7 @@ jobs:
           cp -r docs/mockups frontend/dist/mockups
           cp -r docs/brand frontend/dist/brand
           cp frontend/src/styles/tokens.css frontend/dist/mockups/assets/tokens.css
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
           path: frontend/dist
