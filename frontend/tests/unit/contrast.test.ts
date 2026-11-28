@@ -4,9 +4,9 @@ import { describe, expect, it } from 'vitest';
 const css = readFileSync('src/styles/tokens.css', 'utf8');
 
 function token(name: string): string {
-  const m = css.match(new RegExp('--' + name + ':[ ]*(#[0-9a-f]{6})', 'i'));
+  const m = css.match(new RegExp('--' + name + ':[ ]*(#[0-9a-f]{6}|var\\(--([\\w-]+)\\))', 'i'));
   if (!m) throw new Error(`token --${name} tidak ditemukan`);
-  return m[1];
+  return m[2] ? token(m[2]) : m[1];
 }
 
 function luminance(hex: string): number {
@@ -28,6 +28,8 @@ const TEXT_PAIRS: [string, string, number][] = [
   ['color-ink', 'color-surface', 4.5],
   ['color-ink-soft', 'color-bg', 4.5],
   ['color-ink-soft', 'color-surface', 4.5],
+  ['color-ink', 'color-bg-dot', 4.5],
+  ['color-ink-soft', 'color-bg-dot', 4.5],
   ['color-ink', 'color-primary', 4.5],
   ['color-ink', 'color-sunny', 4.5],
   ['color-ink', 'color-teal', 4.5],
@@ -50,6 +52,17 @@ function subjectForeground(subject: string): 'ink' | 'white' | null {
 }
 
 describe('kontras WCAG AA', () => {
+  it.each(SUBJECTS)('teks mapel %s di atas warna mapel >= 4.5:1', (s) => {
+    expect(contrast(token(`subject-${s}-text`), token(`subject-${s}`))).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it.each(SUBJECTS)('Ink dan ink-soft di atas tint mapel %s >= 4.5:1', (s) => {
+    expect(contrast(token('color-ink'), token(`subject-${s}-tint`))).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(token('color-ink-soft'), token(`subject-${s}-tint`))).toBeGreaterThanOrEqual(
+      4.5,
+    );
+  });
+
   it.each(TEXT_PAIRS)('%s di atas %s >= %f:1', (fg, bg, min) => {
     expect(contrast(token(fg), token(bg))).toBeGreaterThanOrEqual(min);
   });

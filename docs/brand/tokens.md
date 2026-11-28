@@ -43,3 +43,10 @@ Aturan: teks biasa ≥ 4,5:1; teks besar (≥ 24 px, atau ≥ 18,66 px tebal) & 
 | `frontend/public/fonts/nunito-latin.woff2` | Nunito variabel (200–1000), subset latin | 39 KB |
 
 Total font ±72 KB, dimuat lewat `@font-face` (`font-display: swap`), **tidak** masuk hitungan JS/CSS awal.
+
+## Token CR-008/CR-010 (T3.8, 28 Nov 2026)
+
+- Latar global: `--color-bg` `#fffdf7` + titik `--color-bg-dot` `#e8dec8` (`radial-gradient(… 1.5px)`, 24×24 px, di `base.css`; dekoratif, panel/kartu tetap solid). Ink dan ink-soft di atas titik ≥ 4,5:1.
+- `--subject-{id}-text`: putih untuk Math/English, Ink untuk sisanya (≥ 4,5:1 di atas warna mapel).
+- `--subject-{id}-tint`: warna mapel dicampur 85% putih untuk panel lembut; Ink dan ink-soft di atasnya ≥ 4,5:1.
+- Semua pasangan dijaga `frontend/tests/unit/contrast.test.ts`.
