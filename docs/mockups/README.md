@@ -37,7 +37,7 @@ Header aplikasi + toggle ID/EN · Tombol (primer/sekunder, ≥ 72 px kelas 1–2
 
 ## Mockup v2 — CR-008 "ceria penuh warna" (T3.2, 26 Nov 2026) — menunggu B12
 
-File: `landing-v2`, `beranda-v2` (kelas 1–2), `beranda-besar-v2` (kelas 5–6), gaya `assets/mockup-v2.css` (token teks per mapel di sana = **usulan** untuk T3.8). Ilustrasi: `../brand/subject/subject-*.svg` (8 buah, tanpa buku/toga/pensil/papan tulis/apel/ABC/bola lampu; English = balon bicara, Science = tabung reaksi).
+File: `landing-v2`, `beranda-v2` (kelas 1–2), `beranda-besar-v2` (kelas 5–6), gaya digabung ke `assets/mockup.css` (T3.8b; token teks/tint mapel kini di `tokens.css`). Ilustrasi: `../brand/subject/subject-*.svg` (8 buah, tanpa buku/toga/pensil/papan tulis/apel/ABC/bola lampu; English = balon bicara, Science = tabung reaksi).
 
 - **Kelas 1–2:** band Sunny (sapaan + Kiko yang bisa disentuh), band Teal (statistik), ubin penuh warna 148 px dengan ilustrasi 72 px; badge Gratis/Terkunci **di dalam ubin** (ikon + teks, L-5). Ketuk ubin = nama mapel dibacakan (CR-008 no. 6).
 - **Kelas 5–6:** lebih kalem — baris ringkas, hanya chip ikon yang berwarna, Kiko kecil, tanpa 🔊 besar.
