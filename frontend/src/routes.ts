@@ -10,5 +10,6 @@ export const routes = {
   '/start': Start,
   '/home': Home,
   '/map/:subject': wrap({ asyncComponent: () => import('./routes/Map.svelte') }),
+  '/session/:skillId': wrap({ asyncComponent: () => import('./routes/Session.svelte') }),
   '*': NotFound,
 };

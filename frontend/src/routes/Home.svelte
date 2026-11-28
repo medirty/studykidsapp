@@ -28,6 +28,18 @@
     .catch(() => (pub = null));
 
   const me = $derived(profile.active);
+  // "Lanjut belajar" = skill yang terakhir dilatih (FR-7).
+  let resumeId = $state<string | null>(null);
+  $effect(() => {
+    if (!me) return;
+    void api.listMastery(me.id).then((rows) => {
+      const last = rows.reduce<(typeof rows)[number] | null>(
+        (a, m) => (!a || m.lastPracticedAt > a.lastPracticedAt ? m : a),
+        null,
+      );
+      resumeId = last?.skillId ?? null;
+    });
+  });
   const free = (s: SubjectId) => (pub?.demo.subjects ?? ['math', 'gp', 'art']).includes(s);
   // Kelas 1–2 belum lancar membaca: ketuk ubin membacakan nama mapel (FR-8, tanpa suara = diam).
   const readAloud = (s: SubjectId) => {
@@ -53,7 +65,11 @@
 
   <Card>
     <p role="status">{t('home.streak')}</p>
-    <p>{t('home.continue')}</p>
+    {#if resumeId}
+      <a class="resume" href={`#/session/${resumeId}`}>{t('home.resume')}</a>
+    {:else}
+      <p>{t('home.continue')}</p>
+    {/if}
   </Card>
 
   <section aria-labelledby="h-sub">
@@ -97,6 +113,18 @@
   }
   :global([data-grade-band='lower']) .subjects :global(.subject) {
     min-height: 168px;
+  }
+  .resume {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0 var(--space-5);
+    border: 3px solid var(--color-ink);
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    color: var(--color-ink);
+    font: var(--weight-heading) var(--text-md) var(--font-heading);
+    text-decoration: none;
   }
   .switch {
     display: inline-block;
