@@ -30,3 +30,23 @@ test('judul tab mengikuti route', async () => {
   window.location.hash = '#/';
   await vi.waitFor(() => expect(document.title).toContain('Belajar SD seru'));
 });
+
+test('data-grade-band di root mengikuti kelas profil aktif', async () => {
+  vi.stubGlobal('fetch', () => Promise.reject(new Error('offline')));
+  window.location.hash = '#/';
+  const mk = (id: string, grade: number) => ({ id, nickname: id, grade, avatar: 'pipo' });
+  profile.list = [mk('a', 1), mk('b', 4), mk('c', 6)] as typeof profile.list;
+  render(App);
+  const band = () => document.documentElement.dataset.gradeBand;
+  for (const [id, want] of [
+    ['a', 'lower'],
+    ['b', 'middle'],
+    ['c', 'upper'],
+  ] as const) {
+    profile.activeId = id;
+    await vi.waitFor(() => expect(band()).toBe(want));
+  }
+  profile.activeId = null;
+  await vi.waitFor(() => expect(band()).toBeUndefined());
+  profile.list = [];
+});

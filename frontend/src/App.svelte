@@ -23,6 +23,13 @@
     const key = titleKeys[path] ?? 'notfound.title';
     document.title = key === 'landing.metaTitle' ? t(key) : `${t(key)} — ${brand.name}`;
   });
+  // Band kelas di root: token & komponen menyesuaikan lewat CSS (PRD 9.1 no. 2, 6).
+  $effect(() => {
+    const g = profile.active?.grade;
+    const root = document.documentElement;
+    if (g === undefined) delete root.dataset.gradeBand;
+    else root.dataset.gradeBand = g <= 2 ? 'lower' : g <= 4 ? 'middle' : 'upper';
+  });
   let needRefresh = $state(false);
   const reload = registerSw(() => (needRefresh = true));
 </script>
