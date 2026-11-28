@@ -1,3 +1,4 @@
+import wrap from 'svelte-spa-router/wrap';
 import Home from './routes/Home.svelte';
 import Landing from './routes/Landing.svelte';
 import NotFound from './routes/NotFound.svelte';
@@ -8,5 +9,6 @@ export const routes = {
   '/': Landing,
   '/start': Start,
   '/home': Home,
+  '/map/:subject': wrap({ asyncComponent: () => import('./routes/Map.svelte') }),
   '*': NotFound,
 };

@@ -90,5 +90,22 @@
   "q.pickFirst": "Pick one, then tap where it goes",
   "q.done": "Done",
   "q.clear": "Start over",
-  "q.canvas": "Drawing paper"
+  "q.canvas": "Drawing paper",
+  "map.title": "Learning map",
+  "map.back": "Home",
+  "map.intro": "Follow the trail, island by island.",
+  "map.island": "Island {n} · {title}",
+  "map.done": "Done",
+  "map.open": "Ready to play",
+  "map.locked": "Finish the previous skill first",
+  "map.chest": "Island {n} complete! Kiko is proud.",
+  "map.more": "Island {n} and beyond",
+  "map.moreBody": "Many more fun islands wait here.",
+  "map.unlock": "Unlock all lessons",
+  "map.unlockTitle": "Unlock all lessons",
+  "map.unlockBody": "The full plan is coming soon. Ask a parent to join you!",
+  "map.subjectLocked": "This subject is in the full plan.",
+  "map.soon": "This subject is coming soon. Kiko is getting it ready!",
+  "map.loading": "Loading the map…",
+  "map.legend": "What the marks mean"
 }

@@ -90,5 +90,22 @@
   "q.pickFirst": "Pilih dulu, lalu ketuk tempatnya",
   "q.done": "Selesai",
   "q.clear": "Mulai lagi",
-  "q.canvas": "Kertas gambar"
+  "q.canvas": "Kertas gambar",
+  "map.title": "Peta belajar",
+  "map.back": "Beranda",
+  "map.intro": "Ikuti jalurnya, pulau demi pulau.",
+  "map.island": "Pulau {n} · {title}",
+  "map.done": "Selesai",
+  "map.open": "Siap dimainkan",
+  "map.locked": "Selesaikan skill sebelumnya",
+  "map.chest": "Pulau {n} tuntas! Kiko bangga.",
+  "map.more": "Pulau {n} dan seterusnya",
+  "map.moreBody": "Masih banyak pulau seru menunggu di sini.",
+  "map.unlock": "Buka semua materi",
+  "map.unlockTitle": "Buka semua materi",
+  "map.unlockBody": "Paket lengkap segera hadir. Minta orang tua mendampingi ya!",
+  "map.subjectLocked": "Pelajaran ini ada di paket lengkap.",
+  "map.soon": "Materi pelajaran ini segera hadir. Kiko sedang menyiapkannya!",
+  "map.loading": "Memuat peta…",
+  "map.legend": "Arti tanda"
 }
