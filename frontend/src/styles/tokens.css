@@ -7,7 +7,8 @@
   --color-bubblegum: #ff9ec4;
   --color-success: #22a55b;
   --color-error: #d93a4a;
-  --color-bg: #fff8f2;
+  --color-bg: #fffdf7;
+  --color-bg-dot: #e8dec8; /* titik latar global (dekoratif, CR-010) */
   --color-surface: #ffffff;
   --color-ink-soft: #5a5278; /* teks sekunder */
   --color-line: #e6dccf; /* garis/pembatas (dekoratif, bukan teks) */
@@ -21,6 +22,24 @@
   --subject-art: #ff8a1f;
   --subject-music: #f43f5e;
   --subject-computing: #14b8a6;
+
+  /* Teks di atas warna mapel (>= 4,5:1) dan tint lembut mapel untuk panel (teks Ink di atasnya) */
+  --subject-math-text: var(--color-ink-on-dark);
+  --subject-english-text: var(--color-ink-on-dark);
+  --subject-science-text: var(--color-ink);
+  --subject-gp-text: var(--color-ink);
+  --subject-wellbeing-text: var(--color-ink);
+  --subject-art-text: var(--color-ink);
+  --subject-music-text: var(--color-ink);
+  --subject-computing-text: var(--color-ink);
+  --subject-math-tint: #dee6f9;
+  --subject-english-tint: #ebe1fc;
+  --subject-science-tint: #def2e6;
+  --subject-gp-tint: #dbf2fc;
+  --subject-wellbeing-tint: #fce4f0;
+  --subject-art-tint: #ffeddd;
+  --subject-music-tint: #fde2e7;
+  --subject-computing-tint: #dcf4f2;
 
   --radius-sm: 12px;
   --radius-md: 20px;
