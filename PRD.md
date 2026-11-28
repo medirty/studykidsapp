@@ -1,6 +1,6 @@
 # PRD — StudyKids Web App
 
-> **Versi:** 1.15 · **Tanggal:** 27 Nov 2026 · **Owner:** Bimo (Stairway Games)
+> **Versi:** 1.16 · **Tanggal:** 28 Nov 2026 · **Owner:** Bimo (Stairway Games)
 > **Status:** Disetujui untuk Fase 0 · Perubahan dari v1.0 ada di "Riwayat Versi" (paling bawah)
 > **Pembaca utama:** Claude Code (implementer) dan Bimo (product owner)
 
@@ -445,13 +445,16 @@ Font: maksimal 2 keluarga font, self-hosted, `font-display: swap`, subset Latin.
 | Bubblegum (aksen lembut) | `#FF9EC4` |
 | Success | `#22A55B` |
 | Error (lembut, selalu disertai ikon) | `#D93A4A` |
-| Background | `#FFF8F2` (krem hangat) |
+| Background | `#FFFDF7` (krem netral; CR-010, sebelumnya `#FFF8F2`) |
+| Titik latar (`--color-bg-dot`) | `#E8DEC8` — dekoratif, bukan teks |
 | Warna per mapel | Math `#2459D6`, English `#7C3AED`, Science `#22A55B`, GP `#0EA5E9`, Wellbeing `#EC4899`, Art `#FF8A1F`, Music `#F43F5E`, Computing `#14B8A6` |
 | Radius | 12 / 20 / 999 px |
 | Font | **Baloo 2** (judul), **Nunito** (teks) — self-hosted |
 | Spacing | skala 4 px (4, 8, 12, 16, 24, 32, 48) |
 
 Token disimpan di `src/styles/tokens.css` sebagai CSS variables. **TIDAK BOLEH** ada warna/hex hardcode di komponen.
+
+**Latar bertitik (CR-010):** seluruh layar, termasuk soal dan feedback, memakai `background-image: radial-gradient(var(--color-bg-dot) 1.5px, transparent 1.5px)` ukuran `24px 24px` di atas `--color-bg` (referensi Bimo). Sama di semua kelas (tanpa pengecualian band 5–6). Kartu/panel (soal, jawaban, keypad) tetap solid di atas titik-titik; tidak dipakai di bawah overlay `Modal`. Titik bukan pembawa informasi dan tidak masuk hitungan kontras teks, tetapi pasangan teks/`--color-bg` baru tetap dicek di `contrast.test.ts`.
 
 **Token turunan (CR-008):** tint per mapel dan **warna teks per mapel** di atas ubin penuh (putih untuk Math/English; Ink untuk mapel lain, sesuai hasil hitung kontras AA 4,5:1). Teks sekunder di atas ubin/latar berwarna tidak memakai `--color-ink-soft` bila kontrasnya < 4,5:1. Ilustrasi sebagai penanda utama wajib ≥ 3:1 terhadap warna ubin (WCAG 1.4.11). `contrast.test.ts` diperluas ke token ini. Token yang sudah ada tidak diubah. Ilustrasi dimuat via `?url`/sprite (bukan inline) agar JS awal tetap ≤ 120 KB.
 
@@ -1136,3 +1139,4 @@ Masih terbuka:
 | 1.13 | 25 Nov 2026 | CR-007: warna English `#8B5CF6` → `#7C3AED` (kontras putih 5,70:1, lolos AA). §9.2 diperbarui. |
 | 1.14 | 26 Nov 2026 | CR-008: arah visual "ceria penuh warna" untuk anak SD. §9.1 poin 6, §9.2 (token turunan: tint & teks per mapel; token lama tidak berubah), §14 baris Fase 3 (task awal penyegaran visual). Larangan visual §9.4 berlaku juga untuk ikon mapel. |
 | 1.15 | 27 Nov 2026 | CR-009: auto-posting media sosial (Instagram, Facebook, lalu TikTok) lewat adapter per platform. §5.2 (Out of Scope disempitkan), FR-14 poin 5 diubah + poin 6 baru (aturan persetujuan `auto`/`required`, kuota hanya di caption, pembatalan otomatis). Skema (`social_posts`, `social_accounts`), §11–§13, §8.3, §17.2 dirinci di task pertama Fase 5. |
+| 1.16 | 28 Nov 2026 | CR-010: latar titik-titik krem jadi latar global semua layar (termasuk soal/feedback). §9.2: Background `#FFF8F2` → `#FFFDF7`, token baru `--color-bg-dot` `#E8DEC8`, paragraf latar bertitik. Tidak ada FR/DB/API yang berubah. |
