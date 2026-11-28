@@ -20,7 +20,13 @@
   let path = $state(pathOf());
   // Judul tab per route, ikut bahasa (L-7).
   $effect(() => {
-    const key = titleKeys[path] ?? (path.startsWith('/map/') ? 'map.title' : 'notfound.title');
+    const key =
+      titleKeys[path] ??
+      (path.startsWith('/map/')
+        ? 'map.title'
+        : path.startsWith('/session/')
+          ? 'session.title'
+          : 'notfound.title');
     document.title = key === 'landing.metaTitle' ? t(key) : `${t(key)} — ${brand.name}`;
   });
   // Band kelas di root: token & komponen menyesuaikan lewat CSS (PRD 9.1 no. 2, 6).
