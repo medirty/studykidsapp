@@ -92,3 +92,23 @@ test('Beranda 360 px: ubin mapel tanpa scroll horizontal', async ({ page }) => {
   const { violations } = await new AxeBuilder({ page }).analyze();
   expect(violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')).toEqual([]);
 });
+
+test('Peta belajar 360 px: Beranda → Math = 1 ketuk, < 1 dtk, tanpa scroll horizontal + axe', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto('/#/start');
+  await page.getByText('Kelas 1', { exact: true }).click();
+  await page.getByLabel('Nama panggilan').fill('Dina');
+  await page.getByRole('button', { name: 'Mulai belajar' }).click();
+  const started = Date.now();
+  await page.getByRole('button', { name: /Math/ }).click();
+  await expect(page.getByRole('link', { name: /Menjumlah dua bilangan satu angka/ })).toBeVisible();
+  expect(Date.now() - started).toBeLessThan(1000);
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  );
+  expect(overflow).toBe(false);
+  const { violations } = await new AxeBuilder({ page }).analyze();
+  expect(violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')).toEqual([]);
+});

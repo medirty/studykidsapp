@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { push } from 'svelte-spa-router';
   import { getLocale, t, type MessageKey } from '../i18n';
   import { api } from '../services/api';
   import { speak } from '../services/speech';
@@ -32,6 +33,10 @@
   const readAloud = (s: SubjectId) => {
     if (me && me.grade <= 2) speak(t(`subject.${s}` as MessageKey), getLocale());
   };
+  const open = (s: SubjectId) => {
+    readAloud(s);
+    void push(`/map/${s}`);
+  };
 </script>
 
 <h1>{t('home.title')}</h1>
@@ -61,7 +66,7 @@
             title={t(`subject.${s}` as MessageKey)}
             locked={!free(s)}
             note={free(s) ? t('home.free', { n: String(pub?.demo.unitLimit ?? 2) }) : undefined}
-            onclick={() => readAloud(s)}
+            onclick={() => open(s)}
           />
         </li>
       {/each}
