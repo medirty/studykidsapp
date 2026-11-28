@@ -1,5 +1,6 @@
 // Local IndexedDB schema (ADR D-011 c). Never edit or remove a version: add version(n+1) with an upgrade.
 import Dexie, { type EntityTable } from 'dexie';
+import type { SkillHistory } from '../engine/types';
 import type { Profile, ProgressEvent, SettingRow, SkillMastery, SyncQueueItem } from './types';
 
 export class StudyKidsDb extends Dexie {
@@ -8,6 +9,7 @@ export class StudyKidsDb extends Dexie {
   progressEvents!: EntityTable<ProgressEvent, 'clientEventId'>;
   skillMastery!: Dexie.Table<SkillMastery, [string, string]>;
   syncQueue!: EntityTable<SyncQueueItem, 'clientEventId'>;
+  skillHistory!: Dexie.Table<SkillHistory, [string, string]>;
 
   constructor() {
     super('studykids'); // fixed, not from brand.config.ts: renaming loses data
@@ -18,6 +20,8 @@ export class StudyKidsDb extends Dexie {
       skillMastery: '[profileId+skillId], profileId',
       syncQueue: 'clientEventId, profileId, enqueuedAt',
     });
+    // v2 (ADR D-014 f): new local-only table, no v1 data changes, so no upgrade().
+    this.version(2).stores({ skillHistory: '[profileId+skillId], profileId' });
   }
 }
 

@@ -36,7 +36,7 @@ export const localApi: Api = {
     const d = await db();
     await d.transaction('rw', d.tables, async () => {
       await d.profiles.delete(id);
-      for (const t of [d.progressEvents, d.skillMastery, d.syncQueue]) {
+      for (const t of [d.progressEvents, d.skillMastery, d.syncQueue, d.skillHistory]) {
         await t.where('profileId').equals(id).delete();
       }
       if ((await d.settings.get('activeProfileId'))?.value === id) {
@@ -55,6 +55,9 @@ export const localApi: Api = {
 
   listMastery: async (profileId) =>
     (await db()).skillMastery.where('profileId').equals(profileId).toArray(),
+  listSkillHistory: async (profileId) =>
+    (await db()).skillHistory.where('profileId').equals(profileId).toArray(),
+  saveSkillHistory: async (rows) => void (await (await db()).skillHistory.bulkPut(rows)),
 };
 
 const notYet = () => Promise.reject(new Error('API mode is not available until Phase 4'));

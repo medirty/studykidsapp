@@ -47,6 +47,13 @@ test('profile and progress survive a reload, without network requests', async ({
     };
     await api.recordProgress(event);
     await api.recordProgress({ ...event, correct: false }); // same clientEventId: ignored
+    const history = {
+      profileId: 'p-e2e',
+      skillId: 'math.add',
+      sessionCounter: 1,
+      recent: [['ab']],
+    };
+    await api.saveSkillHistory([history]); // Dexie v2 table (T3.7)
   });
   expect(requests).toEqual([]);
 
@@ -54,9 +61,15 @@ test('profile and progress survive a reload, without network requests', async ({
   await inject(page);
   const after = await page.evaluate(async () => {
     const api = (window as unknown as { __api: import('../../src/services/types').Api }).__api;
-    return { profiles: await api.listProfiles(), mastery: await api.listMastery('p-e2e') };
+    const profiles = await api.listProfiles();
+    return {
+      profiles,
+      mastery: await api.listMastery('p-e2e'),
+      history: await api.listSkillHistory('p-e2e'),
+    };
   });
   expect(after.profiles.map((p) => p.nickname)).toEqual(['Kiko']);
   expect(after.mastery.map((m) => m.mastery)).toEqual([100]);
   expect(after.profiles[0].xp).toBe(10);
+  expect(after.history.map((h) => h.sessionCounter)).toEqual([1]);
 });
