@@ -25,7 +25,6 @@
     .catch(() => (pub = null));
 
   const me = $derived(profile.active);
-  const big = $derived(me !== null && me.grade <= 2); // kelas 1–2: target sentuh 72 px
   const free = (s: SubjectId) => (pub?.demo.subjects ?? ['math', 'gp', 'art']).includes(s);
 </script>
 
@@ -47,7 +46,7 @@
 
   <section aria-labelledby="h-sub">
     <h2 id="h-sub">{t('home.subjects')}</h2>
-    <ul class="subjects" class:big>
+    <ul class="subjects">
       {#each subjects as s (s)}
         <li>
           <SubjectCard subject={s} title={t(`subject.${s}` as MessageKey)} locked={!free(s)} />
@@ -74,7 +73,7 @@
     display: grid;
     gap: var(--space-2);
   }
-  .big :global(.subject) {
+  :global([data-grade-band='lower']) .subjects :global(.subject) {
     min-height: 88px;
   }
   small {
