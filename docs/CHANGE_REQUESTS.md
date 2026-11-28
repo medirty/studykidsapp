@@ -29,6 +29,7 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 | CR-007 | Warna English #8B5CF6 → #7C3AED | Diterapkan (25 Nov 2026) | v1.13 |
 | CR-008 | Arah visual "ceria penuh warna" untuk anak SD | Diterima, semua pertanyaan terjawab (26 Nov 2026); kode di awal Fase 3 | v1.14 |
 | CR-009 | Auto-posting media sosial (FB/IG/TikTok) | Diterima, dijadwalkan Fase 5 (27 Nov 2026) | v1.15 |
+| CR-010 | Latar titik-titik krem jadi latar global (termasuk layar soal) | Diterima, dijadwalkan Fase 3 bersama T3.8 (28 Nov 2026) | v1.16 |
 
 ## CR-001 — Aturan subagent & auto-merge PR
 - **Tanggal / Pengaju:** 21 Nov 2026 / Bimo
@@ -180,3 +181,29 @@ Alur: catat → analisis dampak (Opus) → keputusan Bimo → naikkan versi PRD 
 - **Tinjauan architect (Opus), 27 Nov 2026:** terima dengan perubahan isi. Koreksi: tidak ada HTTP client di `composer.json` (pakai `ext-curl`, +`ext-sodium`, `ext-fileinfo`, ADR); angka kuota/harga hanya di caption (bukan gambar); item promo/kuota baru aktif setelah penghitung kuota Fase 6; token pakai XChaCha20-Poly1305 + AAD + `key_id`; anti dobel posting lewat `GET_LOCK` + klaim atomik + status `needs_check`; media publik aman + dibersihkan + dikecualikan dari rsync `--delete`. Bagian PRD tambahan: §8.3, §8.4, §11–§13, §15.3, §17.2, §19. Perkiraan task: 12–13 + 2–3 B*. Detail di bagian 11 dokumen desain.
 - **Keputusan Bimo:** diterima, dijadwalkan di Fase 5 (27 Nov 2026). Desain disetujui (opsi C, pendekatan adapter, IG/FB dulu, batalkan otomatis jika kuota habis).
 - **Status:** diterapkan di dokumen: PRD v1.15 (§5.2, FR-14, §14, riwayat) dan backlog Fase 5 di `PROGRESS.md`. Kode menyusul di Fase 5; rincian §8.3/§11–§13/§17.2 dikerjakan di task pertama.
+
+## CR-010 — Latar titik-titik krem jadi latar global di semua layar
+- **Tanggal / Pengaju:** 28 Nov 2026 / Bimo
+- **Deskripsi:** Jadikan latar titik-titik krem sebagai latar resmi **seluruh app**, termasuk layar soal dan feedback, mengikuti referensi Bimo (`medirty.github.io/StudyKids`, termasuk `#/k/1/math/count20/explore`). Nilai terukur di referensi (`body`): dasar `#fffdf7`, titik `radial-gradient(#e8dec8 1.5px, transparent 1.5px)`, ukuran `24px 24px`. Tambah token `--color-bg-dot` (dan token dasar bila berbeda) di `tokens.css`; pasang di `base.css` (app) dan CSS mockup; seragamkan semua mockup v1 ke latar yang sama. Kartu/panel soal tetap solid (putih/tint) di atas titik-titik.
+- **Alasan:** Referensi Bimo memakai titik-titik di semua layar, tetapi hari ini hanya 7 mockup v2 yang bertitik (dari `mockup-v2.css`, tanpa token); sisanya solid, sehingga galeri terlihat tidak konsisten. Aplikasi sungguhan (`base.css:14`) juga masih solid, jadi tanpa CR ini layar soal Fase 3 dibangun dengan gaya lama lalu diulang.
+- **Prioritas:** bagus-jika-ada
+- **Analisis dampak:** *(draf sesi Sonnet; belum ditinjau Opus, PRD §18 langkah 2)*
+  - **PRD:** §9.2 (daftar token: tambah `--color-bg-dot`; catat latar bertitik sebagai gaya dasar), §9.1 (prinsip "ceria penuh warna" CR-008), riwayat versi (v1.16). Tidak ada FR, tabel DB, atau API yang berubah.
+  - **File:** `frontend/src/styles/tokens.css`, `base.css`; `UpdatePrompt.svelte` (memakai `--color-bg` sendiri, periksa); `frontend/tests/unit/contrast.test.ts` (pasangan teks/`--color-bg` dan `--color-bg-dot`); `docs/mockups/assets/mockup.css` + `mockup-v2.css` (satukan; ±36 halaman v1 ikut otomatis karena memuat `mockup.css`); `docs/mockups/README.md`; `frontend/tests/e2e/mockups.spec.ts` (axe).
+  - **Jumlah task:** ± 2, keduanya `[sonnet]`: (1) token + `base.css` + perluasan `contrast.test.ts` + `UpdatePrompt`, bisa digabung dengan T3.8 (yang memang sudah menyiapkan token ini); (2) satukan CSS mockup + README + E2E axe 360/1280 + cek visual 360 px. Tidak ada skema DB, API, auth, atau pembayaran.
+  - **Risiko:**
+    1. Kontras: titik adalah dekoratif (bukan teks), tetapi axe bisa menandai "incomplete" untuk teks di atas `background-image`. Mockup v2 sudah lolos axe (156 test), jadi risiko kecil; tetap diuji di layar soal.
+    2. Layar soal yang padat (keypad, drag-drop, draw): titik-titik di sela elemen bisa dibaca sebagai target. Mitigasi: panel soal solid, titik hanya di sela; uji dengan anak (E3).
+    3. Warna dasar referensi `#fffdf7` beda dari `--color-bg` `#fff8f2`. Mengganti `--color-bg` mengubah seluruh app dan semua pasangan kontras; titik `#e8dec8` ≈ `--color-line` `#e6dccf` (praktis sama). Perlu keputusan (pertanyaan 1).
+    4. Kelas 5–6 mungkin terasa terlalu "bermain" dengan titik. Mitigasi: `[data-grade-band]` (T3.9) boleh menghilangkan/melembutkan titik di band 5–6 (pertanyaan 2).
+    5. Performa: gradient CSS murni, tanpa aset, tanpa dampak budget JS. Layar sangat panjang bisa repaint lebih mahal di HP lemah; ukur di T3.15.
+    6. `prefers-reduced-motion` tidak relevan (statis). Pastikan tidak dipakai di `Modal` overlay agar tidak bocor di bawah dialog.
+  - **Fase aktif (3):** tidak mengganggu bila digabung dengan T3.8 (sebelum T3.12 komponen soal). Tidak membuka kembali fase yang sudah disetujui.
+- **Pertanyaan untuk Bimo:**
+  1. **Warna dasar:** pakai `#fffdf7` dari referensi (rekomendasi, krem lebih netral) atau tetap `#fff8f2` (lebih hangat)?
+  2. **Kelas 5–6:** titik tetap sama di semua kelas (rekomendasi, satu identitas) atau dilembutkan/dihilangkan di band 5–6?
+  3. **Layar soal:** titik-titik juga di belakang area menjawab (rekomendasi: ya, panel jawaban tetap solid) atau layar soal dan feedback tetap solid demi fokus?
+  4. **Mockup v1:** seragamkan semua halaman ke latar baru (rekomendasi), atau cukup halaman v2 dan v1 ditandai usang?
+- **Rekomendasi:** **terima, jadwalkan di Fase 3, digabung dengan T3.8** (token sudah dijadwalkan di sana; ± 2 task `[sonnet]`, risiko rendah). Ditunda ke Fase 4+ berarti layar soal T3.12–T3.13 dibangun solid lalu diulang. Mockup tampilan berubah, jadi persetujuan visual Bimo tetap wajib sebelum kode.
+- **Keputusan Bimo:** diterima, dijadwalkan di Fase 3 (28 Nov 2026, "setuju semua rekomendasi"). Jawaban: (1) dasar `#fffdf7`; (2) titik sama di semua kelas; (3) titik juga di layar soal, panel jawaban solid; (4) semua mockup v1 diseragamkan.
+- **Status:** diterapkan di dokumen: PRD v1.16 (§9.2, riwayat) dan `PROGRESS.md` (T3.8 diperluas + T3.8b). Kode menyusul di Fase 3. Persetujuan visual Bimo atas mockup yang diseragamkan tetap wajib sebelum kode app diubah.
