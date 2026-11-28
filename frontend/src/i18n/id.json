@@ -10,6 +10,7 @@
   "ui.close": "Tutup",
   "ui.stars": "{n} dari {max} bintang",
   "ui.locked": "Terkunci",
+  "ui.free": "Gratis",
   "header.switchLang": "Ganti bahasa ke EN",
   "header.langCode": "EN",
   "header.home": "Ke beranda {brand}",
@@ -76,7 +77,7 @@
   "home.streak": "Seru! Kiko senang kamu datang lagi.",
   "home.continue": "Lanjutan belajar akan muncul di sini setelah materi tersedia.",
   "home.subjects": "Pilih pelajaran",
-  "home.free": "Gratis · Unit 1–{n}",
+  "home.free": "Unit 1–{n}",
   "home.switch": "Ganti profil",
   "home.noProfile": "Pilih atau buat profil dulu ya.",
   "profile.failed": "Penyimpanan di perangkat tidak bisa dibuka. Coba tutup mode penyamaran lalu muat ulang."

@@ -76,3 +76,19 @@ function storedProfileLocale(page: Page): Promise<string | undefined> {
       }),
   );
 }
+
+test('Beranda 360 px: ubin mapel tanpa scroll horizontal', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Coba Gratis' }).click();
+  await page.getByText('Kelas 1', { exact: true }).click();
+  await page.getByLabel('Nama panggilan').fill('Dina');
+  await page.getByRole('button', { name: 'Mulai belajar' }).click();
+  await expect(page.getByRole('button', { name: /Math/ })).toBeVisible();
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  );
+  expect(overflow).toBe(false);
+  const { violations } = await new AxeBuilder({ page }).analyze();
+  expect(violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')).toEqual([]);
+});

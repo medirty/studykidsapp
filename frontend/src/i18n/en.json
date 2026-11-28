@@ -10,6 +10,7 @@
   "ui.close": "Close",
   "ui.stars": "{n} of {max} stars",
   "ui.locked": "Locked",
+  "ui.free": "Free",
   "header.switchLang": "Switch language to ID",
   "header.langCode": "ID",
   "header.home": "{brand} home",
@@ -76,7 +77,7 @@
   "home.streak": "Yay! Kiko is happy you are back.",
   "home.continue": "Keep learning will show up here once lessons are available.",
   "home.subjects": "Pick a subject",
-  "home.free": "Free · Units 1–{n}",
+  "home.free": "Units 1–{n}",
   "home.switch": "Switch profile",
   "home.noProfile": "Please pick or create a profile first.",
   "profile.failed": "Device storage could not be opened. Close private mode and reload."
