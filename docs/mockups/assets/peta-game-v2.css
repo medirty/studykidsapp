@@ -1,4 +1,4 @@
-/* Mockup v2 (CR-008): peta jalur + dunia mini game. Dimuat setelah mockup.css, mockup-v2.css, soal.css. Hanya token. */
+/* Mockup v2 (CR-008): peta jalur + dunia mini game. Dimuat setelah mockup.css, soal.css. Hanya token. */
 
 /* ---- Peta jalur: unit = pulau, skill = simpul. Status = ikon + teks (bukan warna saja) ---- */
 .island-v2 { position: relative; padding: var(--space-4); border-radius: var(--radius-md); background: var(--color-surface); border: 3px solid var(--color-ink); box-shadow: 0 4px 0 var(--color-ink); }
