@@ -86,5 +86,9 @@
   "q.delete": "Delete",
   "q.yourAnswer": "Your answer",
   "q.typeAnswer": "Type your answer",
-  "q.listenHint": "No sound? The voice for this language may not be installed on your device. Ask a parent to check, or try again."
+  "q.listenHint": "No sound? The voice for this language may not be installed on your device. Ask a parent to check, or try again.",
+  "q.pickFirst": "Pick one, then tap where it goes",
+  "q.done": "Done",
+  "q.clear": "Start over",
+  "q.canvas": "Drawing paper"
 }

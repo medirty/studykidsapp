@@ -86,5 +86,9 @@
   "q.delete": "Hapus",
   "q.yourAnswer": "Jawabanmu",
   "q.typeAnswer": "Ketik jawabanmu",
-  "q.listenHint": "Tidak ada suara? Suara bahasa ini mungkin belum terpasang di perangkatmu. Minta orang tua mengeceknya, atau coba lagi."
+  "q.listenHint": "Tidak ada suara? Suara bahasa ini mungkin belum terpasang di perangkatmu. Minta orang tua mengeceknya, atau coba lagi.",
+  "q.pickFirst": "Pilih dulu, lalu ketuk tempatnya",
+  "q.done": "Selesai",
+  "q.clear": "Mulai lagi",
+  "q.canvas": "Kertas gambar"
 }
