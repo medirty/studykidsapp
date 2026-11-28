@@ -80,5 +80,11 @@
   "home.free": "Unit 1–{n}",
   "home.switch": "Ganti profil",
   "home.noProfile": "Pilih atau buat profil dulu ya.",
-  "profile.failed": "Penyimpanan di perangkat tidak bisa dibuka. Coba tutup mode penyamaran lalu muat ulang."
+  "profile.failed": "Penyimpanan di perangkat tidak bisa dibuka. Coba tutup mode penyamaran lalu muat ulang.",
+  "q.true": "Benar",
+  "q.false": "Salah",
+  "q.delete": "Hapus",
+  "q.yourAnswer": "Jawabanmu",
+  "q.typeAnswer": "Ketik jawabanmu",
+  "q.listenHint": "Tidak ada suara? Suara bahasa ini mungkin belum terpasang di perangkatmu. Minta orang tua mengeceknya, atau coba lagi."
 }
