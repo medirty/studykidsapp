@@ -4,7 +4,7 @@
   import { api } from '../services/api';
   import type { PublicSettings, SubjectId } from '../services/types';
   import Card from '../components/ui/Card.svelte';
-  import Kiko from '../components/ui/Kiko.svelte';
+  import KikoButton from '../components/ui/KikoButton.svelte';
 
   const subjects: SubjectId[] = [
     'math',
@@ -43,7 +43,7 @@
 
 <div class="landing">
   <section class="hero" aria-labelledby="h-hero">
-    <Kiko size={160} />
+    <KikoButton size={160} />
     <h1 id="h-hero">{t('landing.title')}</h1>
     <p>{t('landing.lead')}</p>
     <a class="cta" href="#/start">{t('landing.cta')}</a>
@@ -147,6 +147,10 @@
     gap: var(--space-4);
     justify-items: center;
     text-align: center;
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-sunny);
+    color: var(--color-ink);
   }
   h1 {
     color: var(--color-ink);

@@ -6,6 +6,7 @@
   import type { AvatarId } from '../components/ui/avatars';
   import Avatar from '../components/ui/Avatar.svelte';
   import Card from '../components/ui/Card.svelte';
+  import KikoButton from '../components/ui/KikoButton.svelte';
   import SubjectCard from '../components/ui/SubjectCard.svelte';
   import { profile } from '../stores/profile.svelte';
 
@@ -37,6 +38,7 @@
 
 {#if me}
   <section class="hello" aria-labelledby="h-hi">
+    <KikoButton size={96} />
     <Avatar id={me.avatarId as AvatarId} size={72} decorative />
     <div>
       <h2 id="h-hi">{t('home.hello', { name: me.nickname })}</h2>
@@ -76,6 +78,10 @@
     align-items: center;
     gap: var(--space-3);
     margin: var(--space-4) 0;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-teal);
+    color: var(--color-ink);
   }
   .subjects {
     list-style: none;
