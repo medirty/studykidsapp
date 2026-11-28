@@ -3,6 +3,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { localApi } from '../../src/services/api';
 import { openDb } from '../../src/services/db';
 import type { Profile, ProgressEvent } from '../../src/services/types';
+import unit from '../../src/content/math/g1/u1.json';
+import {
+  answer,
+  currentQuestion,
+  historiesAfter,
+  isDone,
+  startSession,
+} from '../../src/engine/session';
+import type { Unit } from '../../src/engine/types';
 
 const now = '2026-11-26T00:00:00.000Z';
 
@@ -94,8 +103,17 @@ describe('localApi profiles', () => {
     await localApi.setSetting('activeProfileId', 'p1');
     await localApi.recordProgress(event());
     await localApi.recordProgress(event({ clientEventId: 'e2', profileId: 'p2' }));
+    const history = (profileId: string) => ({
+      profileId,
+      skillId: 's1',
+      sessionCounter: 1,
+      recent: [],
+    });
+    await localApi.saveSkillHistory([history('p1'), history('p2')]);
 
     await localApi.deleteProfile('p1');
+    expect(await localApi.listSkillHistory('p1')).toEqual([]);
+    expect(await localApi.listSkillHistory('p2')).toEqual([history('p2')]);
 
     const db = await openDb();
     expect(await db.progressEvents.toArray()).toHaveLength(1);
@@ -148,6 +166,35 @@ describe('localApi recordProgress (idempotent queue)', () => {
     expect((await db.progressEvents.get('e1'))?.correct).toBe(true);
     expect((await localApi.listMastery('p1'))[0].mastery).toBe(100);
     expect((await localApi.listProfiles())[0].xp).toBe(10);
+  });
+});
+
+describe('a whole session through localApi (T3.7, offline)', () => {
+  it('saves the counter at start, records every answer and keeps fingerprints for anti-repeat', async () => {
+    await localApi.saveProfile(profile({ grade: 1 }));
+    const skill = (unit as Unit).skills[0];
+    const start = { profileId: 'p1', grade: 1 as const, skill, others: [], now: new Date(now) };
+    let state = startSession({ ...start, histories: await localApi.listSkillHistory('p1') });
+    await localApi.saveSkillHistory(historiesAfter(state));
+    expect((await localApi.listSkillHistory('p1'))[0]).toMatchObject({
+      sessionCounter: 1,
+      recent: [],
+    });
+
+    while (!isDone(state)) {
+      const sq = currentQuestion(state);
+      const done = answer(state, sq, sq.question.answer, 1000, new Date(now), `s${state.index}`);
+      await localApi.recordProgress(done.event);
+      await localApi.saveSkillHistory(historiesAfter(done.state));
+      state = done.state;
+    }
+
+    const [row] = await localApi.listSkillHistory('p1');
+    expect(row.recent).toHaveLength(1);
+    expect(row.recent[0]).toHaveLength(8);
+    expect(await localApi.listMastery('p1')).toMatchObject([{ skillId: skill.id, attempts: 8 }]);
+    expect((await localApi.listProfiles())[0].xp).toBe(80);
+    expect(fetch).not.toHaveBeenCalled();
   });
 });
 

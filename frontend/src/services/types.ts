@@ -1,7 +1,7 @@
 // Data contracts for the local data layer and api.ts (ADR D-011). Types only, no runtime code.
 // PRD §8.4: child data = nickname, grade, avatar, progress. Never email, phone, photo or location.
 import type { Locale } from '../i18n';
-import type { StreakState } from '../engine/types';
+import type { SkillHistory, StreakState } from '../engine/types';
 
 export type Grade = 1 | 2 | 3 | 4 | 5 | 6;
 export type SubjectId =
@@ -98,7 +98,7 @@ export interface Api {
   getEntitlement(): Promise<Entitlement>;
   listProfiles(): Promise<Profile[]>;
   saveProfile(profile: Profile): Promise<void>;
-  /** Also deletes the profile's events, mastery and queue items (PRD §8.4). */
+  /** Also deletes the profile's events, mastery, queue items and skill history (PRD §8.4). */
   deleteProfile(id: string): Promise<void>;
   getSetting<K extends SettingKey>(key: K): Promise<DeviceSettings[K] | undefined>;
   setSetting<K extends SettingKey>(key: K, value: DeviceSettings[K]): Promise<void>;
@@ -108,4 +108,7 @@ export interface Api {
    */
   recordProgress(event: ProgressEvent): Promise<void>;
   listMastery(profileId: string): Promise<SkillMastery[]>;
+  /** Session counter + recent fingerprints per skill (ADR D-014 f). Device-local, never synced. */
+  listSkillHistory(profileId: string): Promise<SkillHistory[]>;
+  saveSkillHistory(rows: SkillHistory[]): Promise<void>;
 }
